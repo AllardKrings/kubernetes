@@ -1,0 +1,8 @@
+site_name: AllardDCS
+plugins:
+  - search
+  - awesome-pages
+
+# Optional theme
+theme:
+  name: readthedocs

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backstage
-          image: allardkrings/backstage:1.42.3a
+          image: allardkrings/backstage:1.42.3b
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT

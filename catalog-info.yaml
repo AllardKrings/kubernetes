@@ -5,7 +5,7 @@ metadata:
   namespace: default
   description: All deployment van Kubernetes clusters in github
   annotations:
-    backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: dir:./docs
   links:
     - url: https://github.com/AllardKrings/kubernetes
       title: AllardDCS Kubernetes Configuration
@@ -16,3 +16,5 @@ spec:
   lifecycle: production
   owner: group:default/allarddcs
   repo: https://github.com/AllardKrings/kubernetes.git
+  techdocs:
+    url: ./docs

@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: argocd
+  description: ArgoCD-configuratie
+spec:
+  type: service
+  owner: group:allarddcs
+  lifecycle: production
+  docs:
+    path: ./README.md

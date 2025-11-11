@@ -2,11 +2,17 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: backstage
+  namespace: default
   description: Backstage-configuratie
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://github.com/AllardKrings/kubernetes/dev/backstage
+      title: backstage-configuratie
+  docs:
+    - url: .docs/README.md
 spec:
   type: service
   owner: group:allarddcs
   lifecycle: production
-  # TechDocs info
-  docs:
-    path: ./README.md
+
