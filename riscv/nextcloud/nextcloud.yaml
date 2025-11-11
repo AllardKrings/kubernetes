@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud                  # < name of the deploymentand reference
+  namespace: nextcloud
+  labels:
+    app: nextcloud                 # < label for tagging and reference
+spec:
+  replicas: 1                      # < number of pods to deploy
+  selector:
+    matchLabels:
+      app: nextcloud
+  strategy:
+    rollingUpdate:
+      maxSurge: 0                  # < The number of pods that can be created above the desired amount of pods during an update
+      maxUnavailable: 1            # < The number of pods that can be unavailable during the update process
+    type: RollingUpdate            # < New pods are added gradually, and old pods are terminated gradually
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+      - image: riscv64/nextcloud:28.0.14-fpm-alpine                # < the name of the docker image we will use
+        name: nextcloud                    # < name of container
+        imagePullPolicy: Always            # < always use the latest image when creating container/pod
+        env:                               # < environment variables. See https://hub.docker.com/r/linuxserver/nextcloud
+        - name: PGID
+          value: "1000"                    # < group "ubuntu"
+        - name: PUID
+          value: "1000"                    # < user "ubuntu"
+        - name: MYSQL_HOST
+          value: mariadb.mariadb.svc.cluster.local
+        - name: MYSQL_DATABASE
+          value: "nextcloud"
+        - name: MYSQL_USER
+          value: "nextcloud"
+        - name: MYSQL_PASSWORD
+          value: "nextcloud"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password"
+        - name: NEXTCLOUD_HOSTNAME
+          value: "nextcloud-riscv.allarddcs.nl"
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: OVERWRITEPROTOCOL
+          value: "https"
+        - name: APACHE_SERVER_NAME
+          value: "nextcloud-riscv.allarddcs.nl"
+        ports:
+         - containerPort: 9000              # < required network portnumber. See https://hub.docker.com/r/linuxserver/nextcloud
+           name: http
+           protocol: TCP
+        volumeMounts:                      # < the volume mount in the container. Look at the relation volumelabel->pvc->pv
+#         - name: nfs-nextcloud
+#           mountPath: /var/www/html
+#           subPath: html
+         - name: nfs-nextcloud
+           mountPath: /var/www/html/data
+           subPath: data
+         - name: nfs-nextcloud
+           mountPath: /var/www/html/config
+           subPath: config
+#         - name: nfs-nextcloud
+#           mountPath: /var/www/html/custom_apps
+#           subPath: nextapps
+      - name: nginx
+        image: riscv64/nginx:1.27.4-alpine
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - name: nfs-nextcloud
+            mountPath: /var/www/html
+            subPath: html
+          - name: nfs-nextcloud
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: default.conf
+      volumes:
+      - name: nfs-nextcloud                # < linkname of the volume for the pvc
+        persistentVolumeClaim:
+          claimName: nextcloud-pvc         # < pvc name we created in the previous yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: nextcloud
+spec:
+  selector:
+    app: nextcloud
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/nextcloud-riscv
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-pvc
+  namespace: nextcloud
+spec:
+  storageClassName: ""
+  volumeName: nextcloud-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+

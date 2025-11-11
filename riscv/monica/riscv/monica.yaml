@@ -1,0 +1,175 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monica
+---
+# Secret for database credentials
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monica-db-secret
+  namespace: monica
+type: Opaque
+stringData:
+  DB_USERNAME: monica
+  DB_PASSWORD: monica
+---
+# Secret for Monica APP_KEY (you can generate a new one with "php artisan key:generate --show")
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monica-app-secret
+  namespace: monica
+type: Opaque
+stringData:
+  APP_KEY: base64:6McA2wuosOQlpO12vIRl7LPFbNlkxzOqzA8ZPSj7Huk=
+---
+# Persistent Volume Claim for Monica's storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: monica-pvc
+  namespace: monica
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: monica-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/monica/riscv
+    readOnly: false
+---
+# Monica Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monica
+  namespace: monica
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monica
+  template:
+    metadata:
+      labels:
+        app: monica
+    spec:
+      containers:
+        - name: monica
+          image: riscv64/monica:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: APP_ENV
+              value: production
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: monica-app-secret
+                  key: APP_KEY
+            - name: DB_CONNECTION
+              value: mysql
+            - name: DB_HOST
+              value: mariadb.mariadb.svc.cluster.local
+            - name: DB_DATABASE
+              value: monica
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: monica-db-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: monica-db-secret
+                  key: DB_PASSWORD
+            - name: DB_PORT
+              value: "3306"
+            - name: APP_URL
+              value: https://monica-riscv.allarddcs
+          volumeMounts:
+            - name: monica-data
+              mountPath: /var/www/html/storage
+      volumes:
+        - name: monica-data
+          persistentVolumeClaim:
+            claimName: monica-pvc
+---
+# Service for Monica
+apiVersion: v1
+kind: Service
+metadata:
+  name: monica
+  namespace: monica
+spec:
+  type: ClusterIP
+  selector:
+    app: monica
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+---
+# Middleware for HTTP -> HTTPS redirect
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-https
+  namespace: monica
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+# HTTP IngressRoute
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: monica
+  namespace: monica
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`monica-riscv.allarddcs.nl`)
+      kind: Rule
+      middlewares:
+        - name: redirect-to-https
+      services:
+        - name: monica
+          port: 80
+---
+# HTTPS IngressRoute (TLS via Let's Encrypt)
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: monica-tls
+  namespace: monica
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`monica-riscv.allarddcs.nl`)
+      kind: Rule
+      services:
+        - name: monica
+          port: 80
+  tls:
+    certResolver: letsencrypt

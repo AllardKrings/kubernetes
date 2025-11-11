@@ -1,0 +1,34 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: gitea-listener
+spec:
+  namespaceSelector: {}
+  resources: {}
+  serviceAccountName: tekton-robot
+  triggers:
+  - bindings:
+    - kind: TriggerBinding
+      ref: gitea-binding
+    interceptors:
+    - params:
+      - name: overlays
+        value:
+#        - key: image-tag
+#          expression: '''harbor-dev.alldcs.nl'''
+        - key: image-name
+          expression: '[''harbor-dev.allarddcs.nl'',body.repository.full_name].join(''/'')'
+        - key: registry
+          expression: body.repository.description.split('/')[0]
+        - key: repository
+          expression: body.repository.description.split('/')[1]
+        - key: version
+          expression: body.repository.description.split('/')[2]
+        - key: image-tag
+          expression: body.ref.split('/')[2]
+      ref:
+        kind: ClusterInterceptor
+        name: cel
+    name: gitea-trigger
+    template:
+      ref: gitea-pipeline-template

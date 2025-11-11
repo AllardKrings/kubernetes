@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1 # or tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: register-change
+spec:
+  params:
+  - name: project
+    type: string
+  - name: git-revision
+    type: string
+  steps:
+  - name: register-change
+    image: apteno/alpine-jq
+    script: |
+      ITOP_URL="https://itop-dev.allarddcs.nl"
+      ITOP_USER="tekton"
+      ITOP_PWD="Itop01@@@"
+      ORGANIZATION="0001"
+      TITLE="Container $(params.project).$(params.git-revision) "
+      DESCRIPTION="Container $(params.project).$(params.git-revision) created"
+      CALLER="tekton"
+      COMMENT="new version of container $(params.project) has been pushed"
+      CHANGE="RoutineChange"
+      # Let's create the ticket via the REST/JSON API
+      JSON_DATA='{"operation":"core/create", "class":"'"${CHANGE}"'", "fields": {"org_id":"'"${ORGANIZATION}"'", "title":"'"$TITLE"'", "description":"'"$DESCRIPTION"'"}, "caller": "'"$CALLER"'", "comment": "'"$COMMENT"'"}'
+      RESULT=`wget -q --post-data='auth_user='"${ITOP_USER}"'&auth_pwd='"${ITOP_PWD}"'&json_data='"${JSON_DATA}" --no-check-certificate -O -  "${ITOP_URL}/webservices/rest.php?version=1.0"`
+      if echo "$RESULT" | grep "created" 
+         then
+           echo "Change created successfully"
+           echo "$RESULT"
+         else
+           echo "ERROR: failed to create change"
+           echo "$RESULT"
+           exit 1
+      fi
+    workingDir: $(workspaces.source-dir.path)
+  workspaces:
+  - name: source-dir
+    optional: true

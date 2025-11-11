@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres15-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/postgres15test
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres15-pvc
+  namespace: postgres
+spec:
+  storageClassName: ""
+  volumeName: postgres15-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres15
+  namespace: postgres
+spec:
+  serviceName: postgres15
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres15
+  template:
+    metadata:
+      labels:
+        app: postgres15
+    spec:
+      containers:
+      - name: postgres15
+        image: postgres:15
+        ports:
+          - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_USER
+          value: admin
+        - name: POSTGRES_PASSWORD
+          value: Pgadmin01@
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres
+      volumes:
+      - name: postgres
+        persistentVolumeClaim:
+          claimName: postgres15-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres15
+  namespace: postgres
+  labels:
+    name: postgres15
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      name: postgres
+  selector:
+    app: postgres15
+

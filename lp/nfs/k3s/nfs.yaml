@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nfs-provisioning
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: nfs-provisioning
+  namespace: kube-system
+spec:
+  repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+  chart: nfs-subdir-external-provisioner
+  targetNamespace: nfs-provisioning
+  valuesContent: |-
+    nfs:
+      server: 192.168.2.100
+      path: /opt/dynamic-storage

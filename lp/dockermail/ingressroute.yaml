@@ -1,0 +1,64 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: docker-mailserver-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.rule: "Host(`mail.allarddcs.nl`)"
+spec:
+  rules:
+  - host: mail.allarddcs.nl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 25
+  # Add other ports for IMAP, POP3, etc.
+  - host: mail.allarddcs.nl
+    tcp:
+      - port: 25
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 25
+      - port: 465
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 465
+      - port: 587
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 587
+      - port: 993
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 993
+      - port: 143
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 143
+      - port: 110
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 110
+      - port: 995
+        backend:
+          service:
+            name: docker-mailserver
+            port:
+              number: 995

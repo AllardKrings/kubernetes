@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postfixadmin-pv
+  labels:
+    type: local
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/postfixadmin
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postfixadmin-pvc
+  namespace: mail
+spec:
+  storageClassName: ""
+  volumeName: postfixadmin-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1G
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postfixadmin
+  namespace: mail
+  labels:
+    app: postfixadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postfixadmin
+  template:
+    metadata:
+      labels:
+        app: postfixadmin
+    spec:
+      containers:
+      - name: postfixadmin
+        image: amd64/postfixadmin
+        ports:
+          - containerPort: 80
+        env:
+        - name: POSTFIXADMIN_DB_TYPE
+          value: pgsql
+        - name: POSTFIXADMIN_DB_HOST
+          value: postgres13.postgres
+        - name: POSTFIXADMIN_DB_USER
+          value: postfixadmin
+        - name: POSTFIXADMIN_DB_PASSWORD
+          value: postfixadmin
+        - name: POSTFIXADMIN_DB_NAME
+          value: postfixadmin
+        volumeMounts:
+        - name: postfixconfig
+          mountPath: /var/www/html/
+      volumes:
+      - name: postfixconfig
+        persistentVolumeClaim:
+          claimName: postfixadmin-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postfixadmin
+  namespace: mail
+spec:
+  selector:
+    app.kubernetes.io/name: postfixadmin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: postfixadmin
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute-postfixadmin-tls
+  namespace: mail
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`postfixadmin-lp.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: postfixadmin
+      port: 80
+  tls:
+    certResolver: letsencrypt

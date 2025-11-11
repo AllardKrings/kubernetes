@@ -1,0 +1,25 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kubernetes-deployments
+  description: All deployment manifests for our Kubernetes apps
+  links:
+    - url: https://gitea-dev.allarddcs.nl/allard/kubernetes
+      title: Kubernetes Configuration
+spec:
+  type: service
+  lifecycle: production
+  owner: group:allarddcs
+  system: system:kubernetes
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: allarddcs-group
+  description: Location for the Allard DCS group
+spec:
+  type: url
+  targets:
+    - ./group.yaml       # explicit file
+    - ./system.yaml      # explicit file
+    - ./dev/             # dir discovery

@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: cosign-sign-pipeline
+spec:
+  params:
+    - name: image
+      type: string
+  tasks:
+    - name: sign-image
+      taskRef:
+        name: cosign-sign
+      params:
+        - name: image
+          value: $(params.image)

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-sharded-express
+  namespace: nodejs
+  labels:
+    app: mongo-sharded-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-sharded-express
+  template:
+    metadata:
+      labels:
+        app: mongo-sharded-express
+    spec:
+      containers:
+      - name: mongo-sharded-express
+        image: mongo-express
+        ports:
+        - containerPort: 8081
+        env:
+        - name: ME_CONFIG_OPTIONS_EDITORTHEME
+          value: "ambiance"
+        - name: ME_CONFIG_BASICAUTH_USERNAME
+          value: "admin"
+        - name: ME_CONFIG_BASICAUTH_PASSWORD
+          value: "Mongodb01"
+        - name: ME_CONFIG_MONGODB_URL
+          value: "mongodb://root:Mongodb01@192.168.2.109:30981"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-sharded-express
+  namespace: nodejs
+  labels:
+    name: mongo-sharded-express
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8081
+      name: http
+  selector:
+    app: mongo-sharded-express
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mongo-sharded-express-tls
+  namespace: nodejs
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`mongoshardedexpress-prod.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: mongo-sharded-express
+      port: 8081
+  tls:
+    certResolver: letsencrypt

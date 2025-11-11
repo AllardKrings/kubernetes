@@ -1,0 +1,126 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus
+  namespace: nexus
+  labels:
+    app: nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      containers:
+      - name: nexus
+        image: allardkrings/riscv64-nexus
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        ports:
+        - containerPort: 8081
+          name: web
+        - containerPort: 8443
+          name: websecure
+        - containerPort: 8444
+          name: docker
+        volumeMounts:
+        # Nexus work directory
+        - mountPath: /opt/sonatype/sonatype-work/nexus3
+          name: nexus-data
+          subPath: data-dir
+        env:
+        - name: INSTALL4J_ADD_VM_PARAMS
+          value: "-XX:ActiveProcessorCount=4 -Djava.util.prefs.userRoot=/opt/sonatype/sonatype-work/nexus3/javaprefs"
+      volumes:
+      - name: nexus-data
+        persistentVolumeClaim:
+          claimName: nexus-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus
+  namespace: nexus
+spec:
+  ports:
+  - name: web
+    targetPort: 8081
+    port: 8081
+  selector:
+    app: nexus
+  type: ClusterIP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nexus-http
+  namespace: nexus
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`nexus-riscv.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: nexus
+      port: 8081
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: nexus-tls
+  namespace: nexus
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: HostSNI(`nexus-riscv.allarddcs.nl`)
+      services:
+        - name: nexus
+          port: 8081
+  tls:
+    passthrough: true
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nexus-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/nexus/riscv
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nexus-pvc
+  namespace: nexus
+spec:
+  storageClassName: ""
+  volumeName: nexus-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+

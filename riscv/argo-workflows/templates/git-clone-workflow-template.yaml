@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: git-clone-template
+spec:
+  entrypoint: git-clone
+  templates:
+  - name: git-clone
+    inputs:
+      artifacts:
+      - name: argo-source
+        path: /src
+        git:
+          repo: https://gitea-riscv/allard/olproperties.git
+          usernameSecret:
+            name: github-creds
+            key: username
+          passwordSecret:
+            name: github-creds
+            key: password
+    container:
+      image: allardkrings/riscv64-maven
+      command: ["sh", "-c"]
+      args: ["git status && ls && cat VERSION"]
+      workingDir: /src

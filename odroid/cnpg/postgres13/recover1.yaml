@@ -1,0 +1,46 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres13-1
+  namespace: postgres
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:13.14-3
+
+  superuserSecret:
+    name: superuser-secret
+
+  storage:
+    size: 5Gi
+    storageClass: nfs-client
+
+  monitoring:
+    enablePodMonitor: true
+
+  backup:
+    barmanObjectStore:
+      destinationPath: 's3://backups/'
+      endpointURL: 'http://minio.postgres:9000'
+      s3Credentials:
+        accessKeyId:
+          name: minio-creds
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: minio-creds
+          key: MINIO_SECRET_KEY
+    retentionPolicy: "1d"
+  bootstrap:
+    recovery:
+      source: postgres13
+  externalClusters:
+    - name: postgres13
+      barmanObjectStore:
+        destinationPath: 's3://backups/'
+        endpointURL: 'http://minio.postgres:9000'
+        s3Credentials:
+          accessKeyId:
+            name: minio-creds
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: minio-creds
+            key: MINIO_SECRET_KEY

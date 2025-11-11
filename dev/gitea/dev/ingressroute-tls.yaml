@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gitea-tls
+  namespace: gitea
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`gitea-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: gitea
+      port: 3000
+  tls:
+    secretName: gitea-dev.allarddcs.nl-tls

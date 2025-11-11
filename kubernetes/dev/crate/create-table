@@ -1,0 +1,4 @@
+CREATE TABLE iss (
+        timestamp TIMESTAMP GENERATED ALWAYS AS CURRENT_TIMESTAMP,
+        position GEO_POINT
+    );

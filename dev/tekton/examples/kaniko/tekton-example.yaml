@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tekton-example
+  labels:
+    app: tekton-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tekton-example
+  template:
+    metadata:
+      labels:
+        app: tekton-example
+    spec:
+      containers:
+      - name: tekton-example
+#        image: allardkrings/tekton-example:1.0
+        image: harbor.alldcs.nl/allard/tekton-example:1.0
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tekton-example
+  labels:
+    name: tekton-example
+spec:
+  type: ClusterIP
+  selector:
+    app: tekton-example
+  ports:
+    - port: 80

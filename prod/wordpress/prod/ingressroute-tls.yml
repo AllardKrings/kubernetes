@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`wordpress.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: wordpress
+      port: 80
+  tls:
+    certResolver: letsencrypt

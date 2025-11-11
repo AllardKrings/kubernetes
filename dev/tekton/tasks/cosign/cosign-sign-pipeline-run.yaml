@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: cosign-pipeline-run-
+spec:
+  pipelineRef:
+    name: cosign-sign-pipeline  # This refers to your pipeline defined earlier
+  params:
+    - name: image
+      value: "harbor-dev.allarddcs.nl/allard/olproperties:1.3"
+    - name: cosign-password
+      valueFrom:
+        secretKeyRef:
+          name: cosign-password-secret
+          key: password
+
+
+

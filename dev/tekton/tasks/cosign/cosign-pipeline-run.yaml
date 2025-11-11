@@ -1,0 +1,73 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: cosign-pipeline-run-
+spec:
+  pipelineRef:
+    name: cosign-pipeline
+#gitea:
+  params:
+  - name: repo-url
+    value: http://gitea.gitea.svc.cluster.local:3000/allard/olproperties.git
+  - name: git-revision
+    value: 1.3
+
+#maven:
+  - name: maven-mirror-url
+    value: 'http://nexus.nexus.svc.cluster.local:8081/repository/maven-public/'
+
+#sonarqube:
+  - name: sonar-organization
+    value: "allarddcs"
+  - name: sonar-project-key
+    value: olproperties
+  - name: sonar-token
+    value: sqp_214ee7c92e1b82b0d43dd9b1d9462eac8f50434c
+  - name: sonar-host-url
+    value: "https://sonarqube-dev.allarddcs.nl"
+  - name: source-to-scan
+    value: ./src
+
+#push-to-harbor:
+  - name: registry
+    value: harbor-dev.allarddcs.nl
+  - name: project
+    value: allard
+  - name: image-name
+    value: olproperties
+
+#cosign
+  - name: cosign-image-url
+    value: harbor-dev.allarddcs.nl/allard/olproperties
+
+#dependency-track
+  - name: deptrack-apiKey
+    value: odt_BRpq4el8T0XqdeunYMnefniaS0n8Yxd8
+  - name: deptrack-projectName
+    value: olproperties
+  - name: deptrack-projectVersion
+    value: 1.1
+  - name: deptrack-url
+    value: https://deptracka-dev.allarddcs.nl
+
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  - name: maven-settings
+    persistentVolumeClaim:
+    emptyDir: {}
+  - name: sonar-settings
+    configmap:
+      name: sonar-properties
+  - name: registry-credentials
+    secret:
+      secretName: registry-credentials
+      items:
+        - key: .dockerconfigjson
+          path: config.json

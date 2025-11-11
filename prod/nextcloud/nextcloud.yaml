@@ -1,0 +1,258 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nextcloud
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nextcloud-prod.allarddcs.nl
+  namespace: nextcloud
+spec:
+  dnsNames:
+  - nextcloud-prod.allarddcs.nl
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+  secretName: nextcloud-prod.allarddcs.nl
+  usages:
+  - digital signature
+  - key encipherment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud                  # < name of the deploymentand reference
+  namespace: nextcloud
+  labels:
+    app: nextcloud                 # < label for tagging and reference
+spec:
+  replicas: 1                      # < number of pods to deploy
+  selector:
+    matchLabels:
+      app: nextcloud
+  strategy:
+    rollingUpdate:
+      maxSurge: 1                  # < The number of pods that can be created above the desired amount of pods during an update
+      maxUnavailable: 1            # < The number of pods that can be unavailable during the update process
+    type: RollingUpdate            # < New pods are added gradually, and old pods are terminated gradually
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+      - image: nextcloud
+        name: nextcloud                    # < name of container
+        imagePullPolicy: Always            # < always use the latest image when creating container/pod
+        env:                               # < environment variables. See https://hub.docker.com/r/linuxserver/nextcloud
+        - name: PGID
+          value: "1000"                    # < group "ubuntu"
+        - name: PUID
+          value: "1000"                    # < user "ubuntu"
+        - name: MYSQL_HOST
+          value: mariadb.mariadb.svc.cluster.local
+        - name: MYSQL_DATABASE
+          value: "nextcloud"
+        - name: MYSQL_USER
+          value: "nextcloud"
+        - name: MYSQL_PASSWORD
+          value: "nextcloud"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "zabbix"
+        - name: NEXTCLOUD_HOSTNAME
+          value: "nextcloud-prod.allarddcs.nl"
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: OVERWRITEPROTOCOL
+          value: "https"
+        - name: APACHE_SERVER_NAME
+          value: "nextcloud-prod.allarddcs.nl"
+        ports:
+         - containerPort: 80              # < required network portnumber. See https://hub.docker.com/r/linuxserver/nextcloud
+           name: http
+           protocol: TCP
+        volumeMounts:                      # < the volume mount in the container. Look at the relation volumelabel->pvc->pv
+         - name: nfs-nextcloud
+           mountPath: /var/www/html
+           subPath: html
+         - name: nfs-nextcloud
+           mountPath: /var/www/html/data
+           subPath: data
+         - name: nfs-nextcloud
+           mountPath: /var/www/html/config
+           subPath: config
+         - name: nfs-nextcloud
+           mountPath: /var/www/html/custom_apps
+           subPath: nextapps
+         - name: nfs-nextcloud
+           mountPath: /etc/apache2/apache2.conf
+           subPath: apache2.conf
+      volumes:
+      - name: nfs-nextcloud                # < linkname of the volume for the pvc
+        persistentVolumeClaim:
+          claimName: nextcloud-pvc         # < pvc name we created in the previous yaml
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nextcloud                          # < name of the service
+  namespace: nextcloud
+spec:
+  selector:
+    app: nextcloud                         # < reference to the deployment (connects service with the deployment)
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud-http
+  namespace: nextcloud
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`nextcloud-prod.allarddcs.nl`)
+      kind: Rule
+      services:
+        - name: nextcloud
+          port: 80
+      middlewares:
+        - name: redirect-to-https
+          namespace: nextcloud
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud-tls
+  namespace: nextcloud
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`nextcloud-prod.allarddcs.nl`)
+      kind: Rule
+      services:
+        - name: nextcloud
+          port: 80
+      middlewares:
+        - name: nextcloud-headers
+          namespace: nextcloud
+  tls:
+    secretName: nextcloud-prod.allarddcs.nl
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud-well-known
+  namespace: nextcloud
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`nextcloud-prod.allarddcs.nl`) && PathPrefix(`/.well-known`)
+    kind: Rule
+    middlewares:
+    - name: nextcloud-well-known-redirect
+      namespace: nextcloud
+    services:
+    - name: nextcloud
+      port: 80
+  tls:
+    secretName: nextcloud-prod.allarddcs.nl
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud-talk
+  namespace: nextcloud
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`nextcloud-prod.allarddcs.nl`) && PathPrefix(`/nextcloud/apps/spreed`)
+      kind: Rule
+      services:
+        - name: nextcloud
+          port: 80
+      middlewares:
+        - name: nextcloud-headers
+          namespace: nextcloud
+  tls:
+    secretName: nextcloud-prod.allarddcs.nl
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-headers
+  namespace: nextcloud
+spec:
+  headers:
+    stsSeconds: 31536000
+    stsIncludeSubdomains: true
+    stsPreload: true
+    customRequestHeaders:
+      X-Forwarded-Proto: "https"
+      Connection: "Upgrade"
+      Upgrade: "websocket"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-https
+  namespace: nextcloud
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-well-known-redirect
+  namespace: nextcloud
+spec:
+  redirectRegex:
+    regex: "https://(.*)/.well-known/(card|cal)dav"
+    replacement: "https://${1}/remote.php/dav/"
+    permanent: true
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/nextcloud
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-pvc
+  namespace: nextcloud
+spec:
+  storageClassName: ""
+  volumeName: nextcloud-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+

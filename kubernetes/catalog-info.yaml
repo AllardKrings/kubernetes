@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kubernetes-deployments-github
+  namespace: default
+  description: All deployment manifests for our Kubernetes apps
+  links:
+    - url: https://gitea-dev.allarddcs.nl/AllardDCS/kubernetes
+      title: AllardDCS Kubernetes Configuration
+  docs:
+    - url: ./README.md
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/allarddcs

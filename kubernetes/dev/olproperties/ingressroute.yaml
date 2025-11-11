@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: olproperties-tls
+  namespace: default
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`olproperties2.alldcs.nl`)
+    services:
+    - name: olproperties
+      port: 9080
+  tls:
+    certResolver: letsencrypt

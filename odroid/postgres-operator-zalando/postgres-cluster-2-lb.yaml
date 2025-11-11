@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-cluster-2-lb
+  namespace: default
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+#    app: postgres-cluster-1-0
+    statefulset.kubernetes.io/pod-name: postgres-cluster-2-0
+  type: LoadBalancer

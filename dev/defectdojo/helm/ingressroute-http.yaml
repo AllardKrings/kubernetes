@@ -1,0 +1,14 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: defectdojo-http
+  namespace: defectdojo
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`defectdojo-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: defectdojo-django
+      port: 80

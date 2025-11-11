@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nexus.alldcs.nl-tls
+spec:
+  dnsNames:
+  - nexus.alldcs.nl
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+  secretName: nexus.alldcs.nl-tls
+  usages:
+  - digital signature
+  - key encipherment

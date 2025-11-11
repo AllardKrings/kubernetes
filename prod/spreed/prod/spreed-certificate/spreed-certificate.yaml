@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: spreed-prod.allarddcs.nl
+  namespace: nextcloud
+spec:
+  secretName: spreed-prod.allarddcs.nl
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+    - spreed-prod.allarddcs.nl

@@ -1,0 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-odroid-alldcs
+  namespace: monitoring
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`grafana-odroid.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: prometheus-community-grafana
+      port: 80
+  tls:
+    certResolver: letsencrypt
+
+
+
+
+

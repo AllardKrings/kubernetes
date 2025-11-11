@@ -1,0 +1,8 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Backup
+metadata:
+  name: postgres13-backup
+  namespace: postgres
+spec:
+  cluster:
+    name: postgres13

@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: syft-pipeline-run-
+spec:
+  pipelineRef:
+    name: syft-pipeline
+  params:
+  - name: image-reference
+    value: harbor.alldcs.nl/allard/olproperties:1.1
+  - name: deptrack-apiKey
+    value: nUbx5hG6gm09OOdZZh1si4WssmUHy6Np
+  - name: deptrack-projectName
+    value: olproperties
+  - name: deptrack-projectVersion
+    value: 1.0
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  - name: registry-credentials
+    secret:
+      secretName: registry-credentials
+      items:
+        - key: .dockerconfigjson
+          path: config.json

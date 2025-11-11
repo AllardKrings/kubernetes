@@ -1,0 +1,156 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs
+  namespace: nodejs
+  labels:
+    app: nodejs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
+    spec:
+      containers:
+      - name: nodejs
+        image: allardkrings/myfirstnodejsapp
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs
+  namespace: nodejs
+  labels:
+    app: nodejs
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: nodejs
+  type: ClusterIP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nodejs-tls
+  namespace: nodejs
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`nodejs-prod.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: nodejs
+      port: 8080
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nodejs-http
+  namespace: nodejs
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`nodejs-prod.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: nodejs
+      port: 8080
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  labels:
+    app: mongodb
+  name: mongodb
+  namespace: nodejs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - image: mongodb/mongodb-community-server
+        name: mongodb
+#        args: ["--dbpath","/data/db"]
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: admin
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: Mongodb01
+        volumeMounts:
+        - name: "mongo-data-dir"
+          mountPath: "/data/db"
+      volumes:
+      - name: "mongo-data-dir"
+        persistentVolumeClaim:
+          claimName: "nodejs-pvc"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongodb
+  name: mongodb
+  namespace: nodejs
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: mongodb
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nodejs-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/nodejsapp
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nodejs-pvc
+  namespace: nodejs
+spec:
+  storageClassName: ""
+  volumeName: nodejs-pv
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+
+

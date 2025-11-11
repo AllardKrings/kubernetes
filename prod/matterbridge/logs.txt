@@ -1,0 +1,8 @@
+time="2025-02-28T11:15:19Z" level=info msg="Running version 1.26.1-dev c4157a4" prefix=main
+time="2025-02-28T11:15:19Z" level=info msg="WARNING: THIS IS A DEVELOPMENT VERSION. Things may break." prefix=main
+time="2025-02-28T11:15:19Z" level=info msg="Parsing gateway mygateway" prefix=router
+time="2025-02-28T11:15:19Z" level=info msg="Starting bridge: matrix.my-matrix " prefix=router
+time="2025-02-28T11:15:19Z" level=info msg="Connecting https://matrix-lp.allarddcs.nl" prefix=matrix
+time="2025-02-28T11:15:20Z" level=info msg="Connection succeeded" prefix=matrix
+time="2025-02-28T11:15:20Z" level=info msg="matrix.my-matrix: joining #mattermost (ID: #mattermostmatrix.my-matrix)" prefix=matrix
+time="2025-02-28T11:15:20Z" level=fatal msg="Starting gateway failed: Bridge matrix.my-matrix failed to join channel: contents=[123 34 101 114 114 99 111 100 101 34 58 34 77 95 85 78 75 78 79 87 78 34 44 34 101 114 114 111 114 34 58 34 35 109 97 116 116 101 114 109 111 115 116 32 119 97 115 32 110 111 116 32 108 101 103 97 108 32 114 111 111 109 32 73 68 32 111 114 32 114 111 111 109 32 97 108 105 97 115 34 125] msg=Failed to POST JSON to /_matrix/client/r0/join/#mattermost code=400 wrapped=M_UNKNOWN: #mattermost was not legal room ID or room alias" prefix=main

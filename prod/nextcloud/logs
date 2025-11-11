@@ -1,0 +1,25 @@
+#!/bin/bash
+
+NAMESPACE="nextcloud"
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <nextcloud|spreed>"
+    exit 1
+fi
+
+APP_NAME=$1
+
+if [[ "$APP_NAME" != "nextcloud" && "$APP_NAME" != "spreed" ]]; then
+    echo "Error: Invalid argument. Use 'nextcloud' or 'spreed'."
+    exit 1
+fi
+
+POD_NAME=$(microk8s kubectl get pods -n $NAMESPACE -l app=$APP_NAME -o jsonpath='{.items[0].metadata.name}')
+
+if [ -z "$POD_NAME" ]; then
+    echo "Error: No pod found for app=$APP_NAME in namespace $NAMESPACE"
+    exit 1
+fi
+
+echo "Fetching logs for pod: $POD_NAME"
+microk8s kubectl logs -n $NAMESPACE $POD_NAME

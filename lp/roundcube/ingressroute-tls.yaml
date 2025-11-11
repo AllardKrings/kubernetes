@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: roundcube-tls
+  namespace: mail
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`roundcube-lp.allarddcs.nl`)
+    services:
+    - name: roundcube
+      port: 80
+  tls:
+    secretName: roundcube-lp.allarddcs.nl-tls
+#    certResolver: letsencrypt

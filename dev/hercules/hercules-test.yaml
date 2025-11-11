@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hercules
+  labels:
+    app: hercules
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hercules
+  template:
+    metadata:
+      labels:
+        app: hercules
+    spec:
+      containers:
+      - name: hercules
+        image: core.harbor.alldcs.nl/test/hercules

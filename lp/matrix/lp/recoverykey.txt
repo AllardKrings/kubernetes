@@ -1,0 +1,2 @@
+account: test
+recovery key: EsTz j5um bhAd WG9u GiHo bkt5 EjRa 7Bhh UxbH 89PT QEn2 zm2e

@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: odroid-tls-alldcs
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`odroid.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: external-nginx
+      port: 80
+  tls:
+    certResolver: letsencrypt

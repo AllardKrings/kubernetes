@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: timestamp
+spec:
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: timestamp
+      taskRef:
+        name: timestamp

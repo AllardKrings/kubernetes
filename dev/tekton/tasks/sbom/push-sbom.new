@@ -1,0 +1,56 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: push-sbom
+  namespace: default
+spec:
+  params:
+  - description: The name of sbom
+    name: sbom
+    type: string
+  - description: The deptrack-authorisation-key to upload the sbom, put in secret
+    name: deptrack-apiKey
+    type: string
+  - description: The name of the deptrack-project
+    name: deptrack-projectName
+    type: string
+  - description: The version of the deptrack-project
+    name: deptrack-projectVersion
+    type: string
+  - description: The URL of the DepTrack API
+    name: deptrack-url
+    type: string
+  steps:
+  - computeResources: {}
+    image: harbor-dev.allarddcs.nl/allard/curl:1.0
+    name: push-sbom
+    script: |
+      #!/usr/bin/env bash
+
+      # Run curl command and capture the output and error messages
+      response=$(curl -v -k -X POST \
+        -H 'Content-Type: multipart/form-data; boundary=__X_BOM__' \
+        -H "X-API-Key: $(params.deptrack-apiKey)" \
+        -F "autoCreate=true" \
+        -F "projectName=$(params.deptrack-projectName)" \
+        -F "projectVersion=$(params.deptrack-projectVersion)" \
+        -F "bom=@$(params.sbom)" \
+        "$(params.deptrack-url)/api/v1/bom" 2>&1)
+      # Check the response for a specific token or success message
+      if echo "$response" | grep -q "token"; then
+        echo "SBOM uploaded successfully"
+      else
+        # Print the error response from curl to diagnose the failure
+        echo $(params.deptrack-url)
+        echo $(params.deptrack-apiKey)
+        echo $(params.deptrack-projectName)
+        echo $(params.deptrack-projectVersion)
+        echo $(params.sbom)
+        echo "Failed to upload SBOM. Response from curl:"
+        echo "$response"
+        exit 1
+      fi
+    workingDir: $(workspaces.source-dir.path)
+  workspaces:
+  - name: source-dir
+    optional: true

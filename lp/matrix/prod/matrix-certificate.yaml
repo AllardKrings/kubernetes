@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: matrix-prod.allarddcs.nl-tls
+  namespace: matrix
+spec:
+  dnsNames:
+  - matrix-prod.allarddcs.nl
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+  secretName: matrix-prod.allarddcs.nl-tls
+  usages:
+  - digital signature
+  - key encipherment

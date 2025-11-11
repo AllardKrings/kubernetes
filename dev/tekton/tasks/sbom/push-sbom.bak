@@ -1,0 +1,50 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: push-sbom
+  namespace: default
+spec:
+  params:
+  - description: The name of sbom
+    name: sbom
+    type: string
+  - description: The deptrack-authorisation-key to upload the sbom, put in secret
+    name: deptrack-apiKey
+    type: string
+  - description: The name of the deptrack-project
+    name: deptrack-projectName
+    type: string
+  - description: The version of the deptrack-project
+    name: deptrack-projectVersion
+    type: string
+  steps:
+  - computeResources: {}
+    image: allardkrings/ubuntu-curl:1.0
+    name: push-sbom
+    script: |
+        #!/usr/bin/env bash
+        if
+          curl -X POST  \
+          -H 'Content-Type: multipart/form-data; boundary=__X_BOM__' \
+          -H "X-API-Key: odt_UPC8l0R9vzQILZIphSoK15J4u4Ns3HEy" \
+          -F "autoCreate=true" \
+          -F "projectName=olproperties" \
+          -F "projectVersion=1.1" \
+          -F "bom=@olproperties.sbom.json" \
+          "https://deptracka-dev.allarddcs.nl/api/v1/bom" \
+          | grep "token" 
+        then
+          echo "sbom uploaded succesfully"
+        else
+          echo odt_UPC8l0R9vzQILZIphSoK15J4u4Ns3HEy
+          echo olproperties
+          echo 1.1
+          echo olproperties.sbom.json
+          ls
+          echo "upload sbom failed"
+          exit -1
+        fi
+    workingDir: $(workspaces.source-dir.path)
+  workspaces:
+  - name: source-dir
+    optional: true

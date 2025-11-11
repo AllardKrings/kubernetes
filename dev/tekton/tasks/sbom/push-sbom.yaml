@@ -1,0 +1,50 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: push-sbom
+  namespace: default
+spec:
+  params:
+  - description: name of the image
+    name: image-reference
+    type: string
+  - description: The name of sbom
+    name: sbom
+    type: string
+  - description: The deptrack-authorisation-key to upload the sbom, put in secret
+    name: deptrack-apiKey
+    type: string
+  - description: The name of the deptrack-project
+    name: deptrack-projectName
+    type: string
+  - description: The version of the deptrack-project
+    name: deptrack-projectVersion
+    type: string
+  - description: The URL of the DepTrack API
+    name: deptrack-url
+    type: string
+  steps:
+  - computeResources: {}
+    image: harbor-dev.allarddcs.nl/allard/curl:1.0
+    name: push-sbom
+    script: |
+        #!/usr/bin/env bash
+        if curl -k -X POST  \
+          -H 'Content-Type: multipart/form-data; boundary=__X_BOM__' \
+          -H "X-API-Key: $(params.deptrack-apiKey)" \
+          -F "autoCreate=true" \
+          -F "projectName=$(params.deptrack-projectName)" \
+          -F "projectVersion=$(params.deptrack-projectVersion)" \
+          -F "bom=@$(params.sbom)" \
+          "$(params.deptrack-url)/api/v1/bom" \
+          | grep "token"
+        then
+          echo "sbom uploaded successfully"
+        else
+          echo "Failed to upload sbom"
+          exit -1
+        fi
+    workingDir: $(workspaces.source-dir.path)
+  workspaces:
+  - name: source-dir
+    optional: true

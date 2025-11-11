@@ -1,0 +1,10 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: argocd-pipeline-run-
+spec:
+  pipelineRef:
+    name: argocd-pipeline-test
+  params:
+  - name: sonar-project-key
+    value: olproperties

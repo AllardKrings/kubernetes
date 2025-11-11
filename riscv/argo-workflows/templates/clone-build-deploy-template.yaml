@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: clone-build-deploy
+  namespace: argo
+spec:
+  entrypoint: main
+  volumes:
+  - name: workdir
+    persistentVolumeClaim:
+      claimName: argo-workflows-pvc
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+  - name: kubeconfig
+    secret:
+      secretName: kubeconfig-secret
+
+  templates:
+  - name: main
+    steps:
+    - - name: build
+        template: git-clone
+    - - name: deploy
+        template: deploy-app
+
+  - name: git-clone
+    container:
+      image: allardkrings/riscv64-maven
+      command: ["sh", "-c"]
+      args:
+        - |
+          echo "Cleaning up /src directory..." && \
+          rm -rf /src/* /src/.* 2>/dev/null || true && \
+          git clone http://allard:Gitea01%40@gitea.gitea.svc.cluster.local:3000/allard/olproperties.git /src && \
+          cd /src && \
+          git status && \
+          ls -la && \
+          mvn clean install
+      env:
+      - name: USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: gitea-creds
+            key: username
+      - name: PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: gitea-creds
+            key: password
+      volumeMounts:
+      - name: workdir
+        mountPath: /src
+      - name: dockersock
+        mountPath: /var/run/docker.sock
+
+  - name: deploy-app
+    serviceAccountName: argo-workflow
+    container:
+      image: allardkrings/riscv64-kubectl
+      command: ["sh", "-c"]
+      args:
+        - |
+          echo "Contents of /src:" && ls -la /src && \
+          echo "Checking deployment.yaml:" && cat /src/deployment.yaml && \
+          echo "Deploying application..." && \
+          kubectl apply -f /src/deployment.yaml --validate=false
+      volumeMounts:
+      - name: workdir
+        mountPath: /src
+    continueOn:
+      failed: true

@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+      - name: jenkins
+        image: allardkrings/riscv64-jenkins:1.6
+        securityContext:
+          privileged: true
+        ports:
+          - name: http-port
+            containerPort: 8080
+          - name: jnlp-port
+            containerPort: 50000
+        volumeMounts:
+          - name: jenkins-home
+            mountPath: /var/jenkins_home
+          - name: docker-sock
+            mountPath: "/var/run/docker.sock"
+            readOnly: false
+          - name: docker-directory
+            mountPath: "/var/lib/docker"
+            readOnly: false
+          - name: docker-bin
+            mountPath: "/usr/bin/docker"
+            readOnly: false
+      initContainers:
+      - name: change-ownership-container
+        image: riscv64/busybox
+        command: ["/bin/chown","-R","1000:1000", "/var/run/docker.sock"]
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        volumeMounts:
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+      volumes:
+        - name: jenkins-home
+          persistentVolumeClaim:
+            claimName: jenkins-pvc
+        - name: docker-sock
+          hostPath:
+            path: "/var/run/docker.sock"
+        - name: docker-directory
+          hostPath:
+            path: "/var/lib/docker"
+        - name: docker-bin
+          hostPath:
+            path: "/usr/local/bin/docker"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30000
+  selector:
+    app: jenkins
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-jnlp
+  namespace: jenkins
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50000
+      targetPort: 50000
+  selector:
+    app: jenkins
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jenkins-tls
+  namespace: jenkins
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`jenkins-riscv.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: jenkins
+      port: 8080
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/jenkins
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-pvc
+  namespace: jenkins
+spec:
+  storageClassName: ""
+  volumeName: jenkins-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+
+

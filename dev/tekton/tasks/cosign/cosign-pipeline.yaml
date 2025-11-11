@@ -1,0 +1,64 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: cosign-pipeline
+spec:
+  description: |
+    This pipeline clones a git repo, builds a Docker image with Kaniko and
+    pushes it to a registry
+  params:
+  - name: repo-url
+    type: string
+  - name: git-revision
+    type: string
+
+  - name: maven-mirror-url
+    type: string
+
+  - name: sonar-organization
+    type: string
+  - name: sonar-project-key
+    type: string
+  - name: sonar-token
+    type: string
+  - name: sonar-host-url
+    type: string
+  - name: source-to-scan
+    type: string
+
+  - name: registry
+    type: string
+  - name: project
+    type: string
+  - name: image-name
+    type: string
+
+  - name: cosign-image-url
+    type: string
+
+  - name: deptrack-projectName
+    type: string
+  - name: deptrack-projectVersion
+    type: string
+  - name: deptrack-apiKey
+    type: string
+  - name: deptrack-url
+    type: string
+
+  workspaces:
+  - name: shared-data
+  - name: registry-credentials
+  - name: maven-settings
+  - name: sonar-settings
+
+  tasks:
+
+  - name: cosign-sign
+    taskRef:
+      name: cosign-sign
+    params:
+    - name: cosign-image-url
+      value: $(params.registry)/$(params.project)/$(params.image-name):$(params.git-revision)
+    - name: cosign-image-digest
+      value: sha256:bfb0a7c2b8960ec9a1f61df004bfea8826ab9bf95454368aead0acce929654a4
+

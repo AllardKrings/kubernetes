@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drupal
+  namespace: drupal
+  labels:
+    app: drupal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drupal
+  template:
+    metadata:
+      labels:
+        app: drupal
+    spec:
+      initContainers:
+        - name: init-sites-volume
+          image: drupal
+          command: ['/bin/bash', '-c']
+          args: ['chown www-data:www-data /var/www/html/sites -R']
+          volumeMounts:
+          - name: drupal-data
+            mountPath: /var/www/html/sites
+            subPath: sites
+      containers:
+        - name: drupal
+          image: drupal
+          imagePullPolicy: Always
+          env:
+          - name: ServerName
+            value: drupal-lp.alldcs.nl
+#          - name: GITEA__database__DB_TYPE
+#            value: mysql
+#          - name: GITEA__database__HOST
+#            value: mariadb.mariadb:3306
+#          - name: GITEA__database__NAME
+#            value: gitea
+#          - name: GITEA__database__USER
+#            value: gitea
+#          - name: GITEA__database__PASSWD
+#            value: gitea
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: drupal-data
+              mountPath: /var/www/html/modules
+              subPath: modules
+            - name: drupal-data
+              mountPath: /var/www/html/profiles
+              subPath: profiles
+            - name: drupal-data
+              mountPath: /var/www/html/themes
+              subPath: themes
+            - name: drupal-data
+              mountPath: /var/www/html/sites
+              subPath: sites
+      volumes:
+        - name: drupal-data
+          persistentVolumeClaim:
+            claimName: drupal-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal
+  namespace: drupal
+  labels:
+    app: drupal
+spec:
+  sessionAffinity: None
+  ports:
+    - protocol: TCP
+      port: 80
+  selector:
+    app: drupal
+  type: LoadBalancer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: drupal-tls
+  namespace: drupal
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`drupal-lp.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: drupal
+      port: 80
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: drupal-http
+  namespace: drupal
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`drupal-lp.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: drupal
+      port: 80
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: drupal-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/drupal/riscv
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: drupal-pvc
+  namespace: drupal
+spec:
+  storageClassName: ""
+  volumeName: drupal-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+
+

@@ -1,0 +1,55 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: generate-and-push-sbom
+spec:
+  description: |
+    This pipeline generates an sbom with syft and pushes the sbom to deptrack
+  params:
+  - name: image-reference
+    type: string
+  - name: deptrack-url
+    type: string
+  - name: deptrack-projectName
+    type: string
+  - name: deptrack-projectVersion
+    type: string
+  - name: deptrack-options
+    type: array
+  - name: deptrack-apiKey
+    type: string
+  workspaces:
+  - name: shared-data
+  tasks:
+  - name: syft
+    taskRef:
+      name: syft
+    params:
+    - name: ARGS
+      value:
+      - $(params.image-reference)
+      - --output
+      - cyclonedx-json=./$(params.deptrack-projectName).sbom.json
+    workspaces:
+    - name: source-dir
+      workspace: shared-data
+
+  - name: push-sbom
+    runAfter: ["syft"]
+    taskref:
+      name: push-sbom
+    params:
+    - name: deptrack-url
+      value: $(params.deptrack-url)
+    - name: deptrack-apiKey
+      value: $(params.deptrack-apiKey)
+    - name: deptrack-projectName
+      value: $(params.deptrack-projectName)
+    - name: deptrack-projectVersion
+      value: $(params.deptrack-projectVersion)
+    - name: sbom
+      value: $(params.deptrack-projectName).sbom.json
+    workspaces:
+    - name: source-dir
+      workspace: shared-data
+

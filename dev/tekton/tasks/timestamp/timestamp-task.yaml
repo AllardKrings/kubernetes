@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: timestamp
+spec:
+  results:
+  - name: timestamp
+  steps:
+  - name: timestamp
+    image: busybox
+    script: |
+      #!/bin/sh
+      # Get the current date-time in YYYYMMDD_HHMMSS format
+      TIMESTAMP=$(date +"%d%h%m%s")
+      echo $TIMESTAMP > $(results.timestamp.path)
+      echo "TIMESTAMP= " $TIMESTAMP
+      if [[ "$TIMESTAMP" =~ ^[a-zA-Z0-9_.-]+$ ]]; then
+        echo "TIMESTAMP is valid"
+      else
+        echo "TIMESTAMP is invalid"
+      fi

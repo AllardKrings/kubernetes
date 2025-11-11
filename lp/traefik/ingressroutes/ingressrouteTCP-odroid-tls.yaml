@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: odroid-tls
+  namespace: traefik
+spec:
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: odroid-tls
+  namespace: traefik
+subsets:
+  - addresses:
+    - ip: 192.168.2.230
+    ports:
+    - port: 443
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: odroid-tls
+  namespace: traefik
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: HostSNIRegexp(`^[a-z0-9]+-odroid\.allarddcs\.nl$`)
+    services:
+    - name: odroid-tls
+      port: 443
+  tls:
+    passthrough: true

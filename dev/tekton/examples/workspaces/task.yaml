@@ -1,0 +1,18 @@
+
+spec:
+  steps:
+    - name: write-message
+      image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        set -xe
+        if [ "$(workspaces.messages.bound)" == "true" ] ; then
+          echo hello! > $(workspaces.messages.path)/message
+        fi        
+  workspaces:
+    - name: messages
+      description: |
+        The folder where we write the message to. If no workspace
+        is provided then the message will not be written.        
+      optional: true
+      mountPath: /home/ubuntu/tekton

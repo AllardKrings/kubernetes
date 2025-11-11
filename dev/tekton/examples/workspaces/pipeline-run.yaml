@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: pr-different-path-
+spec:
+  pipelineRef:
+    name: pipeline-using-different-subpaths
+  workspaces:
+    - name: ws
+      persistentVolumeClaim:
+        claimName: workspace-pvc

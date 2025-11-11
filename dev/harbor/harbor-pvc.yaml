@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: harbor-registry-pvc
+  namespace: harbor
+spec:
+  storageClassName: ""
+  volumeName: harbor-registry-pv
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 15Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: harbor-jobsvc-pvc
+  namespace: harbor
+spec:
+  storageClassName: ""
+  volumeName: harbor-jobsvc-pv
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: harbor-jobsvc-scandata-pvc
+  namespace: harbor
+spec:
+  storageClassName: ""
+  volumeName: harbor-jobsvc-scandata-pv
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-harbor-trivy-0
+  namespace: harbor
+spec:
+  storageClassName: ""
+  volumeName: harbor-trivy-pv
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-harbor-redis-master-0
+  namespace: harbor
+spec:
+  storageClassName: ""
+  volumeName: harbor-redis-pv
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi

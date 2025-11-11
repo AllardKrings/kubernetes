@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: backstage-lp.allarddcs.nl-tls
+  namespace: backstage
+spec:
+  dnsNames:
+  - backstage-lp.allarddcs.nl
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+  secretName: backstage-lp.allarddcs.nl-tls
+  usages:
+  - digital signature
+  - key encipherment

@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: quay-tls
+  namespace: quay
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`quay-lp.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: quay
+      port: 443
+  tls:
+    certResolver: letsencrypt

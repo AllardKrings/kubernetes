@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: riscv-http
+  namespace: traefik
+spec:
+ ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: riscv-http
+  namespace: traefik
+subsets:
+  - addresses:
+    - ip: 192.168.2.113
+    ports:
+    - port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: riscv-http
+  namespace: traefik
+spec:
+  entryPoints:
+  - web
+  routes:
+    - match: HostRegexp(`^[a-z0-9]+-riscv\.allarddcs\.nl$`) 
+      kind: Rule
+      services:
+        - name: riscv-http
+          port: 80

@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nexus-tls
+  namespace: nexus
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`nexus-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: nexus
+      port: 8081
+  tls:
+    certResolver: letsencrypt

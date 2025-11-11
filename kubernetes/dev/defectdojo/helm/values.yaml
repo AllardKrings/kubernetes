@@ -1,0 +1,36 @@
+tag: 2.22.4
+fullnameOverride: defectdojo
+host: defectdojo.alldcs.nl
+site_url: https://defectdojo.alldcs.nl
+alternativeHosts:
+  - defectdojo-django.defectdojo
+celery:
+  beat:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+  worker:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+initializer:
+  # should be false after initial installation was performed
+  run: true
+  nodeSelector:
+    kubernetes.io/arch: amd64
+django:
+  ingress:
+    enabled: true # change to 'false' for OpenShift
+    activateTLS: false
+  uwsgi:
+    livenessProbe:
+      # Enable liveness checks on uwsgi container. Those values are use on nginx readiness checks as well.
+      # default value is 120, so in our case 20 is just fine
+      initialDelaySeconds: 20
+  nodeSelector:
+    kubernetes.io/arch: amd64
+rabbitmq:
+  nodeSelector:
+    kubernetes.io/arch: amd64
+postgresql:
+  primary:
+    nodeSelector:
+      kubernetes.io/arch: amd64

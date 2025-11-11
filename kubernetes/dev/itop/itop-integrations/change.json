@@ -1,0 +1,12 @@
+{
+  "operation":"core/create",
+  "comment":"Synchronization from blah...",
+  "class":"RoutineChange",
+  "fields":
+  {
+    "org_id":"SELECT Organization WHERE name = 'ALLDCS'",
+    "caller_id":{"name":"Krings","first_name":"Allard"},
+    "title":"container",
+    "description":"container gebouwd"
+  }
+}

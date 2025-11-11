@@ -1,0 +1,252 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: deptrack
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deptrack-apiserver
+  namespace: deptrack
+  labels:
+    app: deptrack-apiserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deptrack-apiserver
+  template:
+    metadata:
+      labels:
+        app: deptrack-apiserver
+    spec:
+      containers:
+      - name: deptrack-apiserver
+        image: dependencytrack/apiserver
+        ports:
+          - containerPort: 8080
+        env:
+        - name: ALPINE_DATABASE_MODE
+          value: 'external'
+        - name: ALPINE_DATABASE_URL
+          value: 'jdbc:postgresql://postgres13.postgres:5432/deptrack'
+#          value: 'jdbc:postgresql://192.168.2.233:5432/deptrack'
+        - name: ALPINE_DATABASE_DRIVER
+          value: 'org.postgresql.Driver'
+        - name: ALPINE_DATABASE_USERNAME
+          value: 'deptrack'
+        - name: ALPINE_DATABASE_PASSWORD
+          value: 'deptrack'
+        - name: ALPINE_DATABASE_POOL_ENABLED
+          value: 'true'
+        - name: ALPINE_DATABASE_POOL_MAX_SIZE
+          value: '20'
+        - name: ALPINE_DATABASE_POOL_MIN_IDLE
+          value: '10'
+        - name: ALPINE_DATABASE_POOL_IDLE_TIMEOUT
+          value: '300000'
+        - name: ALPINE_DATABASE_POOL_MAX_LIFETIME
+          value: '600000'
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: deptrack-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deptrack-apiserver
+  namespace: deptrack
+  labels:
+    name: deptrack-apiserver
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      name: deptrack-apiserver
+  selector:
+    app: deptrack-apiserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deptrack-frontend
+  namespace: deptrack
+  labels:
+    app: deptrack-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deptrack-frontend
+  template:
+    metadata:
+      labels:
+        app: deptrack-frontend
+    spec:
+      containers:
+      - name: deptrack-frontend
+        image: dependencytrack/frontend
+        ports:
+          - containerPort: 8080
+        env:
+        - name: API_BASE_URL
+          value: 'https://deptracka-dev.allarddcs.nl'
+        volumeMounts:
+        - mountPath: /app/static/config.json
+          name: config
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: deptrack-config-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deptrack-frontend
+  namespace: deptrack
+  labels:
+    name: deptrack-frontend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      name: deptrack-frontend
+  selector:
+    app: deptrack-frontend
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: deptrackf-http
+  namespace: deptrack
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`deptrackf-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: deptrack-frontend
+      port: 8080
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: deptracka-http
+  namespace: deptrack
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`deptracka-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: deptrack-apiserver
+      port: 8080
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: deptrackf-tls
+  namespace: deptrack
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`deptrackf-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: deptrack-frontend
+      port: 8080
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: deptracka-tls
+  namespace: deptrack
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`deptracka-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: deptrack-apiserver
+      port: 8080
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: deptrack-data-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/deptrack/data
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deptrack-data-pvc
+  namespace: deptrack
+spec:
+  storageClassName: ""
+  volumeName: deptrack-data-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: deptrack-config-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/deptrack/config
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deptrack-config-pvc
+  namespace: deptrack
+spec:
+  storageClassName: ""
+  volumeName: deptrack-config-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+

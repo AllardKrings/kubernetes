@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: buildah-clone-build-push-
+spec:
+  pipelineRef:
+    name: buildah-clone-build-push
+  workspaces:
+    - name: myworkspace
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 50Mi
+    - name: dockerconfig-ws
+      secret:
+        secretName: dockerconfig-secret 
+  params:
+  - name: repo-url
+    value: https://github.com/AllardKrings/helloallard.git
+  - name: image-reference
+    value: harbor.alldcs.nl/allard/hello-allard:1.0

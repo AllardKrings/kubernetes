@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: kaniko-clone-build-push-
+spec:
+  pipelineRef:
+    name: kaniko-clone-build-push
+#  podTemplate:
+#    securityContext:
+#      fsGroup: 65532
+  workspaces:
+  - name: shared-data
+    persistentVolumeClaim:
+      claimName: kaniko-workspace-pvc
+  - name: registry-credentials
+    secret:
+#      secretName: docker-credentials
+      secretName: harbor-credentials
+      items:
+        - key: .dockerconfigjson
+          path: config.json
+  params:
+  - name: repo-url
+    value: https://github.com/google/docsy-example.git
+  - name: image-reference
+#    value: allardkrings/tekton-example:1.0
+    value: harbor.alldcs.nl/allard/tekton-example:1.0
+#    value: harbor-registry/allard/tekton-example:1.0
+#    value: 80.60.8.14/allard/tekton-example:1.0
+#    value: 192.168.40.82/allard/tekton-example:1.0

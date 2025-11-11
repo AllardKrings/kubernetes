@@ -1,0 +1,153 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coturn
+  namespace: matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coturn
+  template:
+    metadata:
+      labels:
+        app: coturn
+    spec:
+      containers:
+        - name: coturn
+          image: coturn/coturn:latest
+          ports:
+            - name: turn-udp
+              containerPort: 3478
+              protocol: UDP
+            - name: turn-tcp
+              containerPort: 3478
+              protocol: TCP
+            - name: turns-tcp
+              containerPort: 5349
+              protocol: TCP
+          volumeMounts:
+            - name: coturn-cert
+              mountPath: "/etc/coturn/certs"
+              readOnly: true
+            - name: coturn-config
+              mountPath: /etc/coturn
+            - name: coturn-data
+              mountPath: /var/log
+              subPath: logs
+          args:
+            - "--tls-listening-port=5349"
+            - "--cert=/etc/coturn/certs/tls.crt"
+            - "--pkey=/etc/coturn/certs/tls.key"
+      volumes:
+        - name: coturn-config
+          configMap:
+            name: coturn-config
+        - name: coturn-data
+          persistentVolumeClaim:
+            claimName: coturn-pvc
+        - name: coturn-cert
+          secret:
+            secretName: coturn-cert
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coturn-config
+  namespace: matrix
+data:
+  turnserver.conf: |
+    listening-port=3478
+    tls-listening-port=5349
+    listening-ip=0.0.0.0
+    relay-ip=0.0.0.0
+    total-quota=100
+    bps-capacity=0
+    cert=/etc/coturn/certs/fullchain.pem
+    pkey=/etc/coturn/certs/privkey.pem
+    log-file=/var/log/turnserver.log
+    no-stdout-log
+    verbose
+
+    min-port=49152
+    max-port=65535
+
+    # External IP (public or internal depending on setup)
+    listening-ip=0.0.0.0
+    relay-ip=0.0.0.0
+    external-ip=82.174.234.158
+
+    # Secure authentication
+    use-auth-secret
+    static-auth-secret=heleenvanderpol
+    realm=matrix-prod.allarddcs.nl
+
+    # Enable TLS
+    cert=/etc/coturn/certs/fullchain.pem
+    pkey=/etc/coturn/certs/privkey.pem
+
+    # WebRTC-specific settings
+    fingerprint
+    lt-cred-mech
+    stale-nonce
+
+    # Allow peers to communicate via relay
+    no-multicast-peers
+    no-loopback-peers
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coturn
+  namespace: matrix
+spec:
+  selector:
+    app: coturn
+  type: LoadBalancer
+  ports:
+    - name: coturn-udp
+      port: 3478
+      targetPort: 3478
+      protocol: UDP
+    - name: coturn-tcp
+      port: 3478
+      targetPort: 3478
+      protocol: TCP
+    - name: coturn-tls
+      port: 5349
+      targetPort: 5349
+      protocol: TCP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: coturn-pvc
+  namespace: matrix
+spec:
+  storageClassName: ""
+  volumeName: coturn-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: coturn-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/coturn
+    readOnly: false

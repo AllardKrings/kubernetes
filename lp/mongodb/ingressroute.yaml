@@ -1,0 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mongodb-express-tls
+  namespace: mongodb
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`mongodb-lp.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: mongo-express
+      port: 8081
+  tls:
+    certResolver: letsencrypt
+
+
+
+
+

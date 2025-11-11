@@ -1,0 +1,1 @@
+microk8s kubectl expose deployment mongodb-mongodb-sharded --type=NodePort --name=mongodb-nodeport -n mongodb --port=27017

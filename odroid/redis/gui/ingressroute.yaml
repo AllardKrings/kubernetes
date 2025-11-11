@@ -1,0 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: redis-alldcs-tls
+  namespace: redis
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`redis-odroid.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: redis-insight
+      port: 5540
+  tls:
+    certResolver: letsencrypt
+
+
+
+
+

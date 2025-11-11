@@ -1,0 +1,24 @@
+apiVersion: v1
+data:
+  dbPassword: cm91bmRrdWJl
+  dbUsername: cm91bmRrdWJl
+  desKey: ZUdmaFIzdGNNVlhKZW10VkN1b0JRRmIyUUxSc0hoM3diRzBZbE9ySGVEaFdJTUoyOU1qRE01UnlTOEhvTHgzdw==
+  smtpPassword: JXA=
+  smtpUsername: JXU=
+kind: Secret
+metadata:
+  annotations:
+    meta.helm.sh/release-name: roundcube
+    meta.helm.sh/release-namespace: mail
+  creationTimestamp: "2025-01-25T09:41:15Z"
+  labels:
+    app.kubernetes.io/instance: roundcube
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: roundcube
+    app.kubernetes.io/version: 1.6.9
+    helm.sh/chart: roundcube-1.16.0
+  name: roundcube
+  namespace: mail
+  resourceVersion: "45407979"
+  uid: 3362cf2e-450f-40db-8f78-4f2e3198ea48
+type: Opaque

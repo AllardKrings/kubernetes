@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matterbridge
+  namespace: mattermost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matterbridge
+  template:
+    metadata:
+      labels:
+        app: matterbridge
+    spec:
+      containers:
+        - name: matterbridge
+          image: 42wim/matterbridge:latest
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/matterbridge
+      volumes:
+        - name: config-volume
+          configMap:
+            name: matterbridge-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matterbridge
+  namespace: mattermost
+spec:
+  selector:
+    app: matterbridge
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4242
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: matterbridge-config
+  namespace: mattermost
+data:
+  matterbridge.toml: |
+    [general]
+    RemoteNickFormat="{NICK}"
+
+    [matrix]
+    [matrix.my-matrix]
+    Server="https://matrix-lp.allarddcs.nl"
+    Login="mattermost"
+    Password="Matrix01@"
+    RemoteNickFormat="{NICK}"
+
+    [mattermost]
+    [mattermost.my-mattermost]
+    Server="mattermost-prod.allarddcs.nl"
+    Token="xfxh83q14prftd61c4y4hiuw6w"
+    Team="matrix"
+    RemoteNickFormat="{NICK}"
+
+    [[gateway]]
+    name="mygateway"
+    enable=true
+    [[gateway.inout]]
+    account="matrix.my-matrix"
+    channel="!UDCHpOSdDiIbbhoBrb:matrix-lp.allarddcs.nl"
+    [[gateway.inout]]
+    account="mattermost.my-mattermost"
+    channel="matrix"

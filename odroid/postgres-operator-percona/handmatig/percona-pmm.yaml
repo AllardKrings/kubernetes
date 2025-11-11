@@ -1,0 +1,122 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: percona-pmm-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.40.100
+    path: /mnt/nfs_share/percona-pmm
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: percona-pmm-pvc
+spec:
+  storageClassName: ""
+  volumeName: percona-pmm-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: percona-pmm
+  labels:
+    app: percona-pmm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: percona-pmm
+  template:
+    metadata:
+      labels:
+        app: percona-pmm
+    spec:
+      containers:
+      - name: percona-pmm
+        image: percona/pmm-server:2
+        ports:
+        - containerPort: 443
+        env:
+        - name: DISABLE_UPDATES          #Disable automatic updates
+          value: 'true'
+        - name: DISABLE_TELEMETRY        #Disable built-in telemetry and disable STT if telemetry is disabled
+          value: 'true'
+        - name: METRICS_RESOLUTION       #High metrics resolution in seconds
+          value: 10s
+        - name: METRICS_RESOLUTION_HR    #High metrics resolution (same as above)
+          value: 10s
+        - name: METRICS_RESOLUTION_MR    #Medium metrics resolution in seconds
+          value: '100s'
+        - name: METRICS_RESOLUTION_LR    #Low metrics resolution in seconds
+          value: '500s'
+        - name: DATA_RETENTION           #How long to keep time-series data in ClickHouse. This variable accepts golang style duration format, example: 24h, 30m, 10s
+          value: '24h'
+        - name: ENABLE_VM_CACHE          #Enable cache in VM
+          value: 'false'
+        - name: ENABLE_ALERTING          #Enable integrated alerting
+          value: 'false'
+        - name: ENABLE_AZUREDISCOVER     #Enable support for discovery of Azure databases
+          value: 'false'
+        - name: ENABLE_BACKUP_MANAGEMENT #Enable integrated backup tools
+          value: 'true'
+        - name: ENABLE_DBAAS             #Enable DBaaS features   
+          value: 'true'
+        - name: PMM_PUBLIC_ADDRESS       #External IP address or the DNS name on which PMM server is running.
+          value: ''
+        - name: PMM_DEBUG                #Enables a more verbose log level
+          value: ''
+        - name: PMM_TRACE
+          value: ''
+        volumeMounts:
+        - mountPath: /svr
+          name: percona-pmm
+      volumes:
+      - name: percona-pmm
+        persistentVolumeClaim:
+          claimName: percona-pmm-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: percona-pmm
+spec:
+  selector:
+    app.kubernetes.io/name: percona-pmm
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    app: percona-pmm
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: percona-pmm-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`percona.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: percona-pmm
+      port: 443
+  tls:
+    certResolver: letsencrypt

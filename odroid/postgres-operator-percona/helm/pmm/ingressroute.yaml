@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: percona-pmm-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`percona.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: percona-pmm
+      port: 443
+  tls:
+    certResolver: letsencrypt

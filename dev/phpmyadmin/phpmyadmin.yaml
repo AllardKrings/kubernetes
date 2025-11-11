@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin
+  namespace: mariadb
+  labels:
+    app: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: phpmyadmin
+        ports:
+          - containerPort: 80
+        env:
+        - name: PMA_HOST
+          value: mariadb
+        - name: PMA_PORT
+          value: "3306"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "jamesbrown" 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin
+  namespace: mariadb
+spec:
+  selector:
+    app.kubernetes.io/name: phpmyadmin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: phpmyadmin
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: phpmyadmin-tls
+  namespace: mariadb
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`phpmyadmin-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: phpmyadmin
+      port: 80
+  tls:
+    certResolver: letsencrypt

@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: itop-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/itop/
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: itop-pvc
+  namespace: itop
+spec:
+  storageClassName: ""
+  volumeName: itop-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: itop
+  namespace: itop
+  labels:
+    app: itop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: itop
+  template:
+    metadata:
+      labels:
+        app: itop
+    spec:
+      containers:
+      - name: itop
+        image: allardkrings/itop:external
+        env:
+        - name: ITOP_DB_HOST
+          value: mariadb.mariadb
+        - name: ITOP_DB_NAME
+          value: itop
+        - name: ITOP_DB_USER
+          value: itop
+        - name: ITOP_DB_PASS
+          value: itop
+        volumeMounts:
+        - mountPath: /var/www/html/conf
+          name: itop
+          subPath: conf
+      volumes:
+      - name: itop
+        persistentVolumeClaim:
+          claimName: itop-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: itop
+  namespace: itop
+spec:
+  selector:
+    app.kubernetes.io/name: itop
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: itop
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: itop-http
+  namespace: itop
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`itop-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: itop
+      port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: itop-tls
+  namespace: itop
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`itop-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: itop
+      port: 80
+  tls:
+    certResolver: letsencrypt

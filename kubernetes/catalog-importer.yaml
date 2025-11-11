@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: kubernetes-recursive-import
+  description: "Recursively import all catalog-info.yaml files from this repo"
+spec:
+  targets:
+    - ./**/catalog-info.yaml

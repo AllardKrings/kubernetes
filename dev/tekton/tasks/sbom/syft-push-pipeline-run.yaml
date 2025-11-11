@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: syft-push-pipeline-run-
+spec:
+  pipelineRef:
+    name: generate-and-push-sbom
+  params:
+  - name: image-reference
+    value: harbor-dev.allarddcs.nl/allard/olproperties:1.0
+  - name: deptrack-url
+    value: http://deptrack-apiserver.deptrack.svc.cluster.local:8080
+  - name: deptrack-projectName
+    value: olproperties
+  - name: deptrack-projectVersion
+    value: 1.1
+  - name: deptrack-apiKey
+    value: odt_BRpq4el8T0XqdeunYMnefniaS0n8Yxd8
+  - name: deptrack-options
+    value:
+     - ""
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nexus-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`nexus.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: nexus
+      port: 8081

@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: allarddcs-root
+  description: Root location for all Backstage entities in this repo
+spec:
+  type: git
+  target: https://gitea-dev.allarddcs.nl/allard/kubernetes.git
+  options:
+    branch: master
+  targets:
+    - group.yaml
+    - system.yaml
+    - dev/   # recursive discovery of catalog-info.yaml in dev/ and its subfolders

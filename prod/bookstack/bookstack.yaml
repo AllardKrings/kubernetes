@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstack
+  namespace: bookstack
+  labels:
+    app: bookstack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstack
+  template:
+    metadata:
+      labels:
+        app: bookstack
+    spec:
+      containers:
+      - name: bookstack
+        image: linuxserver/bookstack
+        ports:
+        - containerPort: 80
+        env:
+        - name: APP_URL
+          value: https://bookstack-prod.allarddcs.nl
+        - name: PUID
+          value: "1001"
+        - name: PGID
+          value: "986"
+        - name: DB_HOST
+          value: "mariadb.mariadb"
+        - name: DB_USER
+          value: "bookstack"
+        - name: DB_PASS
+          value: "bookstack"
+        - name: DB_DATABASE
+          value: "bookstack"
+        volumeMounts:
+        - mountPath: "/config"
+          name: bookstackvolume
+      volumes:
+      - name: bookstackvolume
+        persistentVolumeClaim:
+          claimName: bookstack-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstack
+  namespace: bookstack
+  labels:
+    app: bookstack
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: bookstack
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bookstack-tls
+  namespace: bookstack
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`bookstack-prod.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: bookstack
+      port: 80
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: bookstack-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/bookstack
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bookstack-pvc
+  namespace: bookstack
+spec:
+  storageClassName: ""
+  volumeName: bookstack-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+

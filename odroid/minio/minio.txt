@@ -1,0 +1,3 @@
+Username: I8VTWUTPITYMGQ8BL22V 
+  Password: Snd6kC8KL73E7FyHaf3vMmgD8iDSHlGdEcrAHIoJ 
+  Note: Copy the credentials to a secure location. MinIO will not display these again.

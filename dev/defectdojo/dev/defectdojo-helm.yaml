@@ -1,0 +1,1075 @@
+---
+# Source: defectdojo/charts/rabbitmq/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: defectdojo-rabbitmq
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-11.2.2
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+secrets:
+  - name: defectdojo-rabbitmq
+---
+# Source: defectdojo/charts/rabbitmq/templates/config-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: defectdojo-rabbitmq-config
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-11.2.2
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  rabbitmq.conf: |-
+    IyMgVXNlcm5hbWUgYW5kIHBhc3N3b3JkCiMjCmRlZmF1bHRfdXNlciA9IHVzZXIKIyMgQ2x1c3RlcmluZwojIwpjbHVzdGVyX2Zvcm1hdGlvbi5wZWVyX2Rpc2NvdmVyeV9iYWNrZW5kICA9IHJhYmJpdF9wZWVyX2Rpc2NvdmVyeV9rOHMKY2x1c3Rlcl9mb3JtYXRpb24uazhzLmhvc3QgPSBrdWJlcm5ldGVzLmRlZmF1bHQKY2x1c3Rlcl9mb3JtYXRpb24ubm9kZV9jbGVhbnVwLmludGVydmFsID0gMTAKY2x1c3Rlcl9mb3JtYXRpb24ubm9kZV9jbGVhbnVwLm9ubHlfbG9nX3dhcm5pbmcgPSB0cnVlCmNsdXN0ZXJfcGFydGl0aW9uX2hhbmRsaW5nID0gYXV0b2hlYWwKIyBxdWV1ZSBtYXN0ZXIgbG9jYXRvcgpxdWV1ZV9tYXN0ZXJfbG9jYXRvciA9IG1pbi1tYXN0ZXJzCiMgZW5hYmxlIGd1ZXN0IHVzZXIKbG9vcGJhY2tfdXNlcnMuZ3Vlc3QgPSBmYWxzZQojZGVmYXVsdF92aG9zdCA9IGRlZmVjdGRvam8tdmhvc3QKI2Rpc2tfZnJlZV9saW1pdC5hYnNvbHV0ZSA9IDUwTUIKIyMgTWVtb3J5IFRocmVzaG9sZAojIwp0b3RhbF9tZW1vcnlfYXZhaWxhYmxlX292ZXJyaWRlX3ZhbHVlID0gNTM2ODcwOTEyCnZtX21lbW9yeV9oaWdoX3dhdGVybWFyay5yZWxhdGl2ZSA9IDAuNQ==
+---
+# Source: defectdojo/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: defectdojo
+  labels:
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+data:
+  DD_ADMIN_USER: admin
+  DD_ADMIN_MAIL: admin@defectdojo.local
+  DD_ADMIN_FIRST_NAME: Admin
+  DD_ADMIN_LAST_NAME: User
+  DD_ALLOWED_HOSTS: defectdojo.alldcs.nl,defectdojo-django.defectdojo
+  DD_SITE_URL: https://defectdojo.alldcs.nl
+  DD_CELERY_BROKER_SCHEME: amqp
+  DD_CELERY_BROKER_USER: 'user'
+  DD_CELERY_BROKER_HOST: defectdojo-rabbitmq
+  DD_CELERY_BROKER_PORT: '5672'
+  DD_CELERY_BROKER_PARAMS: ''
+  DD_CELERY_BROKER_PATH: '//'
+  DD_CELERY_LOG_LEVEL: INFO
+  DD_CELERY_WORKER_POOL_TYPE: solo
+  DD_CELERY_WORKER_AUTOSCALE_MIN: ''
+  DD_CELERY_WORKER_AUTOSCALE_MAX: ''
+  DD_CELERY_WORKER_CONCURRENCY: ''
+  DD_CELERY_WORKER_PREFETCH_MULTIPLIER: ''
+  DD_DATABASE_ENGINE: django.db.backends.postgresql
+  DD_DATABASE_HOST: defectdojo-postgresql
+  DD_DATABASE_PORT: '5432'
+  DD_DATABASE_USER: defectdojo
+  DD_DATABASE_NAME: defectdojo
+  DD_INITIALIZE: 'true'
+  DD_UWSGI_ENDPOINT: /run/defectdojo/uwsgi.sock
+  DD_UWSGI_HOST: localhost
+  DD_UWSGI_PASS: unix:///run/defectdojo/uwsgi.sock
+  DD_UWSGI_NUM_OF_PROCESSES: '2'
+  DD_UWSGI_NUM_OF_THREADS: '2'
+  DD_DJANGO_METRICS_ENABLED: 'false'
+  NGINX_METRICS_ENABLED: 'false'
+  METRICS_HTTP_AUTH_USER: monitoring
+---
+# Source: defectdojo/charts/rabbitmq/templates/role.yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: defectdojo-rabbitmq-endpoint-reader
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-11.2.2
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create"]
+---
+# Source: defectdojo/charts/rabbitmq/templates/rolebinding.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: defectdojo-rabbitmq-endpoint-reader
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-11.2.2
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+subjects:
+  - kind: ServiceAccount
+    name: defectdojo-rabbitmq
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: defectdojo-rabbitmq-endpoint-reader
+---
+# Source: defectdojo/charts/postgresql/templates/primary/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: defectdojo-postgresql-hl
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-11.6.26
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: primary
+    # Use this annotation in addition to the actual publishNotReadyAddresses
+    # field below because the annotation will stop being respected soon but the
+    # field is broken in some versions of Kubernetes:
+    # https://github.com/kubernetes/kubernetes/issues/58662
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  # We want all pods in the StatefulSet to have their addresses published for
+  # the sake of the other Postgresql pods even before they're ready, since they
+  # have to be able to talk to each other in order to become ready.
+  publishNotReadyAddresses: true
+  ports:
+    - name: tcp-postgresql
+      port: 5432
+      targetPort: tcp-postgresql
+  selector:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/component: primary
+---
+# Source: defectdojo/charts/postgresql/templates/primary/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: defectdojo-postgresql
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-11.6.26
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: primary
+  annotations:
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - name: tcp-postgresql
+      port: 5432
+      targetPort: tcp-postgresql
+      nodePort: null
+  selector:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/component: primary
+---
+# Source: defectdojo/charts/rabbitmq/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: defectdojo-rabbitmq-headless
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-11.2.2
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+spec:
+  clusterIP: None
+  ports:
+    - name: epmd
+      port: 4369
+      targetPort: epmd
+    - name: amqp
+      port: 5672
+      targetPort: amqp
+    - name: dist
+      port: 25672
+      targetPort: dist
+    - name: http-stats
+      port: 15672
+      targetPort: stats
+  selector: 
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/instance: defectdojo
+  publishNotReadyAddresses: true
+---
+# Source: defectdojo/charts/rabbitmq/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: defectdojo-rabbitmq
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-11.2.2
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - name: amqp
+      port: 5672
+      targetPort: amqp
+      nodePort: null
+    - name: epmd
+      port: 4369
+      targetPort: epmd
+      nodePort: null
+    - name: dist
+      port: 25672
+      targetPort: dist
+      nodePort: null
+    - name: http-stats
+      port: 15672
+      targetPort: stats
+      nodePort: null
+  selector: 
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/instance: defectdojo
+---
+# Source: defectdojo/templates/django-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: defectdojo-django
+  labels:
+    defectdojo.org/component: django
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+spec:
+  selector:
+    defectdojo.org/component: django
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: http
+---
+# Source: defectdojo/templates/celery-beat-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: defectdojo-celery-beat
+  labels:
+    defectdojo.org/component: celery
+    defectdojo.org/subcomponent: beat
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      defectdojo.org/component: celery
+      app.kubernetes.io/name: defectdojo
+      app.kubernetes.io/instance: defectdojo
+  template:
+    metadata:
+      labels:
+        defectdojo.org/component: celery
+        app.kubernetes.io/name: defectdojo
+        app.kubernetes.io/instance: defectdojo
+      annotations:
+    spec:
+      serviceAccountName: defectdojo
+      volumes:
+      - name: run
+        emptyDir: {}
+      containers:
+      - command:
+        - /entrypoint-celery-beat.sh
+        name: celery
+        image: "defectdojo/defectdojo-django:2.22.4"
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 1001
+        volumeMounts:
+        - name: run
+          mountPath: /run/defectdojo
+        envFrom:
+        - configMapRef:
+            name: defectdojo
+        - secretRef:
+            name: defectdojo-extrasecrets
+            optional: true
+        env:
+        - name: DD_CELERY_BROKER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo-rabbitmq-specific
+              key: rabbitmq-password
+        - name: DD_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+                name: defectdojo-postgresql-specific
+                key: postgresql-password
+        - name: DD_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo
+              key: DD_SECRET_KEY
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      nodeSelector:
+        kubernetes.io/arch: amd64
+---
+# Source: defectdojo/templates/celery-worker-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: defectdojo-celery-worker
+  labels:
+    defectdojo.org/component: celery
+    defectdojo.org/subcomponent: worker
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      defectdojo.org/component: celery
+      app.kubernetes.io/name: defectdojo
+      app.kubernetes.io/instance: defectdojo
+  template:
+    metadata:
+      labels:
+        defectdojo.org/component: celery
+        app.kubernetes.io/name: defectdojo
+        app.kubernetes.io/instance: defectdojo
+      annotations:
+    spec:
+      serviceAccountName: defectdojo
+      volumes:
+      containers:
+      - name: celery
+        image: "defectdojo/defectdojo-django:2.22.4"
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 1001
+        command: ['/entrypoint-celery-worker.sh']
+        volumeMounts:
+        envFrom:
+        - configMapRef:
+            name: defectdojo
+        - secretRef:
+            name: defectdojo-extrasecrets
+            optional: true
+        env:
+        - name: DD_CELERY_BROKER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo-rabbitmq-specific
+              key: rabbitmq-password
+        - name: DD_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+                name: defectdojo-postgresql-specific
+                key: postgresql-password
+        - name: DD_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo
+              key: DD_SECRET_KEY
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      nodeSelector:
+        kubernetes.io/arch: amd64
+---
+# Source: defectdojo/templates/django-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: defectdojo-django
+  labels:
+    defectdojo.org/component: django
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      defectdojo.org/component: django
+      app.kubernetes.io/name: defectdojo
+      app.kubernetes.io/instance: defectdojo
+  template:
+    metadata:
+      labels:
+        defectdojo.org/component: django
+        app.kubernetes.io/name: defectdojo
+        app.kubernetes.io/instance: defectdojo        
+      annotations:
+    spec:
+      serviceAccountName: defectdojo
+      securityContext:
+        fsGroup: 1001
+      volumes:
+      - name: run
+        emptyDir: {}
+      - name: media
+        emptyDir: {}
+      containers:
+      - name: uwsgi
+        image: 'harbor-dev.alldcs.nl/allard/defectdojo:1.0'
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 1001
+        volumeMounts:
+        - name: run
+          mountPath: /run/defectdojo
+        - name: media
+          mountPath: "/app/media"
+        ports:
+        - name: http-uwsgi
+          protocol: TCP
+          containerPort: 8081
+        envFrom:
+        - configMapRef:
+            name: defectdojo
+        - secretRef:
+            name: defectdojo-extrasecrets
+            optional: true
+        env:
+        - name: DD_CELERY_BROKER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo-rabbitmq-specific
+              key: rabbitmq-password
+        - name: DD_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+                name: defectdojo-postgresql-specific
+                key: postgresql-password
+        - name: DD_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo
+              key: DD_SECRET_KEY
+        - name: DD_CREDENTIAL_AES_256_KEY
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo
+              key: DD_CREDENTIAL_AES_256_KEY
+        - name: DD_SESSION_COOKIE_SECURE
+          value: "False"
+        - name: DD_CSRF_COOKIE_SECURE
+          value: "False"
+        livenessProbe:
+          httpGet:
+            path: /login?force_login_form&next=/
+            port: http-uwsgi
+            httpHeaders:
+            - name: Host
+              value: defectdojo.alldcs.nl
+          failureThreshold: 6
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+      - name: nginx
+        image: 'defectdojo/defectdojo-nginx:2.22.4'
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 1001
+        volumeMounts:
+        - name: run
+          mountPath: /run/defectdojo
+        - name: media
+          mountPath: /usr/share/nginx/html/media
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: defectdojo
+        env:
+        - name: METRICS_HTTP_AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo
+              key: METRICS_HTTP_AUTH_PASSWORD
+        - name: USE_TLS
+          value: 'false'
+        - name: GENERATE_TLS_CERTIFICATE
+          value: 'false'
+        livenessProbe:
+          httpGet:
+            path: /nginx_health
+            port: http
+            httpHeaders:
+            - name: Host
+              value: defectdojo.alldcs.nl
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 6
+        readinessProbe:
+          httpGet:
+            path: /uwsgi_health
+            port: http
+            httpHeaders:
+            - name: Host
+              value: defectdojo.alldcs.nl
+          failureThreshold: 6
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      nodeSelector:
+        kubernetes.io/arch: amd64
+---
+# Source: defectdojo/charts/postgresql/templates/primary/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: defectdojo-postgresql
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-11.6.26
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: primary
+  annotations:
+spec:
+  replicas: 1
+  serviceName: defectdojo-postgresql-hl
+  updateStrategy:
+    rollingUpdate: {}
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/instance: defectdojo
+      app.kubernetes.io/component: primary
+  template:
+    metadata:
+      name: defectdojo-postgresql
+      labels:
+        app.kubernetes.io/name: postgresql
+        helm.sh/chart: postgresql-11.6.26
+        app.kubernetes.io/instance: defectdojo
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/component: primary
+      annotations:
+    spec:
+      serviceAccountName: default
+      
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: postgresql
+                    app.kubernetes.io/instance: defectdojo
+                    app.kubernetes.io/component: primary
+                namespaces:
+                  - "defectdojo"
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 1001
+      hostNetwork: false
+      hostIPC: false
+      initContainers:
+      containers:
+        - name: postgresql
+          image: docker.io/bitnami/postgresql:11.16.0-debian-11-r9
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            # Authentication
+            - name: POSTGRES_USER
+              value: "defectdojo"
+            - name: POSTGRES_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: defectdojo-postgresql-specific
+                  key: postgresql-postgres-password
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: defectdojo-postgresql-specific
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "defectdojo"
+            # Replication
+            # Initdb
+            # Standby
+            # LDAP
+            - name: POSTGRESQL_ENABLE_LDAP
+              value: "no"
+            # TLS
+            - name: POSTGRESQL_ENABLE_TLS
+              value: "no"
+            # Audit
+            - name: POSTGRESQL_LOG_HOSTNAME
+              value: "false"
+            - name: POSTGRESQL_LOG_CONNECTIONS
+              value: "false"
+            - name: POSTGRESQL_LOG_DISCONNECTIONS
+              value: "false"
+            - name: POSTGRESQL_PGAUDIT_LOG_CATALOG
+              value: "off"
+            # Others
+            - name: POSTGRESQL_CLIENT_MIN_MESSAGES
+              value: "error"
+            - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
+              value: "pgaudit"
+          ports:
+            - name: tcp-postgresql
+              containerPort: 5432
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "defectdojo" -d "dbname=defectdojo" -h 127.0.0.1 -p 5432
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                
+                - |
+                  exec pg_isready -U "defectdojo" -d "dbname=defectdojo" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+          resources:
+            limits: {}
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm
+            - name: data
+              mountPath: /bitnami/postgresql
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "8Gi"
+---
+# Source: defectdojo/charts/rabbitmq/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: defectdojo-rabbitmq
+  namespace: "defectdojo"
+  labels:
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-11.2.2
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+spec:
+  serviceName: defectdojo-rabbitmq-headless
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rabbitmq
+      app.kubernetes.io/instance: defectdojo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rabbitmq
+        helm.sh/chart: rabbitmq-11.2.2
+        app.kubernetes.io/instance: defectdojo
+        app.kubernetes.io/managed-by: Helm
+      annotations:
+        checksum/config: 208929eee544dead36ca3c947884b65e8ffb3c4e72fbf6721922c651640ffe3c
+    spec:
+      
+      serviceAccountName: defectdojo-rabbitmq
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: rabbitmq
+                    app.kubernetes.io/instance: defectdojo
+                namespaces:
+                  - "defectdojo"
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 1001
+      terminationGracePeriodSeconds: 120
+      initContainers:
+      containers:
+        - name: rabbitmq
+          image: docker.io/bitnami/rabbitmq:3.11.5-debian-11-r2
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/bash
+                  - -ec
+                  - |
+                    if [[ -f /opt/bitnami/scripts/rabbitmq/nodeshutdown.sh ]]; then
+                        /opt/bitnami/scripts/rabbitmq/nodeshutdown.sh -t "120" -d "false"
+                    else
+                        rabbitmqctl stop_app
+                    fi
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: K8S_SERVICE_NAME
+              value: defectdojo-rabbitmq-headless
+            - name: K8S_ADDRESS_TYPE
+              value: hostname
+            - name: RABBITMQ_FORCE_BOOT
+              value: "no"
+            - name: RABBITMQ_NODE_NAME
+              value: "rabbit@$(MY_POD_NAME).$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local"
+            - name: K8S_HOSTNAME_SUFFIX
+              value: ".$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local"
+            - name: RABBITMQ_MNESIA_DIR
+              value: "/bitnami/rabbitmq/mnesia/$(RABBITMQ_NODE_NAME)"
+            - name: RABBITMQ_LDAP_ENABLE
+              value: "no"
+            - name: RABBITMQ_LOGS
+              value: "-"
+            - name: RABBITMQ_ULIMIT_NOFILES
+              value: "65536"
+            - name: RABBITMQ_USE_LONGNAME
+              value: "true"
+            - name: RABBITMQ_ERL_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: defectdojo-rabbitmq-specific
+                  key: rabbitmq-erlang-cookie
+            - name: RABBITMQ_LOAD_DEFINITIONS
+              value: "no"
+            - name: RABBITMQ_DEFINITIONS_FILE
+              value: "/app/load_definition.json"
+            - name: RABBITMQ_SECURE_PASSWORD
+              value: "yes"
+            - name: RABBITMQ_USERNAME
+              value: "user"
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: defectdojo-rabbitmq-specific
+                  key: rabbitmq-password
+            - name: RABBITMQ_PLUGINS
+              value: "rabbitmq_management, rabbitmq_peer_discovery_k8s, rabbitmq_auth_backend_ldap"
+          envFrom:
+          ports:
+            - name: amqp
+              containerPort: 5672
+            - name: dist
+              containerPort: 25672
+            - name: stats
+              containerPort: 15672
+            - name: epmd
+              containerPort: 4369
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 20
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - rabbitmq-diagnostics -q ping
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 20
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - name: configuration
+              mountPath: /bitnami/rabbitmq/conf
+            - name: data
+              mountPath: /bitnami/rabbitmq/mnesia
+      volumes:
+        - name: configuration
+          secret:
+            secretName: defectdojo-rabbitmq-config
+            items:
+              - key: rabbitmq.conf
+                path: rabbitmq.conf
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app.kubernetes.io/name: rabbitmq
+          app.kubernetes.io/instance: defectdojo
+      spec:
+        accessModes:
+            - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "8Gi"
+---
+# Source: defectdojo/templates/django-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: defectdojo
+  labels:
+    defectdojo.org/component: django
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+spec:
+  rules:
+  - host: defectdojo.alldcs.nl
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: defectdojo-django
+            servicePort: http
+---
+# Source: defectdojo/templates/sa.yaml
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: defectdojo
+  labels:
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+  annotations:
+    helm.sh/resource-policy: keep
+    helm.sh/hook: "pre-install"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+---
+# Source: defectdojo/templates/tests/unit-tests.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: defectdojo-unit-tests
+  labels:
+    app.kubernetes.io/name: defectdojo
+    helm.sh/chart: defectdojo-1.6.112
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    helm.sh/hook: test-success
+spec:
+  serviceAccountName: defectdojo
+  containers:
+    - name: unit-tests
+      image: 'defectdojo/defectdojo-django:2.22.4'
+      imagePullPolicy: Always
+      securityContext:
+        runAsUser: 1001
+      command: ['/entrypoint-unit-tests.sh']
+      envFrom:
+        - configMapRef:
+            name: defectdojo
+      env:
+        - name: DD_DATABASE_USER
+          value: defectdojo
+        - name: DD_CELERY_BROKER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              # Use broker chart secret
+              # name: defectdojo-rabbitmq
+              # Use secret handled outside of the chart
+              name: defectdojo-rabbitmq-specific
+              key: rabbitmq-password
+        - name: DD_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo-postgresql-specific
+              key: postgresql-password
+        - name: DD_DEBUG
+          value: 'True'
+        - name: DD_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo
+              key: DD_SECRET_KEY
+        - name: DD_CREDENTIAL_AES_256_KEY
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo
+              key: DD_CREDENTIAL_AES_256_KEY
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+  restartPolicy: Never
+---
+# Source: defectdojo/templates/initializer-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: defectdojo-initializer-2024-05-16-11-17
+  labels:
+    defectdojo.org/component: initializer
+    app.kubernetes.io/name: defectdojo
+    app.kubernetes.io/instance: defectdojo
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: defectdojo-1.6.112
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    metadata:
+      labels:
+        defectdojo.org/component: initializer
+        app.kubernetes.io/name: defectdojo
+        app.kubernetes.io/instance: defectdojo
+      annotations:
+    spec:
+      serviceAccountName: defectdojo
+      volumes:
+      containers:
+      - name: initializer
+        image: "defectdojo/defectdojo-django:2.22.4"
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 1001
+        volumeMounts:
+        command:
+          - /entrypoint-initializer.sh
+        envFrom:
+        - configMapRef:
+            name: defectdojo
+        - secretRef:
+            name: defectdojo
+        env:
+        - name: DD_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: defectdojo-postgresql-specific
+              key: postgresql-password
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+      restartPolicy: Never
+      nodeSelector:
+        kubernetes.io/arch: amd64
+  backoffLimit: 1

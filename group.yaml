@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: allarddcs
+  namespace: default
+  description: AllardDCS development team
+spec:
+  type: team
+  profile:
+    displayName: AllardDCS
+  children: []

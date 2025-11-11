@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cratedb-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`cratedb.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: crate-ui
+      port: 4200
+  tls:
+    certResolver: letsencrypt

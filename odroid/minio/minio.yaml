@@ -1,0 +1,140 @@
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  # This name uniquely identifies the Deployment
+  name: minio
+  namespace: postgres # Change this value to match the namespace metadata.name
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        # Label is used as selector in the service.
+        app: minio
+    spec:
+      # Refer to the PVC created earlier
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          # Name of the PVC created earlier
+          claimName: minio-pvc
+      containers:
+      - name: minio
+        # Pulls the default Minio image from Docker Hub
+        image: minio/minio:latest
+        command:
+        - /bin/bash
+        - -c
+        args:
+        - minio server /storage --console-address :9090
+        env:
+        # Minio access key and secret key
+        - name: MINIO_ROOT_USER
+          value: "admin"
+        - name: MINIO_ROOT_PASSWORD
+          value: "Minio01@"
+        ports:
+        - containerPort: 9000
+          hostPort: 9000
+        - containerPort: 9090
+          hostPort: 9090
+        # Mount the volume into the pod
+        volumeMounts:
+        - name: storage # must match the volume name, above
+          mountPath: "/storage"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+  namespace: postgres
+spec:
+  type: ClusterIP
+  ports:
+    - name: minio-console
+      port: 9090
+  selector:
+    app: minio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-api
+  namespace: postgres
+spec:
+  type: ClusterIP
+  ports:
+    - name: minio-api
+      port: 9000
+  selector:
+    app: minio
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-allarddcs-tls
+  namespace: postgres
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`minio-odroid.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: minio
+      port: 9090
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-api-allarddcs-tls
+  namespace: postgres
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`minio-odroid-api.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: minio-api
+      port: 9000
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: minio-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/minio
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: postgres
+spec:
+  storageClassName: ""
+  volumeName: minio-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 5Gi

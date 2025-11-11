@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: build-and-deploy-pipelinerun-commit-hash
+spec:
+  pipelineRef:
+    name: build-and-deploy-pipeline
+  params:
+    - name: git-repository-url
+      value: "https://gitea.example.com/yourorg/yourrepo.git"
+    - name: git-revision
+      value: "main"  # Specify the branch/tag you want to build from
+  resources:
+    - name: clone-repo
+      resourceRef:
+        name: git-repo-resource  # This should be a Tekton Git resource if using Tekton resources

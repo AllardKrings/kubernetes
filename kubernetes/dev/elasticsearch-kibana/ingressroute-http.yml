@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: quickstart-http-dialdcs
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host("elastic.dialdcs.com")
+    kind: Rule
+    middlewares:
+    - name: redirect-to-https
+    services:
+      - name: quickstart-kb-http
+        port: 5601
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: quickstart-http-alldcs
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host("elastic.alldcs.nl")
+    kind: Rule
+    middlewares:
+    - name: redirect-to-https
+    services:
+      - name: quickstart-kb-http
+        port: 5601

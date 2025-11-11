@@ -1,0 +1,64 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: argocd-sync-or-deploy
+  namespace: default
+spec:
+  params:
+    - name: appName
+      type: string
+      description: The name of the ArgoCD application
+    - name: appRepoURL
+      type: string
+      description: The Git repository URL for the ArgoCD application
+    - name: appRepoRevision
+      type: string
+      description: The Git repository revision (e.g., branch, tag)
+    - name: appPath
+      type: string
+      description: The path to the ArgoCD application manifests in the Git repository
+    - name: argocdServer
+      type: string
+      description: The ArgoCD server URL
+    - name: argocdUsername
+      type: string
+      description: The ArgoCD username for authentication
+    - name: argocdPassword
+      type: string
+      description: The ArgoCD password for authentication
+  stepTemplate:
+    computeResources: {}
+    envFrom:
+    - configMapRef:
+        name: argocd-env-configmap
+    - secretRef:
+        name: argocd-env-secret
+  steps:
+    - name: sync-argocd-app
+      image: quay.io/argoproj/argocd-cli:v2.8.3
+      script: |
+        #!/bin/bash
+        echo "ARGOCD_SERVER   = " $ARGOCD_SERVER
+        echo "ARGOCD_USERNAME = " $ARGOCD_USERNAME
+        echo "ARGOCD_PASSWORD = " $ARGOCD_PASSWORD
+        # Login to ArgoCD
+        argocd login $(params.argocdServer) --username $(params.argocdUsername) --password $(params.argocdPassword) --insecure
+        # Check if the application already exists
+        if argocd app list | grep -q $(params.appName); then
+          echo "Application $(params.appName) exists. Updating the application..."
+          # Sync the existing application to update
+          argocd app sync $(params.appName) --revision $(params.appRepoRevision) --insecure
+        else
+          echo "Application $(params.appName) does not exist. Creating a new application..."
+          # Create a new application if it doesn't exist
+          argocd app create $(params.appName) \
+            --repo $(params.appRepoURL) \
+            --revision $(params.appRepoRevision) \
+            --path $(params.appPath) \
+            --dest-server https://kubernetes.default.svc \
+            --dest-namespace default \
+            --insecure
+        fi
+  workspaces:
+    - name: source-dir
+      optional: true

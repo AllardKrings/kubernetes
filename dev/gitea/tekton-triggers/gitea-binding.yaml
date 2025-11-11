@@ -1,0 +1,13 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: gitea-binding
+spec:
+  params:
+  - name: repo-url
+    value: $(body.repository.clone_url)
+  - name: git-revision
+#    value: $(body.repository.description)
+    value: $(extensions.image-tag)
+  - name: image-reference
+    value: harbor-dev.allarddcs.nl/$(body.repository.full_name):$(extensions.image-tag)

@@ -1,0 +1,50 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres13
+  namespace: postgres
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:13.14-3
+  instances: 3
+  superuserSecret:
+    name: superuser-secret
+  bootstrap:
+    initdb:
+      postInitSQL:
+      - CREATE USER admin WITH PASSWORD 'Postgres01@'
+      - ALTER USER admin WITH SUPERUSER
+      - CREATE USER harbor WITH PASSWORD 'harbor'
+      - CREATE DATABASE harbor OWNER harbor
+  storage:
+    size: 5Gi
+
+  monitoring:
+    enablePodMonitor: true
+
+  backup:
+    barmanObjectStore:
+      destinationPath: 's3://backups/'
+      endpointURL: 'http://minio.postgres:9000'
+      s3Credentials:
+        accessKeyId:
+          name: minio-creds
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: minio-creds
+          key: MINIO_SECRET_KEY
+    retentionPolicy: "1d"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres13-lb
+  namespace: postgres
+spec:
+  selector:
+    cnpg.io/cluster: postgres13
+    role: primary
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: LoadBalancer
+

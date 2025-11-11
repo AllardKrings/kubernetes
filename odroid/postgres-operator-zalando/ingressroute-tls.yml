@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: postgres-operator-tls-alldcs
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`pgzalando.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: postgres-operator-ui
+      port: 8081
+  tls:
+    certResolver: letsencrypt

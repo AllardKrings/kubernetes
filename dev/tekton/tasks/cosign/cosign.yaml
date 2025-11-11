@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cosign-debug
+spec:
+  containers:
+    - name: cosign
+      image: bitnami/cosign
+      command: ["sleep", "3600"]
+      volumeMounts:
+        - name: cosign-key
+          mountPath: /cosign
+  volumes:
+    - name: cosign-key
+      secret:
+        secretName: cosign-key-secret
+        items:
+          - key: cosign.key
+            path: key

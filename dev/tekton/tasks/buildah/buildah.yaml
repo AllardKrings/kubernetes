@@ -1,0 +1,106 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"tekton.dev/v1beta1","kind":"Task","metadata":{"annotations":{"tekton.dev/categories":"Image Build","tekton.dev/pipelines.minVersion":"0.17.0","tekton.dev/platforms":"linux/amd64,linux/s390x,linux/ppc64le,linux/arm64","tekton.dev/tags":"image-build"},"labels":{"app.kubernetes.io/version":"0.5"},"name":"buildah","namespace":"default"},"spec":{"description":"Buildah task builds source into a container image and then pushes it to a container registry.\nBuildah Task builds source into a container image using Project Atomic's Buildah build tool.It uses Buildah's support for building from Dockerfiles, using its buildah bud command.This command executes the directives in the Dockerfile to assemble a container image, then pushes that image to a container registry.","params":[{"description":"Reference of the image buildah will produce.","name":"IMAGE"},{"default":"quay.io/buildah/stable:v1.23.3","description":"The location of the buildah builder image.","name":"BUILDER_IMAGE"},{"default":"overlay","description":"Set buildah storage driver","name":"STORAGE_DRIVER"},{"default":"./Dockerfile","description":"Path to the Dockerfile to build.","name":"DOCKERFILE"},{"default":".","description":"Path to the directory to use as context.","name":"CONTEXT"},{"default":"true","description":"Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)","name":"TLSVERIFY"},{"default":"oci","description":"The format of the built container, oci or docker","name":"FORMAT"},{"default":"","description":"Extra parameters passed for the build command when building images.","name":"BUILD_EXTRA_ARGS"},{"default":"","description":"Extra parameters passed for the push command when pushing images.","name":"PUSH_EXTRA_ARGS","type":"string"},{"default":"false","description":"Skip pushing the built image","name":"SKIP_PUSH"}],"results":[{"description":"Digest of the image just built.","name":"IMAGE_DIGEST"},{"description":"Image repository where the built image would be pushed to","name":"IMAGE_URL"}],"steps":[{"image":"$(params.BUILDER_IMAGE)","name":"build","script":"[[ \"$(workspaces.sslcertdir.bound)\" == \"true\" ]] \u0026\u0026 CERT_DIR_FLAG=\"--cert-dir $(workspaces.sslcertdir.path)\"\n[[ \"$(workspaces.dockerconfig.bound)\" == \"true\" ]] \u0026\u0026 export DOCKER_CONFIG=\"$(workspaces.dockerconfig.path)\"\nbuildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER) bud \\\n  $(params.BUILD_EXTRA_ARGS) --format=$(params.FORMAT) \\\n  --tls-verify=$(params.TLSVERIFY) --no-cache \\\n  -f $(params.DOCKERFILE) -t $(params.IMAGE) $(params.CONTEXT)\n[[ \"$(params.SKIP_PUSH)\" == \"true\" ]] \u0026\u0026 echo \"Push skipped\" \u0026\u0026 exit 0\nbuildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER) push \\\n  $(params.PUSH_EXTRA_ARGS) --tls-verify=$(params.TLSVERIFY) \\\n  --digestfile /tmp/image-digest $(params.IMAGE) \\\n  docker://$(params.IMAGE)\ncat /tmp/image-digest | tee $(results.IMAGE_DIGEST.path)\necho -n \"$(params.IMAGE)\" | tee $(results.IMAGE_URL.path)\n","securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/var/lib/containers","name":"varlibcontainers"}],"workingDir":"$(workspaces.source.path)"}],"volumes":[{"emptyDir":{},"name":"varlibcontainers"}],"workspaces":[{"name":"source"},{"name":"sslcertdir","optional":true},{"description":"An optional workspace that allows providing a .docker/config.json file for Buildah to access the container registry. The file should be placed at the root of the Workspace with name config.json.","name":"dockerconfig","optional":true}]}}
+    tekton.dev/categories: Image Build
+    tekton.dev/pipelines.minVersion: 0.17.0
+    tekton.dev/platforms: linux/amd64,linux/s390x,linux/ppc64le,linux/arm64
+    tekton.dev/tags: image-build
+  creationTimestamp: "2024-02-28T10:37:30Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/version: "0.5"
+  name: buildah
+  namespace: default
+  resourceVersion: "670600"
+  uid: be7a4925-c0ff-4397-8056-2842f9844108
+spec:
+  description: |-
+    Buildah task builds source into a container image and then pushes it to a container registry.
+    Buildah Task builds source into a container image using Project Atomic's Buildah build tool.It uses Buildah's support for building from Dockerfiles, using its buildah bud command.This command executes the directives in the Dockerfile to assemble a container image, then pushes that image to a container registry.
+  params:
+  - description: Reference of the image buildah will produce.
+    name: IMAGE
+    type: string
+  - default: quay.io/buildah/stable:v1.23.3
+    description: The location of the buildah builder image.
+    name: BUILDER_IMAGE
+    type: string
+  - default: overlay
+    description: Set buildah storage driver
+    name: STORAGE_DRIVER
+    type: string
+  - default: ./Dockerfile
+    description: Path to the Dockerfile to build.
+    name: DOCKERFILE
+    type: string
+  - default: .
+    description: Path to the directory to use as context.
+    name: CONTEXT
+    type: string
+  - default: "true"
+    description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS
+      registry)
+    name: TLSVERIFY
+    type: string
+  - default: oci
+    description: The format of the built container, oci or docker
+    name: FORMAT
+    type: string
+  - default: ""
+    description: Extra parameters passed for the build command when building images.
+    name: BUILD_EXTRA_ARGS
+    type: string
+  - default: ""
+    description: Extra parameters passed for the push command when pushing images.
+    name: PUSH_EXTRA_ARGS
+    type: string
+  - default: "false"
+    description: Skip pushing the built image
+    name: SKIP_PUSH
+    type: string
+  results:
+  - description: Digest of the image just built.
+    name: IMAGE_DIGEST
+    type: string
+  - description: Image repository where the built image would be pushed to
+    name: IMAGE_URL
+    type: string
+  steps:
+  - computeResources: {}
+    image: $(params.BUILDER_IMAGE)
+    name: build
+    script: |
+      [[ "$(workspaces.sslcertdir.bound)" == "true" ]] && CERT_DIR_FLAG="--cert-dir $(workspaces.sslcertdir.path)"
+      [[ "$(workspaces.dockerconfig.bound)" == "true" ]] && export DOCKER_CONFIG="$(workspaces.dockerconfig.path)"
+      buildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER) bud \
+        $(params.BUILD_EXTRA_ARGS) --format=$(params.FORMAT) \
+        --tls-verify=$(params.TLSVERIFY) --no-cache \
+        -f $(params.DOCKERFILE) -t $(params.IMAGE) $(params.CONTEXT)
+      [[ "$(params.SKIP_PUSH)" == "true" ]] && echo "Push skipped" && exit 0
+      buildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER) push \
+        $(params.PUSH_EXTRA_ARGS) --tls-verify=$(params.TLSVERIFY) \
+        --digestfile /tmp/image-digest $(params.IMAGE) \
+        docker://$(params.IMAGE)
+      cat /tmp/image-digest | tee $(results.IMAGE_DIGEST.path)
+      echo -n "$(params.IMAGE)" | tee $(results.IMAGE_URL.path)
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    workingDir: $(workspaces.source.path)
+  volumes:
+  - emptyDir: {}
+    name: varlibcontainers
+  workspaces:
+  - name: source
+  - name: sslcertdir
+    optional: true
+  - description: An optional workspace that allows providing a .docker/config.json
+      file for Buildah to access the container registry. The file should be placed
+      at the root of the Workspace with name config.json.
+    name: dockerconfig
+    optional: true

@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      containers:
+        - name: backstage
+          image: allardkrings/backstage:1.1
+#          image: ghcr.io/backstage/backstage
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "7007"
+            - name: POSTGRES_USER
+              value: backstage
+            - name: POSTGRES_PASSWORD
+              value: backstage
+            - name: POSTGRES_DB
+              value: backstage
+            - name: POSTGRES_SERVICE_HOST
+              value: postgres13.postgres.svc.cluster.local
+            - name: POSTGRES_SERVICE_PORT
+              value: "5432"
+            - name: APP_CONFIG_auth_environment
+              value: development
+            - name: NODE_ENV
+              value: development
+            - name: GITEA_TOKEN
+              value: "7c289d89b02489984fc9850411bb26f6ee4e9d37"
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-token
+                  key: GITHUB_TOKEN
+          volumeMounts:
+            - mountPath: /app/app-config.production.yaml
+              subPath: app-config.yaml
+              name: app-configmap
+      volumes:
+        - name: app-configmap
+          configMap:
+            name: backstage-app-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  type: ClusterIP
+  selector:
+    app: backstage
+  ports:
+    - name: http
+      port: 7007
+      targetPort: 7007
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: backstage-tls
+  namespace: backstage
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`backstage-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: backstage
+      port: 7007
+  tls:
+#    certResolver: letsencrypt
+    secretName: backstage-dev.allarddcs.nl-tls

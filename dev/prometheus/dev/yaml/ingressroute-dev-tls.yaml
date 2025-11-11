@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-dev-tls
+  namespace: observability
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`prometheus.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: kube-prom-stack-kube-prome-prometheus
+      port: 9090
+  tls:
+    certResolver: letsencrypt

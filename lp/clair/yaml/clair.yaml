@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clair
+  namespace: quay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clair
+  template:
+    metadata:
+      labels:
+        app: clair
+    spec:
+      containers:
+      - image: quay.io/projectquay/clair:4.7.2
+        name: clairv4
+        resources:
+          limits:
+            memory: 500Mi
+            cpu: 1
+          requests:
+            memory: 200Mi
+            cpu: 500m
+        ports:
+        - containerPort: 6060
+          name: endpoint
+          protocol: TCP
+        - containerPort: 8089
+          name: health
+          protocol: TCP
+        env:
+        - name: CLAIR_CONF
+          value: /clair/config.yaml
+        - name: CLAIR_MODE
+          value: combo
+        volumeMounts:
+        - mountPath: /clair/
+          name: clair
+#        livenessProbe:
+#          httpGet:
+#            path: /health
+#            port: 6061
+#        readinessProbe:
+#          httpGet:
+#            path: /health
+#            port: 6061
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      volumes:
+      - name: clair
+        persistentVolumeClaim:
+          claimName: clair-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clair
+  namespace: quay
+spec:
+  ports:
+  - name: endpoint
+    port: 6060
+    nodePort: 30081
+    protocol: TCP
+    targetPort: 6060
+  - name: health
+    port: 8089
+    nodePort: 30088
+    protocol: TCP
+    targetPort: 8089
+  selector:
+    app: clair
+  type: NodePort
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: clair-pvc
+  namespace: quay
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""
+  volumeMode: Filesystem
+  volumeName: clair-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: clair-pv
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 1Gi
+  mountOptions:
+  - hard
+  - nfsvers=4.1
+  nfs:
+    path: /mnt/nfs_share/clair
+    server: 192.168.2.110
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+

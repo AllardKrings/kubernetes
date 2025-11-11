@@ -1,0 +1,42 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: clair-http
+  namespace: quay
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`clair-lp.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: clair
+      port: 8081
+  - match: Host(`clairh-lp.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: health
+      port: 8088
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: clair-tls
+  namespace: quay
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`clair-lp.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: clair
+      port: 8081
+  - match: Host(`clairh-lp.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: health
+      port: 8088
+  tls:
+    certResolver: letsencrypt
+

@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html class="xv-responsive is-desktop" lang="en">
+<head>
+		<title>404 page not found - bedpage.com</title>
+				
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="keywords" content="404 page not found">
+		<meta name="description" content="404 page not found">
+		<meta name="RATING" content="RTA-5042-1996-1400-1577-RTA">
+		<meta name="msvalidate.01" content="18A5DE0EF7C531AE4D95E0378D1CAB09" />
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://bedpage.b-cdn.net/assets/img/bp180.png?569">
+		<link rel="icon" type="image/svg+xml" href="https://bedpage.b-cdn.net/assets/img/bpfav.svg?as">
+		<link rel="icon" type="image/png" sizes="32x32" href="https://bedpage.b-cdn.net/assets/img/bp32.png?569">
+		<link rel="icon" type="image/png" sizes="16x16" href="https://bedpage.b-cdn.net/assets/img/bp16.png?569">
+		<link rel="mask-icon" href="https://bedpage.b-cdn.net/assets/img/bp.black.svg?569" color="#de2600">
+		<link rel="canonical" href="https://nextcloud.yourdomain.com/ocs/v2.php/cloud/capabilities/" />
+				
+		<meta name="Distribution" content="Global">
+		<meta name="Classification" content="adult entertainment">
+		<meta name="robots" content="index,follow">
+		
+		<!-- SEO Meta Tags -->
+		<meta itemprop="name" content="404 page not found - bedpage.com">
+		<meta itemprop="description" content="404 page not found">
+
+		<!-- Twitter Meta Tags -->
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:title" content="404 page not found - bedpage.com">
+		<meta name="twitter:description" content="404 page not found">
+		<meta name="twitter:site" content="@bedpage">
+
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:title" content="404 page not found - bedpage.com">
+		<meta property="og:type" content="website">
+		<meta property="og:description" content="404 page not found">
+		<meta property="og:url" content="https://nextcloud.yourdomain.com/ocs/v2.php/cloud/capabilities/">
+		<meta property="og:site_name" content="bedpage">
+		<meta property="og:image" content="/seologo.jpg" />
+		 
+		<meta name="theme-color" content="#fff">
+		<link rel="stylesheet" href="https://bedpage.b-cdn.net/assets/css/home.css">
+		<link rel="stylesheet" href="https://bedpage.b-cdn.net/assets/css/theme.css?soulo96">
+		
+		<style>
+		.error404{
+			font-family: Arial, sans-serif;
+			text-align: center;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 50vh;
+			color: #333;
+		}
+		.error404 h2 {
+		  font-size: 2.5rem;
+		  margin-bottom: 0.5rem;
+		  color: #333;
+		}
+		.error404 p {
+		  font-size: 1.2rem;
+		  margin: 0.5rem 0;
+		}
+
+		.error404 p a {
+		  color: #e60073;
+		  text-decoration: none;
+		  font-weight: bold;
+		}
+
+		.error404 p a:hover {
+		  text-decoration: underline;
+		}
+
+		.error404 hr {
+		  width: 50px;
+		  height: 1px;
+		  background-color: #ccc;
+		  border: none;
+		  margin: 1rem auto;
+		}
+		.selectmobshow{
+			display:none;
+		}
+		#city-select, #category-select, #area-select, #tag-select, #city-select-pop, #category-select-pop, #area-select-pop{
+			width: 48%;
+			float: left;
+			display: inline-block;
+			padding: 6px 12px;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.42857143;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: middle;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+			border-radius: 4px;
+			color: #333;
+			background-color: #fff;
+			border-color: #ccc;
+			text-align: left;
+			margin-bottom: 10px;
+			margin-right: 5px;
+		}
+		#city-select-pop, #category-select-pop, #area-select-pop, .serbtn{
+			width: 100%;
+		}
+		#home-search div.cont{
+			padding:0px;
+		}
+		#main nav ul{
+			padding: 0;
+			margin-bottom: 5px !important;
+		}
+		
+		#main .page-title {
+			padding-top: 10px;
+			border-bottom: 1px solid #f1eeee;
+		}
+		
+		.suggestions {
+			position: absolute;
+			left: 0px;
+			width: 100%;
+			top: 65px;		}
+		
+		.viewad #main .page-title{
+			font-size: 20px;
+			line-height: 35px;
+			border-bottom: none;
+			margin-bottom: 0;
+		}
+		.topclass{
+			width: 100%;
+			padding: 5px 15px;
+			font-size: 15px;
+			color: #000;
+			font-weight: 600;
+			text-align: right;
+		}
+		.topclass span{
+			cursor: pointer;
+		}
+		.listbox{
+			display:none;
+			width: 100%;
+			font: 14px / 1.4em arial;
+			padding-left: 1px;
+			padding-right: 10px;
+			margin-bottom: 10px;			
+			column-gap: 7px;
+		}
+		.listbox a.first{
+			text-decoration: none;
+		}
+		
+		.topactive{
+			color: #090;
+		}
+		#top{
+			color: #000;
+		}
+		#gallery{
+			color: #090;
+		}
+		
+				
+		#homefirst{
+			font-family: system-ui;
+		}
+		#homefirst h3 a{
+			text-decoration: none;
+			color: #de2600;
+		}
+		#homefirst .suggestions{
+			left: auto;
+			top: 150px;
+		}
+		#homefirst h2 {
+			max-width: 100%;
+			margin-top: 8px;
+			margin-bottom: 8px;
+			padding: 6px;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			background-color: #000000;
+			color: #fff;
+		}
+		#homefirst .inner {
+			-webkit-column-count: 6;
+			-moz-column-count: 6;
+			column-count: 6;
+			padding: 0px 10px;
+		}
+		#homefirst .geoUnit {
+			min-width: 100%;
+			-webkit-column-break-inside: avoid;
+			-moz-column-break-inside: avoid;
+			-o-column-break-inside: avoid;
+			-ms-column-break-inside: avoid;
+			column-break-inside: avoid;
+			page-break-inside: avoid;
+		}
+		#homefirst h3 {
+			margin: 0 0 5px;
+			font-size: 16px;
+			color: #de2600;
+		}
+		#homefirst .geoUnit ul {
+			margin: 0;
+			padding: 0;
+			padding-left: 10px;
+			margin-bottom: 10px;
+			font-size: 15px;	
+			line-height: 30px;
+		}
+		
+		.categories .indexSectionButtons{
+			padding: 2px 15px;
+			background-color: #000;
+			color: #fff;
+			border-radius: 15px;
+			font-size: 15px;
+			font-weight: 600;
+			max-width: 400px;
+			margin-bottom: 10px;
+		}
+		.categories .indexSectionList {
+			font-size: 17px;
+			line-height: 30px;
+			padding-top: 7px;
+			margin: 0 0 0 1em;
+			padding: 0;
+			color: #000;
+		}
+		.categories .main ul{
+			padding:0;
+			font-size: 15px;
+		}
+		.description-body-main{
+			font-size: 16px;
+			line-height: 30px;
+		}
+		.date {
+			width: 100%;
+			margin-bottom: 5px;
+			padding: 3px;
+			padding-left: 6px;
+			color: #000;
+			font: 11pt arial;
+			text-align: left;
+			background-color: #eaeaea;
+			background-color: #eee;
+			background-image: -webkit-gradient(linear, left top, right top, color-stop(.25, #eee), color-stop(.75, #fff));
+			background-image: -moz-linear-gradient(left center, #eee 25%, #fff 75%);
+		}
+		
+		.hidepost{
+			display:none;
+		}
+		
+						.date{
+					display:none;
+				}
+				
+		@media (max-width: 1024px) {
+			#homefirst .inner {
+				-webkit-column-count: 5;
+				-moz-column-count: 5;
+				column-count: 5;
+			}
+		}
+		@media (max-width: 768px) {
+			#homefirst .inner {
+				-webkit-column-count: 4;
+				-moz-column-count: 4;
+				column-count: 4;
+			}
+		}
+		@media only screen and (max-width:450px){
+			.breadcrumb{
+				margin-top: 15px;
+			}
+			.suggestions {
+				top: 80px;			}
+			.listbox{
+				border-bottom: 1px solid #dfdddd;
+				padding-bottom: 10px;
+			}
+			.listbox svg{
+				height: 23px;
+				padding-top: 7px;
+			}
+			.listbox a span{
+				color: #0000ad;
+			}
+			.listbox span{
+				color: #000;
+				margin-left: 2px;
+			}
+			.listbox a.first{
+				text-decoration: none;
+				line-height: 24px;
+				color: #00f;
+			}
+			.listbox span:first{
+				border-left: 0;
+				margin-right: 0;
+			}
+			.listbox .city, .listbox .category{
+				color: #000;
+				text-decoration: none;
+			}
+			.selectmobshow{
+				display: block;
+				padding: 10px;
+				padding-left: 5px;
+				padding-right: 0px;
+				background-color: #f1f1f1;
+				margin-top: 5px;
+				border-radius: 5px;
+				padding-bottom: 0px;
+			}
+			#home-search .search-input, #xv-search-form .search-input{
+				font-size: 15px;
+			}
+			.search-submit{
+				background-color: #555555 !important;
+				border-color: #555555 !important;
+			}
+			#searchInput{
+				border-color: #939393 !important;
+			}
+			.search-submit span{
+				color: #fff;
+			}
+			#main nav ul{
+				padding: 5px;
+				padding-top: 10px;
+			}
+			.head__top.width-full-body{
+				-webkit-box-shadow: 0 0 20px -10px rgba(0, 0, 0, .2);
+				-moz-box-shadow: 0 0 20px -10px rgba(0, 0, 0, .2);
+				box-shadow: 0 0 20px -10px rgba(0, 0, 0, .2);
+			}
+			h1{
+				background-size: 90%;
+			}
+			#main .page-title{
+				font-size: 17px;
+			}
+							.date{
+					display:none;
+				}
+						
+		}
+		
+		@media (max-width: 450px) {
+			#homefirst .inner {
+				-webkit-column-count: 2;
+				-moz-column-count: 2;
+				column-count: 2;
+			}
+			#homefirst .inner {
+				display: none;
+				-webkit-column-count: 2;
+				-moz-column-count: 2;
+				column-count: 2;
+				padding: 8px 4px;
+			}
+			#homefirst .inner.showing {
+				display: block;
+			}
+			#homefirst .suggestions {
+				top: 95px;
+			}
+			#homefirst{
+				margin-top: 10px;
+			}
+			.categories{
+				margin-top: 15px !important;
+			}
+		}
+		
+				
+		</style>	
+	</head>
+	<body class="body--home home">
+				<div class="head__top width-full-body">
+			<header class="head__top__container width-main-container">
+				<a href="#" class="animated-hamburger" id="header-menu-toggle" title="Toggle menu">
+					<span class="an-h-1"></span>
+					<span class="an-h-2"></span>
+					<span class="an-h-3"></span>
+					<span class="an-h-4"></span>
+				</a>
+				<a href="https://www.bedpage.com/" class="head__logo" id="site-logo-link">
+					<h1>404 page not found - bedpage.com</h1>
+				</a>
+				<button class="btn-clear head__choice head__choice--language" id="site-language">Language: <span class="flag-small flag-us" title="English"></span></button>
+				<div class="language-switcher-popup langbox">
+					<div class="x-popup-arrow"></div>
+					<div class="x-popup-content">
+						<ul class="languageSwitch">
+							<li><a href="#" rel="nofollow" data-lang="en" data-key="" data-langkey=""><span class="flag-small flag-us"></span> English</a></li>
+							<li><a href="#" rel="nofollow" data-lang="es" data-key="" data-langkey=""><span class="flag-small flag-es"></span> Español</a></li>
+							<li><a href="#" rel="nofollow" data-lang="zh" data-key="" data-langkey=""><span class="flag-small flag-cn"></span> 中文</a></li>
+						</ul>
+					</div>
+				</div>
+				<div id="header-mobile-right">
+					<a class="head__btn--icf head__btn--id btn-clear" href="https://my.bedpage.com" ><span class="icon-f icf-user-o"></span></a>
+					<div class="head__login-btn-group">
+													<a id="anc-tst-join_for_free-btn" class="head__btn head__btn--connection head__btn--join-free btn-clear" href="https://my.bedpage.com" data-mode="signup-top-page"><span>Login</span></a>
+							<a class="head__btn head__btn--join btn-clear" href="https://my.bedpage.com"><span>Post Ad</span></a>
+											</div>
+				</div>
+			</header>
+		</div>
+
+		<div class="head__menu-line width-full-body">
+			<div class="head__menu-line__container width-main-container">
+				<div id="nav" class="nav-elem forced-opened">
+					<nav aria-label="primary">
+						<ul class="head__menu-line__main-menu">
+														<li class="with-sub-list" id="dev-1519">
+								<span class="head__menu-line__main-menu__lvl1"><span class="icon-f icf-map-marker"></span> Cities</span>
+								<ul class="sub-list" id="list-1519">
+									<li class="dyn topterm topterm-6"><a href="https://albuquerque.bedpage.com">Albuquerque</a></li><li class="dyn topterm topterm-6"><a href="https://austin.bedpage.com">Austin</a></li><li class="dyn topterm topterm-6"><a href="https://baltimore.bedpage.com">Baltimore</a></li><li class="dyn topterm topterm-6"><a href="https://boston.bedpage.com">Boston</a></li><li class="dyn topterm topterm-6"><a href="https://charlotte.bedpage.com">Charlotte</a></li><li class="dyn topterm topterm-6"><a href="https://chicago.bedpage.com">Chicago</a></li><li class="dyn topterm topterm-6"><a href="https://columbus.bedpage.com">Columbus</a></li><li class="dyn topterm topterm-6"><a href="https://dallas.bedpage.com">Dallas</a></li><li class="dyn topterm topterm-6"><a href="https://denver.bedpage.com">Denver</a></li><li class="dyn topterm topterm-6"><a href="https://detroit.bedpage.com">Detroit</a></li><li class="dyn topterm topterm-6"><a href="https://elpaso.bedpage.com">El Paso</a></li><li class="dyn topterm topterm-6"><a href="https://fortworth.bedpage.com">Fort Worth</a></li><li class="dyn topterm topterm-6"><a href="https://fresno.bedpage.com">Fresno</a></li><li class="dyn topterm topterm-6"><a href="https://houston.bedpage.com">Houston</a></li><li class="dyn topterm topterm-6"><a href="https://indianapolis.bedpage.com">Indianapolis</a></li><li class="dyn topterm topterm-6"><a href="https://jacksonville.bedpage.com">Jacksonville</a></li><li class="dyn topterm topterm-6"><a href="https://lasvegas.bedpage.com">Las Vegas</a></li><li class="dyn"><a href="https://losangeles.bedpage.com">Los Angeles</a></li><li class="dyn topterm topterm-6"><a href="https://louisville.bedpage.com">Louisville</a></li><li class="dyn topterm topterm-6"><a href="https://memphis.bedpage.com">Memphis</a></li><li class="dyn topterm topterm-6"><a href="https://milwaukee.bedpage.com">Milwaukee</a></li><li class="dyn topterm topterm-6"><a href="https://nashville.bedpage.com">Nashville</a></li><li class="dyn topterm topterm-6"><a href="https://new-york.bedpage.com">New York</a></li><li class="dyn topterm topterm-6"><a href="https://oklahomacity.bedpage.com">Oklahoma City</a></li><li class="dyn topterm topterm-6"><a href="https://philadelphia.bedpage.com">Philadelphia</a></li><li class="dyn topterm topterm-6"><a href="https://phoenix.bedpage.com">Phoenix</a></li><li class="dyn topterm topterm-6"><a href="https://portland.bedpage.com">Portland</a></li><li class="dyn topterm topterm-6"><a href="https://sanantonio.bedpage.com">San Antonio</a></li><li class="dyn topterm topterm-6"><a href="https://sandiego.bedpage.com">San Diego</a></li><li class="dyn topterm topterm-6"><a href="https://sf.bedpage.com">San Francisco</a></li><li class="dyn topterm topterm-6"><a href="https://sanjose.bedpage.com">San Jose</a></li><li class="dyn topterm topterm-6"><a href="https://seattle.bedpage.com">Seattle</a></li><li class="dyn topterm topterm-6"><a href="https://tucson.bedpage.com">Tucson</a></li><li class="dyn topterm topterm-6"><a href="https://dc.bedpage.com">Washington</a></li>									<li><a href="https://www.bedpage.com/cities"><span class="icon-f icf-tags"></span> All  Cities</a></li>
+								</ul>
+							</li>
+							
+														
+							<li class="with-sub-list" id="dev-1520">
+								<span class="head__menu-line__main-menu__lvl1"><span class="icon-f icf-tags"></span> Services</span>
+								<ul class="sub-list" id="list-1520">
+									<li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/69'>69</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/adult-baby-minding'>Adult Baby Minding</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/a-level-anal'>A Level - Anal</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/bdsm'>BDSM</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/bisexual'>Bisexual</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/blowjob'>Blowjob</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/bukkake'>Bukkake</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/car-meets'>Car Meets</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/cif-cum-in-face'>CIF - Cum in Face</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/cob'>COB</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/couples'>Couples</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/crossdresser'>Crossdresser</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/cim-cum-in-mouth'>CIM - Cum in Mouth</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/deep-throat'>Deep Throat</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/dogging'>Dogging</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/domination'>Domination</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/duo'>DUO</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/erotic-massage'>Erotic massage</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/face-sitting'>Face Sitting</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/fetish'>Fetish</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/fisting'>Fisting</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/french-kiss'>French Kiss</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/gang-bang'>Gang Bang</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/gfe'>GFE</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/hardcore-sex'>Hardcore sex</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/hdj-handjob'>HDJ - Handjob</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/incall'>Incall</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/kissing'>Kissing</a></li><li class='dyn topterm topterm-6'><a href='https://www.bedpage.com/search/massage'>Massage</a></li>									<li><a href="https://www.bedpage.com/tags"><span class="icon-f icf-tags"></span> All Services</a></li>
+																	</ul>								
+							</li>
+							
+														<li><a class="head__menu-line__main-menu__lvl1" href="https://www.bedpage.com/Escorts"><span class="icon-f icf-hearts-o"></span> Escorts</a></li>
+							<li><a class="head__menu-line__main-menu__lvl1" href="https://www.bedpage.com/MaleEscorts"><span class="icon-f icf-users-o"></span> Male Escorts</a></li>
+							<li><a class="head__menu-line__main-menu__lvl1" href="https://www.bedpage.com/TranssexualEscorts"><span class="icon-f icf-sexe-trans-v2 mcui-picto"></span> Transsexual Escorts</a></li>
+							<li><a class="head__menu-line__main-menu__lvl1" href="https://www.bedpage.com/Bodyrubs"><span class="icon-f icf-star-o"></span> Bodyrubs</a></li>
+																					
+							<li class="with-sub-list mob-show"><span class="head__menu-line__main-menu__lvl1" id="dev-66"><span class="flag-small flag-us" title="English"></span> Language</span>
+								<ul class="sub-list languageSwitch2" id="list-66">
+									<li><a href="#" rel="nofollow" data-lang="en" data-key="" data-langkey=""><span class="flag-small flag-us"></span> English</a></li>
+									<li><a href="#" rel="nofollow" data-lang="es" data-key="" data-langkey=""><span class="flag-small flag-es"></span> Español</a></li>
+									<li><a href="#" rel="nofollow" data-lang="zh" data-key="" data-langkey=""><span class="flag-small flag-cn"></span> 中文</a></li>
+								</ul>								
+							</li>
+													</ul>
+					</nav>
+				</div>
+			</div>
+		</div><style>
+		.container {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            color: #333333;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+			max-width:725px;
+             
+        }
+        .image-container {
+            flex: 1;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .text-container {
+            flex: 1;
+            text-align: left;
+        }
+        .text-container h1 {
+		font-size: 35px;
+		font-weight: bold;
+		color: #333333;
+		margin-bottom: 10px;
+		text-align: CENTER;
+	}
+        .text-container h2 {
+            font-size: 29px;
+		font-weight: bold;
+		color: #333333;
+		margin-bottom: 10px;
+		text-align: CENTER;
+        }
+		.text-container h3 {
+            font-size: 25px;
+		font-weight: bold;
+		color: #333333;
+		margin-bottom: 10px;
+		text-align: CENTER;
+        }
+        
+        .text-container a {
+            color: #e6007e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .heart-line {
+            text-align: center;
+            margin: 10px 0;
+            position: relative;
+        }
+        .heart-line:before,
+        .heart-line:after {
+            content: "";
+            display: inline-block;
+            width: 100px;
+            height: 1px;
+            background-color: #666666;
+            vertical-align: middle;
+        }
+        .heart-line:before {
+            margin-right: 10px;
+        }
+        .heart-line:after {
+            margin-left: 10px;
+        }
+        .heart-line span {
+            font-size: 16px;
+            color: #666666;
+            position: relative;
+        }
+		#content{
+			text-align: -webkit-center;
+		}
+		.h4, h4 {
+			font-size: 25px;
+			width:100%;
+			text-align:center;
+		}
+		@media only screen and (max-width:450px){
+			.text-container h2 {
+				font-size: 16px;
+				width: 100%;
+				text-align: center;
+			}
+			.h4, h4 {
+				font-size: 13px;
+				width: 100%;
+				text-align: center;
+			}
+			.heart-line:before, .heart-line:after{
+				width: 10px;
+			}
+		}
+</style>
+<div id="page">
+	<div id="main">
+		<div id="content">
+			<div class="container">
+				<div class="image-container">
+					<img src="https://bedpage.b-cdn.net/assets/img/model.png" alt="Model">
+				</div>
+				<div class="text-container">
+					<h2>Oops...<br>we cannot find her!</h2>
+					<h4>Maybe she got married!</h4>
+					<div class="heart-line">
+						<span>♥</span>
+					</div>
+					<h2>Don't worry,</h2>
+					<h4>we still have the solution <span>for you in <a href="https://www.bedpage.com/Escorts">Escorts.</a></span><span><br/>Or try to look for another one!</span></h4>
+				</div>
+			</div>
+		</div>
+	</div>	<div id="footer">
+		<footer>
+			<div class="terms">
+				<div class="">
+					<a href="https://www.bedpage.com/">Home</a> -
+					<a href="https://www.bedpage.com/terms-of-use.html">Terms</a> -
+					<a href="https://www.bedpage.com/privacy-policy.html">Privacy</a> -
+															<a href="https://us.bedpage.com">Cities</a> -
+					<a href="https://cat.bedpage.com">Categories</a> -
+					<a alt="Alternative to backpage" title="Alternative to backpage" href="https://www.bedpage.com/alternative-to-backpage">Alternative to backpage</a> -
+					<a alt="Website similar to backpage" title="Website similar to backpage" href="https://www.bedpage.com/website-similar-to-backpage">Website similar to backpage</a> -
+					<a alt="Best sites like backpage" title="Best sites like backpage" href="https://www.bedpage.com/best-sites-like-backpage">Best sites like backpage</a> -
+					<a alt="Backpage replacement" title="Backpage replacement" href="https://www.bedpage.com/backpage-replacement">Backpage replacement</a> -					<a href="https://www.bedpage.com/contact-us.html">Contact</a>
+				</div> 
+			</div>
+			<p class="slogan">bedpage.com is an interactive computer service that enables access by multiple users and should not be treated as the publisher or speaker of any information provided by another information content provider. © 2025 bedpage.com</p>
+						<div class="terms">
+				<div class="">
+											<a href="https://fetish.bedpage.com">Fetish</a> -											<a href="https://independent.bedpage.com">Independent</a> -											<a href="https://mature.bedpage.com">Mature</a> -											<a href="https://outcall.bedpage.com">Outcall</a> -											<a href="https://incall.bedpage.com">Incall</a> -											<a href="https://russian.bedpage.com">Russian</a> -											<a href="https://bdsm.bedpage.com">Bdsm</a> -											<a href="https://erotic-massage.bedpage.com">Erotic massage</a> -											<a href="https://teen.bedpage.com">Teen</a> -											<a href="https://open24.bedpage.com">Open24</a> -											<a href="https://cheap.bedpage.com">Cheap</a> -											<a href="https://bbw.bedpage.com">Bbw</a> -											<a href="https://latin.bedpage.com">Latin</a> -											<a href="https://trans.bedpage.com">Trans</a> -											<a href="https://asian.bedpage.com">Asian</a> -											<a href="https://gigolos.bedpage.com">Gigolos</a> -											<a href="https://ebony.bedpage.com">Ebony</a> -											<a href="https://anal.bedpage.com">Anal</a> -											<a href="https://lesbian.bedpage.com">Lesbian</a> -											<a href="https://available.bedpage.com">Available</a> -											<a href="https://pornstar.bedpage.com">Pornstar</a> -											<a href="https://cam-girls.bedpage.com">Cam girls</a> -											<a href="https://onlyfans.bedpage.com">Onlyfans</a> -											<a href="https://full-service.bedpage.com">Full service</a> -											<a href="https://transgender.bedpage.com">Transgender</a> -											<a href="https://shemale.bedpage.com">Shemale</a> -											<a href="https://milf.bedpage.com">Milf</a> -											<a href="https://happy-ending.bedpage.com">Happy ending</a> -											<a href="https://erotic-massage.bedpage.com">Erotic massage</a> -											<a href="https://fk.bedpage.com">Fk</a> -											<a href="https://fbsm.bedpage.com">Fbsm</a> -											<a href="https://gfe.bedpage.com">Gfe</a> -											<a href="https://bbbj.bedpage.com">Bbbj</a> -											<a href="https://dominatrix.bedpage.com">Dominatrix</a> 									</div>
+			</div>		</footer>
+	</div>
+</div>
+	<script src="https://bedpage.b-cdn.net/assets/js/jquery.min.js"></script>
+	<input type="hidden" id="domain" value="bedpage.com">
+	<script>
+		window.onload = function(){
+		  var headers = document.querySelectorAll('.main h2');
+		  for(i = 0; i < headers.length; i++){
+			  var header = headers[i];
+			  header.onclick = function(e){
+				  var header = e.target;
+				  var inner = header.parentElement.querySelector('.inner');
+				  if(inner.className.match("showing")){
+					  inner.className = "inner";
+				  } else {
+					  inner.className = "inner showing";
+				  }
+			  }
+		  }
+		}
+		
+	function hidepost(postID) {
+        let postElement = document.getElementById("pagelist_" + postID);
+        if (postElement) {
+            postElement.style.display = "none";
+        }
+    }
+		
+	document.addEventListener("DOMContentLoaded", function () {
+		// Function to toggle views
+		function toggleView(viewType) {
+			let isListView = viewType === "listview";
+			let displayType = window.innerWidth > 450 ? "flex" : "block";
+
+			document.querySelectorAll(".listbox").forEach(el => el.style.display = isListView ? displayType : "none");
+			document.querySelectorAll(".galleryview").forEach(el => el.style.display = isListView ? "none" : "block");
+			document.querySelectorAll(".date").forEach(el => el.style.display = isListView ? "block" : "none");
+
+			// Set cookie
+			let domainElement = document.getElementById("domain");
+			let myDomain = domainElement ? domainElement.value || '.' + bedpage.com : '.' + bedpage.com;
+			setCookie("type", viewType, 30, myDomain);
+
+			// Color change
+			let topBtn = document.getElementById("top");
+			let galleryBtn = document.getElementById("gallery");
+
+			if (topBtn && galleryBtn) {
+				topBtn.style.color = isListView ? "#090" : "#000";
+				galleryBtn.style.color = isListView ? "#000" : "#090";
+			}
+		}
+
+		// Event Listeners
+		let topBtn = document.getElementById("top");
+		let galleryBtn = document.getElementById("gallery");
+
+		if (topBtn) {
+			topBtn.addEventListener("click", function () {
+				toggleView("listview");
+			});
+		}
+
+		if (galleryBtn) {
+			galleryBtn.addEventListener("click", function () {
+				toggleView("galleryview");
+			});
+		}
+	});
+		
+	function uploadimagefiles() {
+		var formData = new FormData();
+		var fileInput = $('#file-upload')[0];
+		var file = fileInput.files[0];  // Get the first file selected by the user
+		var path = 'https://bpaws.b-cdn.net/';
+
+		// Reset error messages
+		$('.image_error').html('').hide();
+		$('#progress').css('display', 'none');
+
+		// Check if a file is selected
+		if (!file) {
+			$('.image_error').html('No file selected').show();
+			return;
+		}
+
+		// Check if the file size is within the limit (5MB)
+		var fileSize = file.size / 1024; // in KB
+		if (fileSize > 5000) {
+			$('.image_error').html('File size exceeds 5MB limit').show();
+			return;
+		}
+
+		// Generate a unique filename (e.g., using the current timestamp or a UUID)
+		var uniqueFileName = generateUniqueFileName(file.name);
+
+		// Create a new Blob with the unique file name
+		formData.append('image', file, uniqueFileName); // The 3rd argument is the new file name
+
+		// Show progress bar
+		$('#progress').css('display', 'block').val(0);
+
+		// Upload the file via AJAX
+		$.ajax({
+			url: '/uploadimages', // Server endpoint for file upload
+			type: 'POST',
+			data: formData,
+			processData: false,  // Prevent jQuery from processing the data
+			contentType: false,  // Prevent jQuery from setting content type
+			xhr: function () {
+				var xhr = new XMLHttpRequest();
+				xhr.upload.addEventListener('progress', function (evt) {
+					if (evt.lengthComputable) {
+						var percentComplete = (evt.loaded / evt.total) * 100;
+						$('#progress').val(percentComplete);
+					}
+				}, false);
+				return xhr;
+			},
+			success: function (response) {
+				try {
+					var obj = JSON.parse(response);
+					if (obj.thumb) {
+						$('#imagedata').html(
+							'<div class="position-relative mb-3"><img src="' + path + obj.thumb + '" width="100" class="rounded-3" alt="Uploaded Image" /></div>'
+						);
+						$('.image_error').hide();
+						$('#file-upload').css('display', 'none');
+						$('#progress').val(0).hide();
+					} else if (obj.message) {
+						$('#progress').val(0).hide();
+						// Show the error message from the server response
+						$('.image_error').html('Error: ' + obj.message).show();
+					} else {
+						$('#progress').val(0).hide();
+						// If there's no thumb or message, show a generic error
+						$('.image_error').html('Error: Unknown server response').show();
+					}
+				} catch (error) {
+					$('#progress').val(0).hide();
+					$('.image_error').html('Error: Could not parse response.').show();
+				}
+			},
+			error: function (errResponse) {
+				$('#progress').val(0).hide();
+				console.log('Error:', errResponse);
+				$('.image_error').html('Upload failed. Please try again.').show();
+			}
+		});
+	}
+
+	// Function to generate a unique file name
+	function generateUniqueFileName(originalFileName) {
+		// You can use the current timestamp or a random UUID as a unique identifier
+		var timestamp = new Date().getTime();
+		var fileExtension = originalFileName.split('.').pop(); // Extract the file extension (e.g., jpg, png)
+		var uniqueFileName = timestamp + '.' + fileExtension; // Example: 1617876320000.jpg
+
+		return uniqueFileName;
+	}
+	
+	// Function to check if the device is mobile
+	function isMobileDevice() {
+		return /Mobi|Android/i.test(navigator.userAgent);
+	}
+
+	// Example definition of handleVideoActions
+	function handleVideoActions(postID) {
+		console.log(`Video with PostID ${postID} is being played`);
+		// Add your custom logic here, e.g., analytics, API calls, etc.
+	}
+
+	// Attach click events to all `eye-icon` elements
+	document.querySelectorAll('.eye-icon').forEach(eyeIcon => {
+		eyeIcon.addEventListener('click', (event) => {
+			event.stopPropagation(); // Prevent event bubbling
+
+			// Get the parent container (assumes structure with id starting with 'video_')
+			const videoContainer = eyeIcon.closest('[id^="video_"]');
+			const postID = videoContainer.getAttribute('data-id');
+			const videoElement = videoContainer.querySelector('.hover-video');
+
+			if (!videoElement) {
+				// If no video element is found, log a warning and stop
+				console.warn(`No video element found in container with ID: ${videoContainer.id}`);
+				return;
+			}
+
+			// Reset all other videos
+			document.querySelectorAll('.hover-video').forEach(otherVideo => {
+				if (otherVideo !== videoElement) {
+					otherVideo.pause();
+					otherVideo.currentTime = 0;
+					otherVideo.style.display = 'none'; // Hide other videos
+					const otherContainer = otherVideo.closest('[id^="video_"]');
+					if (otherContainer) {
+						otherContainer.classList.remove('active'); // Remove active class
+					}
+				}
+			});
+
+			// Toggle play/pause for the clicked video
+			if (videoElement.style.display === 'block' && !videoElement.paused) {
+				// If video is already playing, pause it and reset
+				videoElement.pause();
+				videoElement.style.display = 'none'; // Hide the video
+				videoElement.currentTime = 0; // Reset video
+				videoContainer.classList.remove('active'); // Remove active class
+			} else {
+				// Play the video
+				videoElement.style.display = 'block'; // Show the video
+				videoElement.play(); // Play the video
+				videoContainer.classList.add('active'); // Add active class
+				handleVideoActions(postID); // Pass PostID to your function
+			}
+		});
+	});
+
+	$("ul.languageSwitch li a").on("click", function (a) {
+		a.preventDefault();
+		var t = $(this).attr("data-lang"),
+			e = $(this).attr("data-key"),
+			n = $(this).attr("data-langKey"),
+			o = window.location.href.match(/^https?:\/\//) || "",
+			i = window.location.href.replace(/^https?:\/\//, "");
+		if ("" != e && "" != n) {
+			i = i.replace("/" + e + "/", "/" + n + "/");
+		}
+		var myDomain = document.getElementById("domain").value || '.'+bedpage.com; // Fallback domain
+		if ("" != t) {
+			setCookie("languageCode", t, 30, myDomain);
+		} else {
+			setCookie("languageCode", "en", 30, myDomain);
+		}
+		window.location = o + i;
+	});
+
+	$("ul.languageSwitch2 li a").on("click", function (a) {
+		a.preventDefault();
+		var t = $(this).attr("data-lang"),
+			e = $(this).attr("data-key"),
+			n = $(this).attr("data-langKey"),
+			o = window.location.href.match(/^https?:\/\//) || "",
+			i = window.location.href.replace(/^https?:\/\//, "");
+		
+		if ("" != e && "" != n) {
+			i = i.replace("/" + e + "/", "/" + n + "/");
+		}
+
+		var myDomain = document.getElementById("domain").value || '.' + bedpage.com; // Fallback domain
+		if ("" != t) {
+			setCookie("languageCode", t, 30, myDomain);
+		} else {
+			setCookie("languageCode", "en", 30, myDomain);
+		}
+		
+		console.log("New URL:", o + i); // Debugging
+
+		// Assign the new URL and reload the page
+		if (window.innerWidth <= 768) { // Check for mobile screen
+			window.location = o + i;
+			window.location.reload(); // Explicit reload for mobile screens
+		} else {
+			window.location = o + i; // For non-mobile screens, just redirect
+		}
+	});
+
+	$('#header-menu-toggle').click(function () {
+		if ($(this).hasClass('opened')) {
+			$(this).removeClass('opened init-ok');
+			$('#nav').removeClass('opened');
+		} else {
+			$(this).addClass('opened init-ok');
+			$('#nav').addClass('opened');
+		}
+	});
+			
+	$(document).ready(function () {
+		$('#site-language').click(function (event) {
+			event.stopPropagation(); // Prevent this click from triggering the document click event
+			if ($('.langbox').hasClass('opened')) {
+				$('.langbox').removeClass('opened');
+				$(this).removeClass('opened init-ok');
+				$('#nav').removeClass('opened');
+			} else {
+				$('.langbox').addClass('opened');
+				$(this).addClass('opened init-ok');
+				$('#nav').addClass('opened');
+			}
+		});
+
+		$(document).on('click', function () {
+			// Remove the `opened` class when clicking anywhere else
+			if ($('.langbox').hasClass('opened')) {
+				$('.langbox').removeClass('opened');
+				$('#site-language').removeClass('opened init-ok');
+				$('#nav').removeClass('opened');
+			}
+		});
+
+		$('.langbox, #nav').click(function (event) {
+			event.stopPropagation(); // Prevent clicks inside the `.langbox` or `#nav` from closing it
+		});
+	});
+			
+	function handleEvents() {
+		// Detect screen width
+		const isSmallScreen = window.matchMedia('(max-width: 500px)').matches;
+
+		document.querySelectorAll('[id^="dev-"]').forEach(devElement => {
+			const devId = devElement.id; // e.g., 'dev-1'
+			const listId = devId.replace('dev-', 'list-'); // Map 'dev-1' to 'list-1'
+			const listElement = document.getElementById(listId); // Get corresponding list element
+
+			if (isSmallScreen) {
+				// For small screens: use click events with toggle functionality
+				devElement.addEventListener('click', () => {
+					// Find the menu element only within this devElement
+					const menuElement = devElement.querySelector('.head__menu-line__main-menu__lvl1');
+
+					// Check the current display state
+					if (listElement.style.display === 'block') {
+						// Hide the list if it's already visible
+						listElement.style.display = 'none';
+
+						// Remove the 'opened' class within this devElement
+						if (menuElement) {
+							menuElement.classList.remove('opened');
+						}
+					} else {
+						// Hide all list elements first
+						document.querySelectorAll('[id^="list-"]').forEach(list => {
+							list.style.display = 'none';
+						});
+
+						// Remove 'opened' class from all relevant menu elements
+						document.querySelectorAll('.head__menu-line__main-menu__lvl1').forEach(menu => {
+							menu.classList.remove('opened');
+						});
+
+						// Show the clicked list
+						listElement.style.display = 'block';
+
+						// Add the 'opened' class within this devElement
+						if (menuElement) {
+							menuElement.classList.add('opened');
+						}
+					}
+				});
+			} else {
+				// For larger screens: use hover events
+				devElement.addEventListener('mouseover', () => {
+					// Hide all list elements
+					document.querySelectorAll('[id^="list-"]').forEach(list => {
+						list.style.display = 'none';
+					});
+
+					// Show the corresponding list for the hovered element
+					listElement.style.display = 'block';
+				});
+
+				devElement.addEventListener('mouseout', () => {
+					// Hide the corresponding list
+					listElement.style.display = 'none';
+				});
+			}
+		});
+	}
+
+	// Call the function on page load
+	handleEvents();
+
+	// Reapply event listeners when resizing the window
+	window.addEventListener('resize', () => {
+		// Clear existing event listeners
+		document.querySelectorAll('[id^="dev-"]').forEach(devElement => {
+			devElement.replaceWith(devElement.cloneNode(true));
+		});
+
+		// Reapply handlers
+		handleEvents();
+	});
+			
+	let keywords = [];
+
+	// Fetch the keywords from the external JSON file
+	fetch('https://www.bedpage.com/citykey.json?asdert')
+		.then(response => response.json())
+		.then(data => {
+			keywords = data;
+		})
+		.catch(error => console.error('Error fetching keywords:', error));
+
+	const searchInput = document.getElementById('searchInput');
+	const suggestionsDiv = document.getElementById('suggestions');
+
+	document.addEventListener("DOMContentLoaded", function () {
+	
+		const searchInput = document.getElementById('searchInput');
+		const suggestionsDiv = document.getElementById('suggestions');
+
+		if (searchInput) {
+			searchInput.addEventListener('input', () => {
+				const query = searchInput.value.toLowerCase();
+				suggestionsDiv.innerHTML = '';
+				
+				$('.suggestions').css('display','block');
+
+				if (query) {
+					const filteredKeywords = keywords.filter(keyword => keyword.text.toLowerCase().includes(query));
+
+					filteredKeywords.forEach(keyword => {
+						const suggestionItem = document.createElement('div');
+						suggestionItem.className = 'suggestion-item';
+
+						// Highlight the matching part of the suggestion
+						const regex = new RegExp(`(${query})`, 'gi');
+						suggestionItem.innerHTML = keyword.text.replace(regex, '<b>$1</b>');
+						
+													suggestionItem.addEventListener('click', () => {
+								window.location.href = keyword["website-link"];  // Using window.location.href to open the link in the same window
+								suggestionsDiv.innerHTML = '';
+							});	
+												
+						suggestionsDiv.appendChild(suggestionItem);
+					});
+				}
+			});
+		}
+
+		document.addEventListener('click', (event) => {
+			if (!event.target.closest('.search-container')) {
+				suggestionsDiv.innerHTML = '';
+			}
+		});
+	});
+			
+	// Add an event listener to the input field
+	document.addEventListener('DOMContentLoaded', function() {
+		const inputField = document.getElementById('filter-tags-input');
+		if (inputField) {
+			inputField.addEventListener('input', function() {
+				const filterValue = this.value.toLowerCase();
+				const tags = document.querySelectorAll('#tags .tag-item');
+				tags.forEach(tag => {
+					if (tag.textContent.toLowerCase().includes(filterValue)) {
+						tag.style.display = '';
+					} else {
+						tag.style.display = 'none';
+					}
+				});
+			});
+		}
+	});
+			
+	$("#search_form2").submit(function(){
+		
+		var actionurl	= 	$("#searchInput").val();
+		
+		if(actionurl!="" && typeof actionurl!="undefined")
+			{
+				const htmlEntities = {
+					"&": "and",
+					"<": "-",
+					">": "-",
+					'"': "",
+					"'": ""
+				  };
+				  
+				actionurl = actionurl.replace(/^\s+|\s+$/gm,'').replace(/&(amp;)?#?[a-z0-9]+;/i,'-');
+				actionurl = actionurl.replace(/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i,'');
+				actionurl = actionurl.replace(/[^a-z0-9]/i,'-');
+				actionurl = actionurl.replace(/[-]+/,'-');
+				actionurl = actionurl.replace(/([&<>\"'])/g, match => htmlEntities[match]);
+				actionurl = actionurl.replace(/[^a-zA-Z0-9]/g, "-");
+				actionurl = actionurl.replaceAll(' ','-');
+				
+				while(actionurl.charAt(0) === '-')
+				{
+				 actionurl = actionurl.substring(1);
+				}
+				
+				// Ensure the length of actionurl doesn't exceed 50 characters
+				if (actionurl.length > 50) {
+					actionurl = actionurl.substring(0, 50);
+				}
+			
+							var url = 'https://www.bedpage.com//search/'+actionurl;
+						
+			console.log(url);
+			
+			location.replace(url);
+			return false;
+		}else{
+			return false;
+		}
+	  });
+			  
+	function setCookie(a, b, f, c) {
+		var e = new Date;
+		e.setTime(e.getTime());
+		f && (f *= 864E5);
+		e = new Date(e.getTime() + f);
+		c = c || '.'+bedpage.com; // Default domain
+		document.cookie = a + "=" + escape(b) + ";path=/" + (f ? ";expires=" + e.toGMTString() : "") + (c ? ";domain=" + c : "");
+	}
+		
+	function getCookie(a) {
+		var b = document.cookie.indexOf(a + "="),
+			f = b + a.length + 1;
+		if (!b && a != document.cookie.substring(0, a.length) || -1 == b) return null;
+		a = document.cookie.indexOf(";", f); - 1 == a && (a = document.cookie.length);
+		return unescape(document.cookie.substring(f, a))
+	}
+		
+	function deleteCookie(a) {
+		setCookie(a, "", -1)
+	}
+
+</script>
+</div>
+		<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1D0KXQZ5TE"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-1D0KXQZ5TE');
+	</script>
+	<!-- Google tag (gtag.js) -->
+	</body>
+</html>

@@ -1,0 +1,171 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: zabbix-agent
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: zabbix-agent
+  template:
+    metadata:
+      labels:
+        app: zabbix-agent
+    spec:
+      containers:
+      - name: zabbix-agent
+        image: allardkrings/riscv64-zabbix-agent2:plucky
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        ports:
+          - containerPort: 10050
+        env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/zabbix/zabbix_agent2.conf
+          subPath: zabbix_agent2.conf
+      volumes:
+      - name: config-volume
+        configMap:
+          name: zabbix-agent-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zabbix-server
+  namespace: monitoring
+  labels:
+    app: zabbix-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zabbix-server
+  template:
+    metadata:
+      labels:
+        app: zabbix-server
+    spec:
+      containers:
+      - name: zabbix-server
+        image: allardkrings/riscv64-zabbix-server-mysql:6.4.12
+        ports:
+          - containerPort: 10051
+        env:
+        - name: ZABBIX_LISTENIP
+          value: "::"
+        - name: ZBX_SERVER_HOST
+          value: zabbix-server
+        - name: MYSQL_USER
+          value: zabbix
+        - name: MYSQL_PASSWORD
+          value: zabbix
+        - name: MYSQL_DATABASE
+          value: zabbix
+        - name: DB_SERVER_HOST
+          value: mariadb.mariadb
+        - name: MARIADB_ROOT_PASSWORD
+          value: password
+        - name: ZBX_HISTORYCACHESIZE
+          value: 496M
+        - name: ZBX_TRENDCACHESIZE
+          value: 496M
+        - name: ZBX_HISTORYINDEXCACHESIZE
+          value: 496M
+        - name: ZBX_CACHESIZE
+          value: 1024M
+        - name: ZBX_VALUECACHESIZE
+          value: 496M
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: monitoring
+  name: zabbix-server
+  labels:
+    name: zabbix-server
+spec:
+  type: ClusterIP
+  ports:
+    - port: 10051
+      name: zabbix-server
+  selector:
+    app: zabbix-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zabbix-web
+  namespace: monitoring
+  labels:
+    app: zabbix-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zabbix-web
+  template:
+    metadata:
+      labels:
+        app: zabbix-web
+    spec:
+      containers:
+      - name: zabbix-web
+        image: allardkrings/riscv64-zabbix-web-nginx-mysql:6.4.12
+        ports:
+          - containerPort: 8080
+        env:
+        - name: MYSQL_USER
+          value: zabbix
+        - name: MYSQL_PASSWORD
+          value: zabbix
+        - name: MYSQL_DATABASE
+          value: zabbix
+        - name: DB_SERVER_HOST
+          value: mariadb.mariadb
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        - name: ZBX_SERVER_NAME
+          value: ALLDCS
+        - name: ZBX_SERVER_HOST
+          value: zabbix-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zabbix-web
+  namespace: monitoring
+  labels:
+    name: zabbix-web
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app:  zabbix-web
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: zabbix-tls
+  namespace: monitoring
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`zabbix-riscv.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: zabbix-web
+      port: 8080
+  tls:
+    certResolver: letsencrypt
+
+

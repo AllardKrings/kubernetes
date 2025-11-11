@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: metallb-speaker
+  namespace: metallb-system
+  labels:
+    release: prometheus  # important for the Prometheus selector
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: speaker
+  namespaceSelector:
+    matchNames:
+      - metallb-system
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: 15s

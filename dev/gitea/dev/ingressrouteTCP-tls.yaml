@@ -1,0 +1,15 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: gitea-tcp-https
+  namespace: gitea
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: HostSNI(`gitea-dev.allarddcs.nl`)
+    services:
+    - name: gitea
+      port: 3000
+  tls:
+    passthrough: true

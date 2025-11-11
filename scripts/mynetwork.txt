@@ -1,0 +1,1017 @@
+[H[2J[3J Currently scanning: Starting.   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 0 Captured ARP Req/Rep packets, from 0 hosts.   Total size: 0                                             
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ Currently scanning: Starting.   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 7 Captured ARP Req/Rep packets, from 4 hosts.   Total size: 420                                           
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3      1      60  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      2     120  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      2     120  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      2     120  Raspberry Pi Trading Ltd                                
+ Currently scanning: 192.168.2.0/24   |   Screen View: Unique Hosts                                        
+                                                                                                           
+ 15 Captured ARP Req/Rep packets, from 5 hosts.   Total size: 900                                          
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3      2     120  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      4     240  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      4     240  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      4     240  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      1      60  devolo AG                                               
+ Currently scanning: 192.168.2.0/24   |   Screen View: Unique Hosts                                        
+                                                                                                           
+ 56 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 3198                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3      3     180  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      7     420  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      7     420  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      7     420  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      3     180  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: 192.168.2.0/24   |   Screen View: Unique Hosts                                        
+                                                                                                           
+ 61 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 3498                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3      7     420  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      7     420  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      7     420  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      7     420  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      4     240  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 74 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4278                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     14     840  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      5     300  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 76 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4398                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     15     900  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      6     360  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 77 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4458                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     16     960  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      6     360  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 79 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4578                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     18    1080  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      6     360  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 81 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4680                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     19    1140  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      6     360  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 81 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4680                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     19    1140  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      6     360  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 82 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4740                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     20    1200  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      6     360  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 83 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 4800                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95      8     480  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1      9     540  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      6     360  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 90 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 5220                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     10     600  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     11     660  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     11     660  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      7     420  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 97 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 5640                                        
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     12     720  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     13     780  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     13     780  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      8     480  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 103 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 6000                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     14     840  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     15     900  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     15     900  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      8     480  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 109 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 6360                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     16     960  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     17    1020  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     17    1020  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0      8     480  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 117 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 6840                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 117 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 6840                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 117 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 6840                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     21    1260  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 118 Captured ARP Req/Rep packets, from 34 hosts.   Total size: 6900                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     22    1320  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 122 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 7122                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     25    1500  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 125 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 7302                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     28    1680  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 125 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 7302                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     28    1680  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 130 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 7602                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     33    1980  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     10     600  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 133 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 7782                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     35    2100  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     11     660  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 138 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 8082                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     39    2340  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     12     720  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 139 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 8142                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     40    2400  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     12     720  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 145 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 8502                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     44    2640  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     14     840  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 158 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 9282                                       
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     56    3360  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     15     900  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      1      60  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 171 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 10062                                      
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     68    4080  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     15     900  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      2     120  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 171 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 10062                                      
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     68    4080  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     15     900  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      2     120  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 173 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 10182                                      
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     70    4200  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     15     900  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      2     120  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 175 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 10302                                      
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     72    4320  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     15     900  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      2     120  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 177 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 10422                                      
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     74    4440  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     15     900  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      2     120  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                             
+                                                                                                           
+ 177 Captured ARP Req/Rep packets, from 35 hosts.   Total size: 10422                                      
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ -----------------------------------------------------------------------------
+ 192.168.2.1     10:71:b3:80:f0:b3     74    4440  Zyxel Communications Corporation                        
+ 192.168.2.191   d8:3a:dd:a7:c6:95     18    1080  Raspberry Pi Trading Ltd                                
+ 192.168.2.192   e4:5f:01:1b:42:38     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.193   d8:3a:dd:d4:fd:e1     19    1140  Raspberry Pi Trading Ltd                                
+ 192.168.2.24    f4:06:8d:8e:0e:a0     15     900  devolo AG                                               
+ 192.168.2.10    5c:a6:e6:64:03:04      1      42  TP-Link Corporation Limited                             
+ 192.168.2.17    5c:a6:e6:64:07:98      1      42  TP-Link Corporation Limited                             
+ 192.168.2.12    5c:aa:fd:25:c2:20      1      60  Sonos, Inc.                                             
+ 192.168.2.32    94:9f:3e:14:f6:ae      1      60  Sonos, Inc.                                             
+ 192.168.2.34    94:9f:3e:f7:47:aa      1      60  Sonos, Inc.                                             
+ 192.168.2.52    f4:06:8d:66:71:98      1      60  devolo AG                                               
+ 192.168.2.57    00:e0:4c:01:27:74      1      60  REALTEK SEMICONDUCTOR CORP.                             
+ 192.168.2.56    f4:06:8d:66:71:a4      1      60  devolo AG                                               
+ 192.168.2.57    f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.66    8c:98:06:3e:e4:40      1      60  SHENZHEN SEI ROBOTICS CO.,LTD                           
+ 192.168.2.70    4a:2e:f3:14:c3:60      1      60  Unknown vendor                                          
+ 192.168.2.75    78:28:ca:32:b2:36      1      60  Sonos, Inc.                                             
+ 192.168.2.77    94:9f:3e:f7:8d:fc      1      60  Sonos, Inc.                                             
+ 192.168.2.76    b0:a7:b9:6f:47:ad      2     120  TP-Link Corporation Limited                             
+ 192.168.2.74    5c:a6:e6:64:0b:3c      1      42  TP-Link Corporation Limited                             
+ 192.168.2.90    54:60:09:01:22:72      1      60  Google, Inc.                                            
+ 192.168.2.85    f8:0f:f9:51:54:16      1      60  Google, Inc.                                            
+ 192.168.2.110   f8:e4:e3:77:83:fa      1      42  Intel Corporate                                         
+ 192.168.2.18    fc:67:1f:93:d3:cd      1      42  Tuya Smart Inc.                                         

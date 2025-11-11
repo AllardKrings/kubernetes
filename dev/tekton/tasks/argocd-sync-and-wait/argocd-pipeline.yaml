@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: argocd-pipeline-test
+spec:
+  description: |
+    This pipeline tests argocd
+  params:
+  - name: sonar-project-key
+    type: string
+
+  tasks:
+
+  - name: deploy-with-argocd
+    taskref:
+      name: argocd-task-sync-and-wait
+    params:
+    - name: application-name
+      value: $(params.sonar-project-key)

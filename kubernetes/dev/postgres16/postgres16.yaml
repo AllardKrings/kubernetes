@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres16
+  namespace: postgres
+spec:
+  serviceName: postgres16
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres16
+  template:
+    metadata:
+      labels:
+        app: postgres16
+    spec:
+      containers:
+      - name: postgres16
+        image: postgres:16
+        ports:
+          - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: defectdojo
+        - name: POSTGRES_USER
+          value: defectdojo
+        - name: POSTGRES_PASSWORD
+          value: defectdojo
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres
+      volumes:
+      - name: postgres
+        persistentVolumeClaim:
+          claimName: postgres16-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres16
+  namespace: postgres
+  labels:
+    name: postgres16
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      name: postgres
+  selector:
+    app: postgres16
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres16-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/postgres16dev
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres16-pvc
+  namespace: postgres
+spec:
+  storageClassName: ""
+  volumeName: postgres16-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 2Gi

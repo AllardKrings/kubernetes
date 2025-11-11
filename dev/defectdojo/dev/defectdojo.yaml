@@ -1,0 +1,402 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: defectdojo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: nginx
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: nginx
+    spec:
+      containers:
+        - env:
+            - name: NGINX_METRICS_ENABLED
+              value: "false"
+            - name: DD_UWSGI_HOST
+              value: "uwsgi.defectdojo"
+            - name: HTTP_AUTH_PASSWORD
+              value: "Defectdojo01@"
+          image: allardkrings/defectdojo-nginx:1.0
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html/media
+              name: defectdojo-media
+      restartPolicy: Always
+      volumes:
+        - name: defectdojo-media
+          persistentVolumeClaim:
+            claimName: defectdojo-media-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: defectdojo-media-pvc
+  namespace: defectdojo
+spec:
+  storageClassName: ""
+  volumeName: defectdojo-media-pv
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: defectdojo-media-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/defectdojo/media
+    readOnly: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: nginx
+  name: nginx
+  namespace: defectdojo
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    - name: "8443"
+      port: 8443
+      targetPort: 8443
+  selector:
+    io.kompose.service: nginx
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: uwsgi
+  name: uwsgi
+  namespace: defectdojo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: uwsgi
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: uwsgi
+    spec:
+      containers:
+        - command:
+            - /wait-for-it.sh
+            - postgres16.postgres:5432
+            - -t
+            - "30"
+            - --
+            - /entrypoint-uwsgi.sh
+          env:
+            - name: DD_ALLOWED_HOSTS
+              value: '*'
+            - name: DD_CELERY_BROKER_URL
+              value: redis://redis.defectdojo:6379/0
+            - name: DD_CREDENTIAL_AES_256_KEY
+              value: '&91a*agLqesc*0DJ+2*bAbsUZfR*4nLw'
+            - name: DD_DATABASE_URL
+              value: postgresql://defectdojo:defectdojo@postgres16.postgres:5432/defectdojo
+            - name: DD_DEBUG
+              value: "False"
+            - name: DD_DJANGO_METRICS_ENABLED
+              value: "False"
+            - name: DD_SECRET_KEY
+              value: hhZCp@D28z!n@NED*yB!ROMt+WzsY*iq
+          image: allardkrings/defectdojo-django:1.0
+          imagePullPolicy: IfNotPresent
+          name: uwsgi
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/docker/extra_settings
+              name: uwsgi-claim0
+            - mountPath: /app/media
+              name: defectdojo-media
+      restartPolicy: Always
+      volumes:
+        - name: uwsgi-claim0
+          persistentVolumeClaim:
+            claimName: uwsgi-claim0
+        - name: defectdojo-media
+          persistentVolumeClaim:
+            claimName: defectdojo-media-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: uwsgi-claim0
+  name: uwsgi-claim0
+  namespace: defectdojo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: uwsgi
+  name: uwsgi
+  namespace: defectdojo
+spec:
+  ports:
+    - name: "3031"
+      port: 3031
+      targetPort: 3031
+  selector:
+    io.kompose.service: uwsgi
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: celeryworker
+  name: celeryworker
+  namespace: defectdojo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: celeryworker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: celeryworker
+    spec:
+      containers:
+        - command:
+            - /wait-for-it.sh
+            - postgres16.postgres:5432
+            - -t
+            - "30"
+            - --
+            - /entrypoint-celery-worker.sh
+          env:
+            - name: DD_CELERY_BROKER_URL
+              value: redis://redis.defectdojo:6379/0
+            - name: DD_CREDENTIAL_AES_256_KEY
+              value: '&91a*agLqesc*0DJ+2*bAbsUZfR*4nLw'
+            - name: DD_DATABASE_URL
+              value: postgresql://defectdojo:defectdojo@postgres16.postgres:5432/defectdojo
+            - name: DD_SECRET_KEY
+              value: hhZCp@D28z!n@NED*yB!ROMt+WzsY*iq
+          image: allardkrings/defectdojo-django:1.0
+          imagePullPolicy: IfNotPresent
+          name: celeryworker
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/docker/extra_settings
+              name: celeryworker-claim0
+            - mountPath: /app/media
+              name: defectdojo-media
+      restartPolicy: Always
+      volumes:
+        - name: celeryworker-claim0
+          persistentVolumeClaim:
+            claimName: celeryworker-claim0
+        - name: defectdojo-media
+          persistentVolumeClaim:
+            claimName: defectdojo-media-pvc
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: celeryworker-claim0
+  name: celeryworker-claim0
+  namespace: defectdojo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: celerybeat
+  name: celerybeat
+  namespace: defectdojo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: celerybeat
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: celerybeat
+    spec:
+      containers:
+        - command:
+            - /wait-for-it.sh
+            - postgres16.postgres:5432
+            - -t
+            - "30"
+            - --
+            - /entrypoint-celery-beat.sh
+          env:
+            - name: DD_CELERY_BROKER_URL
+              value: redis://redis.defectdojo:6379/0
+            - name: DD_CREDENTIAL_AES_256_KEY
+              value: '&91a*agLqesc*0DJ+2*bAbsUZfR*4nLw'
+            - name: DD_DATABASE_URL
+              value: postgresql://defectdojo:defectdojo@postgres16.postgres:5432/defectdojo
+            - name: DD_SECRET_KEY
+              value: hhZCp@D28z!n@NED*yB!ROMt+WzsY*iq
+          image: allardkrings/defectdojo-django:1.0
+          imagePullPolicy: IfNotPresent
+          name: celerybeat
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/docker/extra_settings
+              name: celerybeat-claim0
+      restartPolicy: Always
+      volumes:
+        - name: celerybeat-claim0
+          persistentVolumeClaim:
+            claimName: celerybeat-claim0
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: celerybeat-claim0
+  name: celerybeat-claim0
+  namespace: defectdojo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: redis
+  name: redis
+  namespace: defectdojo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: redis
+    spec:
+      containers:
+        - image: redis:7.2.4-alpine@sha256:a40e29800d387e3cf9431902e1e7a362e4d819233d68ae39380532c3310091ac
+          name: redis
+          resources: {}
+#          volumeMounts:
+#            - mountPath: /data
+#              name: defectdojo-redis
+      restartPolicy: Always
+#      volumes:
+#        - name: defectdojo-redis
+#          persistentVolumeClaim:
+#            claimName: defectdojo-redis-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: defectdojo-redis-pvc
+  namespace: defectdojo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: defectdojo-redis-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/defectdojo/redis
+    readOnly: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: redis
+  name: redis
+  namespace: defectdojo
+spec:
+  ports:
+    - name: "6379"
+      port: 6379
+      targetPort: 6379
+  selector:
+    io.kompose.service: redis
+status:
+  loadBalancer: {}
+

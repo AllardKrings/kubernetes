@@ -1,0 +1,46 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-http
+  namespace: wordpress
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`wordpress-riscv.allarddcs.nl`)
+      kind: Rule
+      services:
+        - name: joomla
+          port: 80
+      middlewares:
+        - name: redirect-to-https
+          namespace: wordpress
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-tls
+  namespace: wordpress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`wordpress-riscv.allarddcs.nl`)
+      kind: Rule
+      services:
+        - name: wordpress
+          port: 80
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-https
+  namespace: wordpress
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+
+

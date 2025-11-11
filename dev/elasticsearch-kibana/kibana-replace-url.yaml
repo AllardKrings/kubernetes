@@ -1,0 +1,8 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: kibana-replace-url
+spec:
+  redirectRegex:
+    regex: "^https://elastic.dialdcs.com\\.(.*)"
+    replacement: "https://${1}"

@@ -1,0 +1,119 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitea
+  namespace: "gitea"
+  labels:
+    app.kubernetes.io/instance: gitea
+    app.kubernetes.io/name: gitea
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+      nodePort: null
+    - name: ssh
+      port: 22
+      targetPort: ssh
+      nodePort: null
+  selector:
+    app.kubernetes.io/instance: gitea
+    app.kubernetes.io/name: gitea
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitea
+  namespace: "gitea"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gitea
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: gitea
+        app.kubernetes.io/name: gitea
+    spec:
+      containers:
+        - name: gitea
+          image: allardkrings/riscv64-gitea:1.21.7
+          env:
+          - name: GITEA__database__DB_TYPE
+            value: mysql
+          - name: GITEA__database__HOST
+            value: mariadb.mariadb:3306
+          - name: GITEA__database__NAME
+            value: gitea
+          - name: GITEA__database__USER
+            value: gitea
+          - name: GITEA__database__PASSWD
+            value: gitea
+          ports:
+            - name: http
+              containerPort: 3000
+            - name: ssh
+              containerPort: 2222
+          volumeMounts:
+            - name: gitea-data
+              mountPath: /data
+      volumes:
+        - name: gitea-data
+          persistentVolumeClaim:
+            claimName: gitea-pvc
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gitea-tls
+  namespace: gitea
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`gitea-riscv.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: gitea
+      port: 3000
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitea-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/gitea-riscv
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitea-pvc
+  namespace: gitea
+spec:
+  storageClassName: ""
+  volumeName: gitea-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+
+

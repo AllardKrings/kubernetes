@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: odroid-http-alldcs
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`odroid.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: external-nginx
+      port: 30080

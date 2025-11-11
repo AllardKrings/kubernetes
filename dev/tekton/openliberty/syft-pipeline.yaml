@@ -1,0 +1,65 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: syft-pipeline
+spec:
+  description: |
+    This pipeline clones a git repo, builds a Docker image with Kaniko and
+    pushes it to a registry
+  params:
+  - name: image-reference
+    type: string
+  - name: deptrack-projectName
+    type: string
+  - name: deptrack-projectVersion
+    type: string
+  - name: deptrack-apiKey
+    type: string
+  workspaces:
+  - name: shared-data
+  - name: registry-credentials
+  tasks:
+
+  - name: syft
+    taskRef:
+      name: syft
+    params:
+    - name: ARGS
+      value:
+      - $(params.image-reference)
+      - --output
+      - cyclonedx-json=./$(params.deptrack-projectName).sbom.json
+    workspaces:
+    - name: source-dir
+      workspace: shared-data
+
+  - name: grype
+    runAfter: ["syft"]
+    taskRef:
+      name: grype
+    params:
+    - name: ARGS
+      value:
+      - $(params.image-reference)
+      - --output
+      - cyclonedx-json=./vulnerabilities.cyclonedx.json
+    workspaces:
+    - name: source-dir
+      workspace: shared-data
+
+  - name: push-sbom
+    runAfter: ["syft"]
+    taskref:
+      name: push-sbom
+    params:
+    - name: deptrack-apiKey
+      value: $(params.deptrack-apiKey)
+    - name: deptrack-projectName
+      value: $(params.deptrack-projectName)
+    - name: deptrack-projectVersion
+      value: $(params.deptrack-projectVersion)
+    - name: sbom
+      value: $(params.deptrack-projectName).sbom.json
+    workspaces:
+    - name: source-dir
+      workspace: shared-data

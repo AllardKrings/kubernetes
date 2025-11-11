@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: quay-http
+  namespace: quay
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`quay-lp.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: quay
+      port: 8080

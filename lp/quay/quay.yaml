@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quay
+  namespace: quay
+  labels:
+    app: quay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quay
+  template:
+    metadata:
+      labels:
+        app: quay
+    spec:
+      containers:
+      - name: quay
+        image: quay.io/projectquay/quay:latest
+        ports:
+        - containerPort: 8080
+          name: web
+        - containerPort: 8443
+          name: websecure
+        volumeMounts:
+        - mountPath: /quay-registry/conf/stack/
+          name: quay
+          subPath: conf
+        - mountPath: /quay-registry/datastorage/
+          name: quay
+          subPath: data
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      volumes:
+      - name: quay
+        persistentVolumeClaim:
+          claimName: quay-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quay
+  namespace: quay
+spec:
+  ports:
+  - name: http
+    targetPort: 8080
+    port: 8080
+  - name: https
+    targetPort: 8443
+    port: 443
+  selector:
+    app: quay
+  type: NodePort
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: quay-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/quay
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: quay-pvc
+  namespace: quay
+spec:
+  storageClassName: ""
+  volumeName: quay-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi

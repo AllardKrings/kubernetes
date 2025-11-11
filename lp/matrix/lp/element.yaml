@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: element
+  namespace: matrix
+  labels:
+    app: element
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: element
+  template:
+    metadata:
+      labels:
+        app: element
+    spec:
+      containers:
+        - name: element
+          image: vectorim/element-web
+          securityContext:
+            runAsUser: 0  # Run as root (user ID 0)
+            runAsGroup: 0  # Run as root group (group ID 0)
+          ports:
+            - containerPort: 80
+          env:
+            - name: SYNAPSE_SERVER
+              value: "https://matrix-lp.allarddcs.nl"
+            - name: BASE_URL
+              value: "https://element-lp.allarddcs.nl"
+          volumeMounts:
+            - name: element-config
+              mountPath: /config
+      volumes:
+        - name: element-config
+          configMap:
+            name: element-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: element-config
+data:
+  config.json: |
+    {
+      "default_homeserver": "https://matrix-lp.allarddcs.nl",
+      "branding": {
+        "brand": "AllardDCS",
+        "icon": "/path/to/logo.png"
+      }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: element
+  namespace: matrix
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: element
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: element-http
+  namespace: matrix
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`element-lp.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: element
+      port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: element-tls
+  namespace: matrix
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`element-lp.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: element
+      port: 80
+  tls:
+    secretName: element-lp.allarddcs.nl-tls
+

@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: zabbix-dev-tls
+  namespace: monitoring
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`zabbix-dev.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: zabbix-zabbix-web
+      port: 80
+  tls:
+    certResolver: letsencrypt

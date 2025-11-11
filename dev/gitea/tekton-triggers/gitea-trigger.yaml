@@ -1,0 +1,202 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: gitea-listener
+spec:
+  namespaceSelector: {}
+  resources: {}
+  serviceAccountName: tekton-robot
+  triggers:
+  - bindings:
+    - kind: TriggerBinding
+      ref: gitea-binding
+    interceptors:
+    - params:
+      - name: overlays
+        value:
+        - key: version
+          expression: body.ref.split('/')[2]
+      ref:
+        kind: ClusterInterceptor
+        name: cel
+    name: gitea-trigger
+    template:
+      ref: gitea-pipeline-template
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: gitea-binding
+spec:
+  params:
+  - name: repo-url
+    value: $(body.repository.clone_url)
+  - name: git-revision
+    value: $(extensions.version)
+  - name: image-reference
+    value: harbor-dev.allarddcs.nl/$(body.repository.full_name):$(extensions.version)
+#    value: harbor-dev.allarddcs.nl/$(body.repository.full_name)
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: gitea-pipeline-template
+spec:
+  params:
+  - name: git-revision
+    description: The git revision
+    #geen default waarde, komt uit trigger-binding.
+  - name: repo-url
+    description: The git repository url
+    #geen default waarde, komt uit trigger-binding.
+  - name: maven-mirror-url
+    description: url van de nexus-server die als proxy dient voor java-libraries
+    default: 'http://nexus.nexus.svc.cluster.local:8081/repository/maven-public/'
+  - name: sonar-host-url
+    description: url van de sonarqube-server
+    default: "https://sonarqube-dev.allarddcs.nl"
+  - name: sonar-organization
+    description: Organisatienaam in sonar waar vulnerabilities onder vallen 
+    default: "allarddcs"
+  - name: sonar-token
+    description: authenticatiemiddel voor sonar (komt uit sonar) 
+    default: sqp_214ee7c92e1b82b0d43dd9b1d9462eac8f50434c
+  - name: sonar-project-key
+    default: olproperties
+    description: sonar project key
+  - name: source-to-scan
+    description: location of the source that sonarqube should scan
+    default: ./src
+  #- name: image-reference
+    #description: imagename
+    #geen default waarde, komt uit trigger-binding.
+  - name: image
+    description: image
+  - name: registry
+    default: harbor-dev.allarddcs.nl
+  - name: project
+    default: allard
+  - name: image-name
+    default: olproperties
+  - name: cosign-image-url
+    default:
+  - name: tlsverify
+    description: wel of geen tls gebruiken bij push
+    default: "true"
+  - name: deptrack-url
+    description: url of deptrack api-server
+    default: https://deptracka-dev.allarddcs.nl
+  - name: deptrack-apiKey
+    description: key to upload sbom to dependency-track
+    default: odt_BRpq4el8T0XqdeunYMnefniaS0n8Yxd8
+  - name: deptrack-projectName
+    description: projectname in dependency-track
+    default: olproperties
+  - name: deptrack-projectVersion
+    description: projectversion in dependency-track
+    default: "1.1"
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: openliberty-pipeline-run-
+    spec:
+      params:
+      - name: repo-url
+        value: $(tt.params.repo-url)
+      - name: git-revision
+        value: $(tt.params.git-revision)
+      - name: maven-mirror-url
+        value: $(tt.params.maven-mirror-url)
+      - name: sonar-host-url
+        value: $(tt.params.sonar-host-url)
+      - name: sonar-organization
+        value: $(tt.params.sonar-organization)
+      - name: sonar-token
+        value: $(tt.params.sonar-token)
+      - name: sonar-project-key
+        value: $(tt.params.sonar-project-key)
+      - name: source-to-scan
+        value: $(tt.params.source-to-scan)
+#      - name: image-reference
+#        value: $(tt.params.image-reference)
+#      - name: image
+#        value: $(tt.params.registry)/$(tt.params.project)/$(tt.params.image-name):$(tt.params.git-revision)
+      - name: registry
+        value: $(tt.params.registry)
+      - name: project
+        value: $(tt.params.project)
+      - name: image-name
+        value: $(tt.params.image-name)
+      - name: cosign-image-url
+        value: $(tt.params.cosign-image-url)
+      - name: deptrack-url
+        value: $(tt.params.deptrack-url)
+      - name: tlsverify
+        value: $(tt.params.tlsverify)
+      - name: deptrack-apiKey
+        value: $(tt.params.deptrack-apiKey)
+      - name: deptrack-projectName
+        value: $(tt.params.deptrack-projectName)
+      - name: deptrack-projectVersion
+        value: $(tt.params.deptrack-projectVersion)
+      pipelineRef:
+        name: openliberty-pipeline
+      workspaces:
+      - name: shared-data
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+      - name: maven-settings
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+      - configmap:
+          name: sonar-properties
+        name: sonar-settings
+      - name: registry-credentials
+        secret:
+          items:
+          - key: .dockerconfigjson
+            path: config.json
+          secretName: registry-credentials
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tekton-robot
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: triggers-example-eventlistener-binding
+subjects:
+- kind: ServiceAccount
+  name: tekton-robot
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tekton-triggers-eventlistener-roles
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: triggers-example-eventlistener-clusterbinding
+subjects:
+- kind: ServiceAccount
+  name: tekton-robot
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tekton-triggers-eventlistener-clusterroles
+---
+

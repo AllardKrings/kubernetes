@@ -1,0 +1,239 @@
+USER-SUPPLIED VALUES:
+affinity: {}
+autoscaling:
+  enabled: false
+global:
+  # Adjust timeout settings for Traefik
+  timeout:
+    connect: 30s  # Time to wait for a connection to establish (default: 30s)
+    read: 300s    # Increase read timeout for longer responses (default: 60s)
+    write: 300s   # Increase write timeout for larger pushes (default: 60s)
+#certificatesResolvers:
+#  letsencrypt:
+#    acme:
+#      email: admin@allarddcs.nl
+#      storage: /data/acme.json
+#      httpChallenge:
+#        entryPoint: web
+commonLabels: {}
+deployment:
+  additionalContainers: []
+  additionalVolumeMounts: {}
+  additionalVolumes: []
+  annotations: {}
+  dnsConfig: {}
+  enabled: true
+  imagePullSecrets: []
+  initContainers: []
+  kind: Deployment
+  labels: {}
+  lifecycle: {}
+  minReadySeconds: 0
+  podAnnotations: {}
+  podLabels: {}
+  replicas: 1
+  runtimeClassName: null
+  shareProcessNamespace: false
+  terminationGracePeriodSeconds: 60
+envFrom: []
+experimental:
+  kubernetesGateway:
+    enabled: false
+  plugins: {}
+extraObjects: []
+globalArguments:
+- --global.checknewversion
+- --global.sendanonymoususage
+hostNetwork: false
+image:
+  pullPolicy: Always
+  registry: docker.io
+  repository: traefik
+  tag: ""
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+ingressRoute:
+  dashboard:
+    annotations: {}
+    enabled: true
+    entryPoints:
+    - traefik
+    labels: {}
+    matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+    middlewares: []
+    tls: {}
+  healthcheck:
+    annotations: {}
+    enabled: false
+    entryPoints:
+    - traefik
+    labels: {}
+    matchRule: PathPrefix(`/ping`)
+    middlewares: []
+    tls: {}
+livenessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 2
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+logs:
+  access:
+    enabled: false
+    fields:
+      general:
+        defaultmode: keep
+        names: {}
+      headers:
+        defaultmode: drop
+        names: {}
+    filters: {}
+  general:
+    level: ERROR
+metrics:
+  prometheus:
+    entryPoint: metrics
+nodeSelector: {}
+persistence:
+  enabled: true
+  existingClaim: traefik-pvc
+  path: /data
+podDisruptionBudget:
+  enabled: false
+podSecurityContext:
+  fsGroupChangePolicy: OnRootMismatch
+  runAsGroup: 65532
+  runAsNonRoot: true
+  runAsUser: 65532
+podSecurityPolicy:
+  enabled: false
+ports:
+ports:
+  web:
+    expose:
+      default: true
+    exposedPort: 80
+    port: 8000
+    protocol: TCP
+    allowACMEByPass: true 
+  websecure:
+    expose:
+      default: true
+    exposedPort: 443
+    http3:
+      enabled: false
+    middlewares: []
+    port: 8443
+    protocol: TCP
+    allowACMEByPass: true 
+    tls:
+      certResolver: ""
+      domains: []
+      enabled: true
+      options: ""
+  traefik:
+    expose:
+      default: true
+    exposedPort: 9000
+    port: 9000
+    protocol: TCP
+  metrics:
+    expose:
+      default: false
+    exposedPort: 9100
+    port: 9100
+    protocol: TCP
+  imap:
+    expose:
+      default: true
+    exposedPort: 143
+    port: 9143
+    protocol: TCP
+  pop3:
+    expose:
+      default: true
+    exposedPort: 110
+    port: 9110
+    protocol: TCP
+  pop3s:
+    expose:
+      default: true
+    exposedPort: 995
+    port: 9995
+    protocol: TCP
+  smtp:
+    expose:
+      default: true
+    exposedPort: 25
+    port: 9025
+    protocol: TCP
+  smtps:
+    expose:
+      default: true
+    exposedPort: 465
+    port: 9465
+    protocol: TCP
+priorityClassName: ""
+providers:
+  file:
+    content: ""
+    enabled: true
+    watch: true
+  kubernetesCRD:
+    allowCrossNamespace: false
+    allowEmptyServices: true
+    allowExternalNameServices: true
+    enabled: true
+    namespaces: []
+  kubernetesIngress:
+    allowEmptyServices: true
+    allowExternalNameServices: true
+    disableIngressClassLookup: false
+    enabled: true
+    namespaces: []
+    publishedService:
+      enabled: false
+rbac:
+  enabled: true
+  namespaced: false
+  secretResourceNames: []
+readinessProbe:
+  failureThreshold: 1
+  initialDelaySeconds: 2
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+resources: {}
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+service:
+  additionalServices: {}
+  annotations: {}
+  annotationsTCP: {}
+  annotationsUDP: {}
+  enabled: true
+  externalIPs: []
+  labels: {}
+  loadBalancerSourceRanges: []
+  single: true
+  spec: {}
+  type: LoadBalancer
+serviceAccount:
+  name: ""
+serviceAccountAnnotations: {}
+startupProbe: null
+tlsOptions: {}
+tlsStore: {}
+tolerations: []
+topologySpreadConstraints: []
+tracing: {}
+updateStrategy:
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+  type: RollingUpdate
+

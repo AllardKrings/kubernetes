@@ -1,0 +1,27 @@
+#I created a startup service that slows down the fan on Ubuntu after boot to speed setting 1, and that is inaudible.
+
+[Unit]
+Description=RPI-startup Fan Control service
+After=multi-user.target
+[Service]
+User=root
+Type=oneshot
+ExecStart=/bin/bash -c "echo '1' | tee -a /sys/class/thermal/cooling_device0/cur_state" &
+[Install]
+WantedBy=multi-user.target
+
+#Copy above content to a file /etc/systemd/system/fan.service.
+
+#And enable it by:
+
+sudo systemctl enable fan.service
+
+#That’s all, no reboot the Pi and Ubuntu will be silent.
+#Remember the Raspberry Pi willl automatically throttle when reaching a temperature of 85°. So there is no danger in letting the fan run on speed 1 continuously. Even when your compiling the Linux Kernel.
+#Off course you can always check the temperature with, and yes that works also in Ubuntu 23.10 on the Pi
+
+sudo vcgencmd measure_temp
+
+#You can always bump up the speed to 3 by issuing this in the terminal
+
+echo '3' | sudo tee -a /sys/class/thermal/cooling_device0/cur_state

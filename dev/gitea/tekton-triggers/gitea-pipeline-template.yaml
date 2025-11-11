@@ -1,0 +1,79 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: gitea-pipeline-template
+spec:
+  params:
+  - name: git-revision
+    description: The git revision (SHA)
+    default: master
+  - description: The git repository url
+    name: repo-url
+  - name: sonar-project-key
+    default: olproperties
+    description: sonar project key
+  - name: source-to-scan
+    description: location of th source that sonarqube should scan
+    default: ./src
+  - name: image-reference
+    description: imagename
+  - name: deptrack-apiKey
+    description: key to upload sbom to dependency-track
+    default: odt_UPC8l0R9vzQILZIphSoK15J4u4Ns3HEy
+  - name: deptrack-projectName
+    description: projectname in dependency-track
+    default: olproperties
+  - name: deptrack-projectVersion
+    description: projectversion in dependency-track
+    default: "1.1"
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: openliberty-pipeline-run-
+    spec:
+      params:
+      - name: repo-url
+        value: $(tt.params.repo-url)
+      - name: image-reference
+        value: $(tt.params.image-reference)
+      - name: git-revision
+        value: $(tt.params.git-revision)
+      - name: sonar-project-key
+        value: $(tt.params.sonar-project-key)
+      - name: source-to-scan
+        value: $(tt.params.source-to-scan)
+      - name: deptrack-apiKey
+        value: $(tt.params.deptrack-apiKey)
+      - name: deptrack-projectName
+        value: $(tt.params.deptrack-projectName)
+      - name: deptrack-projectVersion
+        value: $(tt.params.deptrack-projectVersion)
+      pipelineRef:
+        name: openliberty-pipeline
+      workspaces:
+      - name: shared-data
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+      - name: maven-settings
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+      - configmap:
+          name: sonar-properties
+        name: sonar-settings
+      - name: registry-credentials
+        secret:
+          items:
+          - key: .dockerconfigjson
+            path: config.json
+          secretName: registry-credentials

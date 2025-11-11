@@ -1,0 +1,158 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joomla
+  namespace: joomla
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joomla
+  template:
+    metadata:
+      labels:
+        app: joomla
+    spec:
+      containers:
+      - name: php-fpm
+      - image: riscv64/joomla:5.2.3-php8.1-fpm-alpine
+        ports:
+          - containerPort: 9000  # PHP-FPM listens on this port
+        volumeMounts:
+          - name: joomla-data
+            mountPath: /var/www/html
+
+      - name: nginx
+        image: nginx:latest
+        ports:
+          - containerPort: 80  # Nginx serves HTTP
+        volumeMounts:
+          - name: nfs-joomla
+            mountPath: /var/www/html
+            subPath: html
+          - name: nfs-joomla
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: default.conf
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joomla
+  namespace: joomla
+  labels:
+    app: joomla
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joomla
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: joomla
+    spec:
+      containers:
+      - image: riscv64/joomla:5.2.3-php8.1-fpm-alpine
+        name: joomla
+        imagePullPolicy: Always
+        env:
+        - name: JOOMLA_DB_HOST
+          value: "mariadb.mariadb"
+        - name: JOOMLA_DB_USER
+          value: "joomla"
+        - name: JOOMLA_DB_PASSWORD
+          value: "joomla"
+#        - JOOMLA_DB_PASSWORD_FILE:
+#          value: "1000"
+        - name: JOOMLA_DB_NAME
+          value: "joomla"
+        - name: JOOMLA_DB_TYPE
+          value: "mysqli"
+        - name: JOOMLA_SITE_NAME
+          value: "allarddcs"
+        - name: JOOMLA_ADMIN_USER
+          value: "admon"
+        - name: JOOMLA_ADMIN_USERNAME
+          value: "Admin"
+        - name: JOOMLA_ADMIN_PASSWORD
+          value: "JoomlaJoomla01"
+        - name: JOOMLA_ADMIN_EMAIL
+          value: "admin@allarddcs.nl"
+#        - JOOMLA_EXTENSIONS_URLS:
+#          value: "1000"
+#        - JOOMLA_EXTENSIONS_PATHS:
+#          value: "1000"
+#        - JOOMLA_SMTP_HOST:
+#          value: "1000"
+#        - JOOMLA_SMTP_HOST_PORT:
+        ports:
+         - containerPort: 9000
+           name: php-fpm
+           protocol: TCP
+      - name: nginx
+        image: riscv64/nginx:1.27.4-alpine
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - name: nfs-joomla
+            mountPath: /var/www/html
+            subPath: html
+          - name: nfs-joomla
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: default.conf
+      volumes:
+      - name: nfs-joomla
+        persistentVolumeClaim:
+          claimName: joomla-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: joomla
+  namespace: joomla
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: joomla-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/joomla/riscv
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: joomla-pvc
+  namespace: joomla
+spec:
+  storageClassName: ""
+  volumeName: joomla-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 2Gi

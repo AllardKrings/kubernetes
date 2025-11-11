@@ -1,0 +1,26 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kubernetes-deployments
+  description: All deployment manifests for our Kubernetes apps
+  annotations:
+    backstage.io/techdocs-ref: url:https://gitea-dev.allarddcs.nl/AllardDCS/kubernetes/raw/main/
+  links:
+    - url: https://gitea-dev.allarddcs.nl/allard/kubernetes
+      title: Kubernetes Configuration
+spec:
+  type: service
+  lifecycle: production
+  owner: group:allarddcs
+  system: system:kubernetes
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: allarddcs-locations
+spec:
+  type: dir
+  targets:
+    - ./group.yaml
+    - ./system.yaml
+

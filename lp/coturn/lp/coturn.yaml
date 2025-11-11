@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coturn
+  namespace: matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coturn
+  template:
+    metadata:
+      labels:
+        app: coturn
+    spec:
+#      hostNetwork: true
+      containers:
+        - name: coturn
+          image: coturn/coturn:latest
+          env:
+            - name: DETECT_EXTERNAL_IP
+              value: "yes"
+            - name: DETECT_RELAY_IP
+              value: "yes"
+          ports:
+            - name: turn-udp
+              containerPort: 3478
+              protocol: UDP
+            - name: turn-tcp
+              containerPort: 3478
+              protocol: TCP
+            - name: turns-tcp
+              containerPort: 5349
+              protocol: TCP
+          volumeMounts:
+            - name: coturn-cert
+              mountPath: /etc/coturn/certs
+              readOnly: true
+            - name: coturn-data
+              mountPath: /etc/coturn/turnserver.conf
+              subPath: config/turnserver.conf
+            - name: coturn-data
+              mountPath: /var/log
+              subPath: logs
+      volumes:
+        - name: coturn-data
+          persistentVolumeClaim:
+            claimName: coturn-pvc
+        - name: coturn-cert
+          secret:
+            secretName: coturn-cert
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coturn
+  namespace: matrix
+spec:
+  type: LoadBalancer
+  ports:
+    - name: turn-udp
+      port: 3478
+      protocol: UDP
+      targetPort: 3478
+    - name: turn-tcp
+      port: 3478
+      protocol: TCP
+      targetPort: 3478
+    - name: turns-tcp
+      port: 5349
+      protocol: TCP
+      targetPort: 5349
+  selector:
+    app: coturn
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: coturn-pvc
+  namespace: matrix
+spec:
+  storageClassName: ""
+  volumeName: coturn-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: coturn-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  hostPath:
+    path: /mnt/nfs_share/coturn/lp
+    type: Directory

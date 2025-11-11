@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ODROID-cluster
+  namespace: default
+  description: Alle deployments van ODROID-cluster
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://github.com/AllardKrings/kubernetes/odroid
+      title: AllardDCS Kubernetes Configuration
+  docs:
+    - url: ./README.md
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/allarddcs

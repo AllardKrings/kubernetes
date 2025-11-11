@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mail-docker-mailserver-mail-config-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  hostPath:
+    path: /mnt/nfs_share/dockermail/config
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mail-docker-mailserver-mail-config-pvc
+  namespace: mail
+spec:
+  storageClassName: ""
+  volumeName: mail-docker-mailserver-mail-config-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mail-docker-mailserver-mail-data-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  hostPath:
+    path: /mnt/nfs_share/dockermail/data
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mail-docker-mailserver-mail-data-pvc
+  namespace: mail
+spec:
+  storageClassName: ""
+  volumeName: mail-docker-mailserver-mail-data-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mail-docker-mailserver-mail-log-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  hostPath:
+    path: /mnt/nfs_share/dockermail/log
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mail-docker-mailserver-mail-log-pvc
+  namespace: mail
+spec:
+  storageClassName: ""
+  volumeName: mail-docker-mailserver-mail-log-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mail-docker-mailserver-mail-state-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  hostPath:
+    path: /mnt/nfs_share/dockermail/state
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mail-docker-mailserver-mail-state-pvc
+  namespace: mail
+spec:
+  storageClassName: ""
+  volumeName: mail-docker-mailserver-mail-state-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hercules
+  labels:
+    app: hercules
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hercules
+  template:
+    metadata:
+      labels:
+        app: hercules
+    spec:
+      containers:
+      - name: hercules
+        image: core.harbor.alldcs.nl/test/hercules
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
+        ports:
+        - containerPort: 22
+          name: hercules-ssh
+        - containerPort: 80
+          name: hercules
+        - containerPort: 3270
+          name: terminal
+        - containerPort: 3390
+          name: network
+        volumeMounts:
+        - mountPath: /share
+          name: hercules
+        - mountPath: /mnt
+          name: mnt
+          subPath: hercules
+      volumes:
+      - name: hercules
+        persistentVolumeClaim:
+          claimName: hercules-pvc
+      - name: mnt
+        persistentVolumeClaim:
+          claimName: mnt
+      nodeSelector:
+        hercules: hercules1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hercules
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: hercules
+  type: NodePort

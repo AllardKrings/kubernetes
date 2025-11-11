@@ -1,0 +1,38 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: nexus-tcp-tls
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: HostSNI(`nexus.alldcs.nl`)
+    services:
+    - name: nexus
+      port: 8443
+  - match: HostSNI(`nexus.alldcs.nl`)
+    services:
+    - name: nexus
+      port: 8443
+  tls:
+    passthrough: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: nexus-tcp-docker
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: HostSNI(`registry.alldcs.nl`)
+    services:
+    - name: nexus
+      port: 8444
+  - match: HostSNI(`registry.alldcs.nl`) && PathPrefix(`/v2/`)
+    services:
+    - name: nexus
+      port: 8444
+  tls:
+    passthrough: true
+

@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: allardkrings/riscv64-nginx:1.24
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx
+          subPath: html
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: nginx
+        persistentVolumeClaim:
+          claimName: nginx-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: nginx
+  labels:
+    name: nginx
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 30080
+      name: http
+  selector:
+    app: nginx
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/nginx-riscv
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pvc
+  namespace: nginx
+spec:
+  storageClassName: ""
+  volumeName: nginx-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi

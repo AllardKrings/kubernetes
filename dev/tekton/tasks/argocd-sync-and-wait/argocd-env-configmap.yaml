@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  ARGOCD_SERVER: argocd-dev.allarddcs.nl
+kind: ConfigMap
+metadata:
+  name: argocd-env-configmap
+  namespace: default

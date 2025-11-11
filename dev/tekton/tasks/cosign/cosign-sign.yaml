@@ -1,0 +1,69 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: cosign-sign
+spec:
+  params:
+    - name: cosign-image-url
+      description: The image to sign (e.g., harbor.example.com/repo/image:tag)
+      type: string
+    - name: cosign-image-digest
+      type: string
+  steps:
+    - name: debug
+      image: busybox
+      command: [ "sh", "-c" ]
+      args:
+        - "cat /root/.docker/config.json"
+      volumeMounts:
+        - name: registry-credentials
+          mountPath: /root/.docker/config.json
+          subPath: .dockerconfigjson
+
+    - name: cosign-sign
+     #      image: ghcr.io/sigstore/cosign:v2.4.1
+      image: bitnamilegacy/cosign
+      securityContext:
+        runAsUser: 0  # Run as root
+        runAsGroup: 0 # Group ID for root
+        privileged: true # Allow privileged operations (if needed)
+      env:
+        - name: COSIGN_ACCEPT
+          value: "Y"               # Automatically agree to the terms & conditions
+        - name: COSIGN_PASSWORD
+          value: "Harbor01@"
+      script: |
+        #!/bin/bash
+        cosign login  harbor-dev.allarddcs.nl -u admin -p Harbor01@
+        set -e
+
+        echo "Signing image: $(params.cosign-image-url)"
+
+        # Sign the image with Cosign
+        echo "y" | cosign sign --key /cosign-keys/key $(params.cosign-image-url)@$(params.cosign-image-digest)
+
+      volumeMounts:
+        - name: cosign-key
+          mountPath: /cosign-keys  # Mount the secret at /cosign-keys
+        - name: registry-credentials
+          mountPath: /root/.docker/config.json
+          subPath: .dockerconfigjson
+        - name: docker-socket
+          mountPath: /var/run/docker.sock  # Mount the Docker socket inside the container
+  volumes:
+    - name: cosign-key
+      secret:
+        secretName: cosign-key-secret     # Secret name for the Cosign key
+        items:
+          - key: cosign.key               # Key in the secret that holds the Cosign private key
+            path: key                      # Path inside the container where the key will be available (i.e., /cosign-keys/key)
+    - name: registry-credentials
+      secret:
+        secretName: registry-credentials  # Secret containing Harbor credentials (from the previous step)
+        items:
+          - key: .dockerconfigjson       # Mount the Docker config to the right place
+            path: .dockerconfigjson
+    - name: docker-socket
+      hostPath:
+        path: /var/run/docker.sock  # Mount the Docker socket
+        type: Socket

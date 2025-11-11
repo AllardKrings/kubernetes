@@ -1,0 +1,44 @@
+# -----------------------------
+# Group definition
+# -----------------------------
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: allarddcs
+  description: All developers in AllardDCS
+spec:
+  type: team
+  children: []
+
+---
+# -----------------------------
+# System definition
+# -----------------------------
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: kubernetes
+  description: Kubernetes deployment system
+spec:
+  owner: group:allarddcs
+
+---
+# -----------------------------
+# Component definition
+# -----------------------------
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kubernetes-deployments
+  description: All deployment manifests for our Kubernetes apps
+  annotations:
+    # TechDocs URL pointing to repo root
+    backstage.io/techdocs-ref: url:https://gitea-dev.allarddcs.nl/AllardDCS/kubernetes/raw/main/
+  links:
+    - url: https://gitea-dev.allarddcs.nl/AllardDCS/kubernetes
+      title: Kubernetes Configuration
+spec:
+  type: service
+  lifecycle: production
+  owner: group:allarddcs
+  system: system:kubernetes

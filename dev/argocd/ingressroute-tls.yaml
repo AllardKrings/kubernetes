@@ -1,0 +1,26 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argocd-tls
+  namespace: argocd
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`argocd-dev.allarddcs.nl`)
+    priority: 10
+    services:
+    - kind: Service
+      name: argocd-argo-cd-server
+      port: 80
+  - kind: Rule
+    match: Host(`argocd-dev.allarddcs.nl`) && Headers(`Content-Type`, `application/grpc`)
+    priority: 11
+    services:
+    - kind: Service
+      name: argocd-argo-cd-server
+      port: 80
+      scheme: h2c
+  tls:
+    certResolver: letsencrypt

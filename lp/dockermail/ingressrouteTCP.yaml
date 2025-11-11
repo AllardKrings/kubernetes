@@ -1,0 +1,23 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: ingressroute-tcp-dockermailserver
+  namespace: mail  # Use the appropriate namespace where your Mailserver is deployed
+spec:
+  entryPoints:
+    - smtp
+    - imap
+    - pop3
+  routes:
+    - match: HostSNI(`*`)  # This will match all hostnames, change it to match a specific domain if needed
+      services:
+        - name: docker-mailserver  # Replace with your actual mailserver service name
+          port: 25  # SMTP port for Mailserver (adjust as needed)
+    - match: HostSNI(`*`)  # IMAP route
+      services:
+        - name: docker-mailserver
+          port: 143  # IMAP port for Mailserver (adjust as needed)
+    - match: HostSNI(`*`)  # POP3 route
+      services:
+        - name: docker-mailserver
+          port: 110  # POP3 port for Mailserver (adjust as needed)

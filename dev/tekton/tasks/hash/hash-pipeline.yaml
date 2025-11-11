@@ -1,0 +1,69 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-and-deploy-pipeline
+spec:
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: "https://gitea.example.com/yourorg/yourrepo.git"
+        - name: revision
+          value: "main"  # or any branch or tag
+
+    - name: get-git-commit-hash
+      taskSpec:
+        steps:
+          - name: get-commit-hash
+            image: busybox
+            script: |
+              #!/bin/sh
+              # Get the current Git commit hash
+              COMMIT_HASH=$(git rev-parse --short HEAD)
+              echo "COMMIT_HASH=$COMMIT_HASH" > $(results.commit-hash.path)
+        results:
+          - name: commit-hash
+            description: The short Git commit hash
+
+    - name: build-image
+      taskRef:
+        name: kaniko
+      params:
+        - name: IMAGE
+          value: "harbor.example.com/myproject/myapp:$(results.commit-hash.commit-hash)"
+        - name: CONTEXT
+          value: "$(resources.clone-repo.results.git-dir)"
+        - name: DOCKERFILE
+          value: "$(resources.clone-repo.results.git-dir)/Dockerfile"
+        - name: REGISTRY
+          value: "harbor.example.com"
+      resources:
+        inputs:
+          - name: clone-repo
+            resource: clone-repo
+
+    - name: push-image
+      taskRef:
+        name: kaniko-push
+      params:
+        - name: IMAGE
+          value: "harbor.example.com/myproject/myapp:$(results.commit-hash.commit-hash)"
+        - name: REGISTRY
+          value: "harbor.example.com"
+      resources:
+        inputs:
+          - name: build-image
+            resource: build-image
+
+    - name: trigger-argocd
+      taskRef:
+        name: argocd-sync
+      params:
+        - name: app-name
+          value: "myapp"
+        - name: project
+          value: "myproject"
+        - name: sync-options
+          value: "--prune --retry"

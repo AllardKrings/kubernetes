@@ -1,0 +1,90 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud-http
+  namespace: nextcloud
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`nextcloud-riscv.allarddcs.nl`)
+      kind: Rule
+      services:
+        - name: nginx
+          port: 80
+      middlewares:
+        - name: redirect-to-https
+          namespace: nextcloud
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud-tls
+  namespace: nextcloud
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`nextcloud-riscv.allarddcs.nl`)
+      kind: Rule
+      middlewares:
+        - name: nextcloud-well-known
+        - name: nextcloud-headers
+      services:
+        - name: nginx
+          port: 80
+    - match: Host(`nextcloud-riscv.allarddcs.nl`) && PathPrefix(`/ocs/`)
+      kind: Rule
+      middlewares:
+        - name: nextcloud-well-known
+        - name: nextcloud-headers
+      services:
+        - name: nginx
+          port: 80
+    - match: Host(`nextcloud-riscv.allarddcs.nl`) && PathPrefix(`/ocs-provider/`)
+      kind: Rule
+      middlewares:
+        - name: nextcloud-headers
+      services:
+        - name: nginx
+          port: 80
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-https
+  namespace: nextcloud
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-headers
+  namespace: nextcloud
+spec:
+  headers:
+    stsSeconds: 15552000
+    browserXssFilter: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    frameDeny: true
+    sslRedirect: true
+    stsIncludeSubdomains: true
+    stsPreload: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-well-known
+  namespace: nextcloud
+spec:
+  redirectRegex:
+    regex: "^/.well-known/(carddav|caldav|webdav)"
+    replacement: "/remote.php/dav"
+    permanent: true
+

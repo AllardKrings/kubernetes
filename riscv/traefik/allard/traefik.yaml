@@ -1,0 +1,261 @@
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: traefik
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+    helm.sh/chart: traefik-21.2.0
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: traefik-traefik
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+    helm.sh/chart: traefik-21.2.0
+    app.kubernetes.io/managed-by: Helm
+rules:
+  - apiGroups:
+      - extensions
+      - networking.k8s.io
+    resources:
+      - ingressclasses
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+      - networking.k8s.io
+    resources:
+      - ingresses/status
+    verbs:
+      - update
+  - apiGroups:
+      - traefik.containo.us
+    resources:
+      - ingressroutes
+      - ingressroutetcps
+      - ingressrouteudps
+      - middlewares
+      - middlewaretcps
+      - tlsoptions
+      - tlsstores
+      - traefikservices
+      - serverstransports
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: traefik-traefik
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+    helm.sh/chart: traefik-21.2.0
+    app.kubernetes.io/managed-by: Helm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik-traefik
+subjects:
+  - kind: ServiceAccount
+    name: traefik
+    namespace: traefik
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+    helm.sh/chart: traefik-21.2.0
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+  ports:
+  - port: 80
+    name: "web"
+    targetPort: web
+    protocol: TCP
+  - port: 443
+    name: "websecure"
+    targetPort: websecure
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+    helm.sh/chart: traefik-21.2.0
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traefik
+      app.kubernetes.io/instance: traefik-traefik
+  strategy: 
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  minReadySeconds: 0
+  template: 
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "9100"
+      labels:
+        app.kubernetes.io/name: traefik
+        app.kubernetes.io/instance: traefik-traefik
+        helm.sh/chart: traefik-21.2.0
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: traefik
+      terminationGracePeriodSeconds: 60
+      hostNetwork: false
+      containers:
+      - image: allardkrings/riscv64-traefik:1.0
+        imagePullPolicy: IfNotPresent
+        name: traefik
+        resources:
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 9000
+            scheme: HTTP
+          failureThreshold: 1
+          initialDelaySeconds: 2
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 9000
+            scheme: HTTP
+          failureThreshold: 3
+          initialDelaySeconds: 2
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        lifecycle:
+        ports:
+        - name: "metrics"
+          containerPort: 9100
+          protocol: "TCP"
+        - name: "traefik"
+          containerPort: 9000
+          protocol: "TCP"
+        - name: "web"
+          containerPort: 8000
+          protocol: "TCP"
+        - name: "websecure"
+          containerPort: 8443
+          protocol: "TCP"
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 65532
+          runAsNonRoot: true
+          runAsUser: 65532
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: tmp
+            mountPath: /tmp
+        args:
+          - "--global.checknewversion"
+          - "--global.sendanonymoususage"
+          - "--entrypoints.metrics.address=:9100/tcp"
+          - "--entrypoints.traefik.address=:9000/tcp"
+          - "--entrypoints.web.address=:8000/tcp"
+          - "--entrypoints.websecure.address=:8443/tcp"
+          - "--api.dashboard=true"
+          - "--api.insecure=true"
+          - "--ping=true"
+          - "--metrics.prometheus=true"
+          - "--metrics.prometheus.entrypoint=metrics"
+          - "--providers.kubernetescrd"
+          - "--providers.kubernetesingress"
+          - "--entrypoints.websecure.http.tls=true"
+          - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+          - "--certificatesresolvers.letsencrypt.acme.email=admin@alldcs.nl"
+          - "--certificatesresolvers.letsencrypt.acme.storage=/data/letsencrypt.json"
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+      securityContext:
+        fsGroup: 65532
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+    helm.sh/chart: traefik-21.2.0
+    app.kubernetes.io/managed-by: Helm
+  name: traefik
+spec:
+  controller: traefik.io/ingress-controller
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: traefik
+  annotations:
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-traefik
+    helm.sh/chart: traefik-21.2.0
+    app.kubernetes.io/managed-by: Helm
+spec:
+  entryPoints:
+  - traefik
+  routes:
+  - match: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+    kind: Rule
+    services:
+    - name: api@internal
+      kind: TraefikService

@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage
+  description: Backstage-configuratie
+spec:
+  type: service
+  owner: group:allarddcs
+  lifecycle: production
+  # TechDocs info
+  docs:
+    path: ./README.md

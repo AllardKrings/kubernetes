@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix
+  namespace: matrix
+  labels:
+    app: matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix
+  template:
+    metadata:
+      labels:
+        app: matrix
+    spec:
+      containers:
+        - name: matrix
+          image: matrixdotorg/synapse:latest
+#          args:
+#          - generate
+          env:
+          - name: SYNAPSE_SERVER_NAME
+            value: "matrix.allarddcs.nl"
+#          - name: SYNAPSE_REPORT_STATS
+#            value: "yes"
+          volumeMounts:
+          - mountPath: /data
+            name: matrix
+      volumes:
+      - name: matrix
+        persistentVolumeClaim:
+          claimName: matrix-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix
+  namespace: matrix
+spec:
+  ports:
+  - name: http
+    targetPort: 8008
+    port: 8008
+  selector:
+    app: matrix
+  type: NodePort
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: matrix-http
+  namespace: matrix
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`matrix-prod.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: matrix
+      port: 8008
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mattrix-tls
+  namespace: matrix
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`matrix-prod.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: matrix
+      port: 8008
+  tls:
+    secretName: matrix-prod.allarddcs.nl-tls
+#    certResolver: letsencrypt
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: matrix-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/matrix/prod
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matrix-pvc
+  namespace: matrix
+spec:
+  storageClassName: ""
+  volumeName: matrix-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+

@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: postgres-operator-ui-http-alldcs
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`postgres-operator.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: external-postgres-operator-ui
+      port: 80

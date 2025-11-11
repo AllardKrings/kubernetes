@@ -1,0 +1,168 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus
+  namespace: nexus
+  labels:
+    app: nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - key: "memory"
+        operator: "Equal"
+        value: "high"
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - pisvrwsv04
+      containers:
+      - name: nexus
+        image: sonatypecommunity/nexus3:3.68.1-java11
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 8081
+          name: web
+        - containerPort: 8443
+          name: websecure
+        - containerPort: 8444
+          name: docker
+        volumeMounts:
+        - mountPath: /nexus-data
+          name: nexus
+          subPath: data-dir
+        - mountPath: /opt/sonatype/nexus/etc/jetty
+          name: nexus
+          subPath: app-dir
+        env:
+        - name: INSTALL4J_ADD_VM_PARAMS
+          value: "-XX:ActiveProcessorCount=4"
+        - name: Djava.util.prefs.userRoot
+          value: "/opt/sonatype/sonatype-work/nexus3/javaprefs"
+      volumes:
+      - name: nexus
+        persistentVolumeClaim:
+          claimName: nexus-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus
+  namespace: nexus
+spec:
+  ports:
+  - name: web
+    targetPort: 8081
+    port: 8081
+  - name: websecure
+    targetPort: 8443
+    port: 8443
+  - name: docker
+    targetPort: 8444
+    port: 8444
+  selector:
+    app: nexus
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nexus-http
+  namespace: nexus
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`nexus-dev.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: nexus
+      port: 8081
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nexus-tls
+  namespace: nexus
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`nexus-dev.alldcs.nl`)
+    kind: Rule
+    services:
+    - name: nexus
+      port: 8081
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: registry-tcp-tls
+  namespace: nexus
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: HostSNI(`registry-dev.alldcs.nl`)
+    services:
+    - name: nexus
+      port: 8444
+  tls:
+    passthrough: true
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nexus-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/nexus/dev
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nexus-pvc
+  namespace: nexus
+spec:
+  storageClassName: ""
+  volumeName: nexus-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+

@@ -1,0 +1,150 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  namespace: rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: docker.io/riscv64/rabbitmq:3-management
+        volumeMounts:
+        - mountPath: /var/lib/rabbitmq
+          name: rabbitmq
+          subPath: rabbitmq/data
+        - mountPath: /var/log/rabbitmq
+          name: rabbitmq
+          subPath: rabbitmq/log
+      volumes:
+      - name: rabbitmq
+        persistentVolumeClaim:
+          claimName: rabbitmq-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: rabbitmq
+spec:
+  ports:
+  - name: port1
+    targetPort: 5672
+    port: 5672
+  - name: port2
+    targetPort: 15672
+    port: 15672
+  - name: port3
+    targetPort: 55670
+    port: 55670
+  - name: port4
+    targetPort: 55674
+    port: 55674
+  selector:
+    app: rabbitmq
+  type: NodePort
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rabbitmq-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.2.110
+    path: /mnt/nfs_share/rabbitmq/riscv
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-pvc
+  namespace: rabbitmq
+spec:
+  storageClassName: ""
+  volumeName: rabbitmq-pv
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: rabbitmq-http
+  namespace: rabbitmq
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`rabbitmq-riscv.allarddcs.nl`)
+    kind: Rule
+    middlewares:
+      - name: redirect-to-https
+        namespace: rabbitmq
+    services:
+    - name: rabbitmq
+      port: 15672
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: rabbitmq-tls
+  namespace: rabbitmq
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`rabbitmq-riscv.allarddcs.nl`)
+    kind: Rule
+    services:
+    - name: rabbitmq
+      port: 15672
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-https
+  namespace: rabbitmq
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-amqp
+  namespace: rabbitmq
+spec:
+  type: NodePort
+  ports:
+  - port: 5672
+    targetPort: 5672
+    protocol: TCP
+    nodePort: 31541  # You can specify or let k8s pick one in 30000-32767 range
+    name: amqp
+  selector:
+    app.kubernetes.io/name: rabbitmq
+

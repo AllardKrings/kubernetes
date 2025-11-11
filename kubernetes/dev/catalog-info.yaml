@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dev
+spec:
+  type: service      # or library, website, etc.
+  lifecycle: production
+  owner: admin@allarddcs.nl
