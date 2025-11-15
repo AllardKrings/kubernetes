@@ -11,6 +11,8 @@ data:
 
     backend:
       baseUrl: https://backstage-dev.allarddcs.nl
+      env:
+        PATH: /usr/local/bin:$PATH
       listen:
         port: 7007
       cors:
