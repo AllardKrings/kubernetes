@@ -57,10 +57,7 @@ data:
       name: AllardDCS
 
     permission:
-      rules:
-        - allow:
-            users:
-              - AllardKrings
+      enabled: false
 
     integrations:
       gitea:
@@ -92,7 +89,7 @@ data:
             organization: 'allarddcs'
             host: gitea-dev.allarddcs.nl
             branch: 'master'
-            catalogPath: '/**/catalog-info.yaml'
+            catalogFile: 'catalog-info.yaml'
             schedule:
               frequency: { minutes: 30 }
               timeout: { minutes: 3 }
@@ -102,10 +99,7 @@ data:
           target: https://gitea-dev.allarddcs.nl/AllardDCS/kubernetes/raw/branch/master/group.yaml
           rules:
             - allow: [Group]
-        - type: file
-          target: /backstage/catalog/private-users/allardkrings.yaml
-          rules:
-            - allow: [User]
+
       processors:
         gitea:
           - host: gitea-dev.allarddcs.nl
@@ -120,21 +114,19 @@ data:
             - name: local-cluster
               url: https://kubernetes.default.svc
               authProvider: serviceAccount
+
     auth:
-      # see https://backstage.io/docs/auth/ to learn about auth providers
       environment: development
       providers:
-        # See https://backstage.io/docs/auth/guest/provider
-        guest: {}
-        github:
+        guest:
           development:
-            clientId: Ov23lilVTWftNp9vMFwB
-            clientSecret: a687566a8d4871d30fe0126f150515531969d5fc
-            usePopup: false
-            signIn:
-              resolvers:
-                # Matches the GitHub username with the Backstage user entity name.
-                # See https://backstage.io/docs/auth/github/provider#resolvers for more resolvers.
-                - resolver: usernameMatchingUserEntityName
-
-
+            enabled: false
+        password:
+          development:
+            users:
+              - username: admin
+                password: Backstage01@
+                email: admin@allarddcs.nl
+                displayName: Administrator
+                roles:
+                  - admin

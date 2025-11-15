@@ -1,0 +1,16 @@
+# backstage-private-users-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backstage-private-users
+  namespace: backstage
+data:
+  allardkrings.yaml: |
+    apiVersion: backstage.io/v1alpha1
+    kind: User
+    metadata:
+      name: AllardKrings          # must match GitHub username
+      email: admin@allarddcs.nl
+    spec:
+      memberOf:
+        - team:AllardDCS

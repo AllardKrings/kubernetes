@@ -13,10 +13,11 @@ spec:
       labels:
         app: backstage
     spec:
+      serviceAccountName: backstage
       containers:
         - name: backstage
-          image: allardkrings/backstage:1.42.3b
-          imagePullPolicy: IfNotPresent
+          image: allardkrings/backstage:1.44.0
+          imagePullPolicy: Always
           env:
             - name: PORT
               value: "7007"
@@ -52,6 +53,8 @@ spec:
             # Mount the PVC as the TechDocs storage directory
             - mountPath: /tmp/techdocs-storage
               name: techdocs-storage
+            - name: private-users
+              mountPath: /backstage/catalog/private-users
       volumes:
         # ConfigMap for app config
         - name: app-configmap
@@ -61,6 +64,9 @@ spec:
         - name: techdocs-storage
           persistentVolumeClaim:
             claimName: backstage-pvc
+        - name: private-users
+          configMap:
+            name: backstage-private-users
 
 ---
 apiVersion: v1
@@ -128,5 +134,3 @@ spec:
   resources:
     requests:
       storage: 1Gi
-
-

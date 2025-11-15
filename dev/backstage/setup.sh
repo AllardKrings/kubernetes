@@ -51,7 +51,6 @@ yarn --cwd packages/backend add \
   @backstage/plugin-scaffolder-backend-module-github \
   @backstage/plugin-scaffolder-backend-module-notifications \
   @backstage/plugin-auth-backend \
-  @backstage/plugin-auth-backend-module-guest-provider \
   @backstage/plugin-techdocs-backend \
   @backstage/plugin-kubernetes-backend \
   @backstage/plugin-devtools-backend \
@@ -103,7 +102,6 @@ import scaffolderBackend from '@backstage/plugin-scaffolder-backend';
 import scaffolderGithub from '@backstage/plugin-scaffolder-backend-module-github';
 import scaffolderNotifications from '@backstage/plugin-scaffolder-backend-module-notifications';
 import authBackend from '@backstage/plugin-auth-backend';
-import guestProvider from '@backstage/plugin-auth-backend-module-guest-provider';
 import techdocsBackend from '@backstage/plugin-techdocs-backend';
 import kubernetesBackend from '@backstage/plugin-kubernetes-backend';
 import devtoolsBackend from '@backstage/plugin-devtools-backend';
@@ -127,7 +125,6 @@ backend.add(scaffolderGithub);
 backend.add(scaffolderNotifications);
 
 backend.add(authBackend);
-backend.add(guestProvider);
 
 backend.add(techdocsBackend);
 backend.add(kubernetesBackend);
